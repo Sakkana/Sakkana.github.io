@@ -12,12 +12,6 @@
       
       
       
-        <tags>
-            
-            <tag> 测试 </tag>
-            
-        </tags>
-      
     </entry>
     
     
@@ -30,12 +24,6 @@
         <content type="html"><![CDATA[<blockquote><p>I’m a test blog.</p><p>Omit me.</p><p>Farwell.</p></blockquote>]]></content>
       
       
-      
-        <tags>
-            
-            <tag> 测试 </tag>
-            
-        </tags>
       
     </entry>
     
