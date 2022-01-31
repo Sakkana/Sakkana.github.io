@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>KMP字符串匹配</title>
+      <link href="/2022/02/01/KMP/"/>
+      <url>/2022/02/01/KMP/</url>
+      
+        <content type="html"><![CDATA[<p>给定一个模式串 S，以及一个模板串 P，所有字符串中只包含大小写英文字母以及阿拉伯数字。</p><p>模板串 P 在模式串 S 中多次作为子串出现。</p><p>求出模板串 P 在模式串 S 中所有出现的位置的起始下标。</p><h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含整数 N，表示数列长度。</p><p>第二行包含 N 个整数，表示整数数列。</p><h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>第一行输入整数 N，表示字符串 P 的长度。</p><p>第二行输入字符串 P。</p><p>第三行输入整数 M，表示字符串 S 的长度。</p><p>第四行输入字符串 S。</p><h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ N ≤ 10<sup>5</sup><br>1 ≤ M ≤ 10<sup>6</sup></p><h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">3aba5ababa<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">0 2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;using namespace std;// 模式串 ———&gt; 大串// 模板串 ---&gt; 小串const int N = 1e5 + 10, M = 1e6 + 10;   //模板串， 模式串char s[M], p[N];    //模式串string， 模板串patternint ne[N];  // core-&gt;求next数组int n, m;int main(){    cin &gt;&gt; n &gt;&gt; p + 1 &gt;&gt; m &gt;&gt; s + 1;         for(int i = 2, j = 0; i &lt;= n; ++ i)    {        while(j &amp;&amp; p[i] != p[j + 1]) j = ne[j];        if(p[i] == p[j + 1]) ++ j;        ne[i] = j;  //一旦到i发现匹配不上，可以回退到j，j是啥？前面两步结局：要么完犊子j=0，要么位于j的字符匹配    }        for(int i = 1, j = 0; i &lt;= m; ++ i)    {        while(j &amp;&amp; s[i] != p[j + 1]) j = ne[j]; // j还有退路(若j = 0则最坏打算，东山再起) &amp;&amp; 未匹配上        if(s[i] == p[j + 1]) ++ j; // 要么完犊子全失败，要么找到一个最大前缀下标        if(j == n)        {            cout &lt;&lt; i - n &lt;&lt; ' ';            j = ne[j];  //继续匹配，看能不能找到最长字串重新出发        }    }        return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p> 理解KMP模式串匹配，需要理解匹配原理，next代表的含义，求解next方法，以及为什么预处理next数组与匹配过程的原理如出一辙。</p><p> 他们俩唯一的不同是预处理时记录next数组的值，而匹配时没有这一步，取而代之的是检查是否匹配结束。</p><p> 预处理模板串p, next[]数组之和模板串p有关，与模式串S无关。<br> 找后缀和前缀相等的子串，并且力求长度最长。<br> next[i] = j的含义：p[1, j] = p[i - j + 1, i] 一旦模板串中下标j + 1的字符与模式串中下i的字符无法匹配<br> 模板串不吊死在一棵树上，j立马回退，去找max(前缀 == 后缀)的长度<br> 假设这个长度是len, 那么最长后缀的下标为[j - len + 1, j]， 而与之相匹配的前缀下标为[1, len]<br> 因此 next[j]的作用就是回退， 原本是下标j在与模式串比较，一旦不匹配执行next[j]，来到长度len对应的下标继续匹配</p></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 字符串 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>单调队列 - 滑动窗口</title>
+      <link href="/2022/02/01/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97%20-%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"/>
+      <url>/2022/02/01/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97%20-%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</url>
+      
+        <content type="html"><![CDATA[<p>给定一个大小为 n ≤ 10<sup>6</sup> 的数组。</p><p>有一个大小为 k 的滑动窗口，它从数组的最左边移动到最右边。</p><p>你只能在窗口中看到 k 个数字。</p><p>每次滑动窗口向右移动一个位置。</p><p>以下是一个例子：</p><p>该数组为 <code>[1 3 -1 -3 5 3 6 7]</code>，k 为 3。</p><table><thead><tr><th align="left">窗口位置</th><th align="left">最小值</th><th align="left">最大值</th></tr></thead><tbody><tr><td align="left">[1 3 -1] -3 5 3 6 7</td><td align="left">-1</td><td align="left">3</td></tr><tr><td align="left">1 [3 -1 -3] 5 3 6 7</td><td align="left">-3</td><td align="left">3</td></tr><tr><td align="left">1 3 [-1 -3 5] 3 6 7</td><td align="left">-3</td><td align="left">5</td></tr><tr><td align="left">1 3 -1 [-3 5 3] 6 7</td><td align="left">-3</td><td align="left">5</td></tr><tr><td align="left">1 3 -1 -3 [5 3 6] 7</td><td align="left">3</td><td align="left">6</td></tr><tr><td align="left">1 3 -1 -3 5 [3 6 7]</td><td align="left">3</td><td align="left">7</td></tr></tbody></table><p>你的任务是确定滑动窗口位于每个位置时，窗口中的最大值和最小值。</p><h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>输入包含两行。</p><p>第一行包含两个整数 n 和 k，分别代表数组长度和滑动窗口的长度。</p><p>第二行有 n 个整数，代表数组的具体数值。</p><p>同行数据之间用空格隔开。</p><h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>输出包含两个。</p><p>第一行输出，从左至右，每个位置滑动窗口中的最小值。</p><p>第二行输出，从左至右，每个位置滑动窗口中的最大值。</p><h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">8 31 3 -1 -3 5 3 6 7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">-1 -3 -3 -3 3 33 3 5 5 6 7<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;#include &lt;cstdio&gt;using namespace std;const int N = 1e6 + 10;int a[N], queue[N], n, k;int main(){    cin &gt;&gt; n &gt;&gt; k;    for(int i = 0; i &lt; n; ++ i) cin &gt;&gt; a[i];        int hh = 0, tt = -1;    for(int i = 0; i &lt; n; ++ i)    {        if(hh &lt;= tt &amp;&amp; i - k + 1 &gt; queue[hh]) ++ hh; // 判断队头是否滑出窗口        while(hh &lt;= tt &amp;&amp; a[queue[tt]] &gt;= a[i]) -- tt; // 如果队尾元素&gt;=新元素，队尾一直出队        queue[++ tt] = i;        if(i &gt;= k - 1) cout &lt;&lt; a[queue[hh]] &lt;&lt; ' ';    }        cout &lt;&lt; endl;        hh = 0, tt = -1;    for(int i = 0; i &lt; n; ++ i)    {        if(hh &lt;= tt &amp;&amp; i - k + 1 &gt; queue[hh]) ++ hh;        while(hh &lt;= tt &amp;&amp; a[queue[tt]] &lt;= a[i]) -- tt;        queue[++ tt] = i;        if(i &gt;= k - 1) cout &lt;&lt; a[queue[hh]] &lt;&lt; ' ';    }        return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p> 队列维护窗口最小值的下标， 队头永远是窗口最小值</p><p>queue中装的不是value，而是Index，方便判断队头最小值下标 queue[hh] 是否滑出窗口临界 i - k + 1</p></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>单调栈</title>
       <link href="/2022/01/31/%E5%8D%95%E8%B0%83%E6%A0%88/"/>
       <url>/2022/01/31/%E5%8D%95%E8%B0%83%E6%A0%88/</url>
@@ -42,7 +80,7 @@
     
     
     <entry>
-      <title>能被整除的数 - 容斥原理</title>
+      <title>容斥原理 - 能被整除的数</title>
       <link href="/2022/01/31/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/"/>
       <url>/2022/01/31/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/</url>
       

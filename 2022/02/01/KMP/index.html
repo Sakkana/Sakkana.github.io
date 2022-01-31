@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="单调栈, 魚のブログ">
+    <meta name="keywords" content="KMP字符串匹配, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>单调栈 | 魚のブログ</title>
+    <title>KMP字符串匹配 | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">单调栈</h1>
+                    <h1 class="description center-align post-title">KMP字符串匹配</h1>
                 </div>
             </div>
         </div>
@@ -371,8 +371,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                                <span class="chip bg-color">数据结构</span>
+                            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                                <span class="chip bg-color">字符串</span>
                             </a>
                         
                     </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-01-31
+                    2022-02-01
                 </div>
                 
 
@@ -396,7 +396,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    424
+                    736
                 </div>
                 
 
@@ -416,52 +416,66 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>给定一个长度为 N 的整数数列，输出每个数左边第一个比它小的数，如果不存在则输出 −1。</p>
+                <p>给定一个模式串 S，以及一个模板串 P，所有字符串中只包含大小写英文字母以及阿拉伯数字。</p>
+<p>模板串 P 在模式串 S 中多次作为子串出现。</p>
+<p>求出模板串 P 在模式串 S 中所有出现的位置的起始下标。</p>
 <h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含整数 N，表示数列长度。</p>
 <p>第二行包含 N 个整数，表示整数数列。</p>
-<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>共一行，包含 N 个整数，其中第 i 个数表示第 i 个数的左边第一个比它小的数，如果不存在则输出 −1。</p>
-<h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ N ≤ 10<sup>5</sup><br>1 ≤ 数列中元素 ≤ 10<sup>9</sup></p>
-<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">5
-3 4 2 7 5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>第一行输入整数 N，表示字符串 P 的长度。</p>
+<p>第二行输入字符串 P。</p>
+<p>第三行输入整数 M，表示字符串 S 的长度。</p>
+<p>第四行输入字符串 S。</p>
+<h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ N ≤ 10<sup>5</sup><br>1 ≤ M ≤ 10<sup>6</sup></p>
+<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">3
+aba
+5
+ababa<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">-1 3 -1 2 2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">0 2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
 <h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;
 using namespace std;
 
-const int N = 1e5 + 10;
-int stk[N], tt, n, x;
+// 模式串 ———&gt; 大串
+// 模板串 ---&gt; 小串
+
+const int N = 1e5 + 10, M = 1e6 + 10;   //模板串， 模式串
+char s[M], p[N];    //模式串string， 模板串pattern
+int ne[N];  // core-&gt;求next数组
+int n, m;
 
 int main()
 {
-    cin &gt;&gt; n;
+    cin &gt;&gt; n &gt;&gt; p + 1 &gt;&gt; m &gt;&gt; s + 1; 
     
-    for(int i = 0; i &lt; n; ++ i)
+    for(int i = 2, j = 0; i &lt;= n; ++ i)
     {
-        scanf("%d", &amp;x);
-        
-        while(tt &amp;&amp; stk[tt] &gt;= x) -- tt; // stack不为空 &amp;&amp; 栈顶 &gt; 新元素
-        
-        if(!tt) // 第一个元素 || 序列Min
-            cout &lt;&lt; -1 &lt;&lt; ' ';
-        else 
-            cout &lt;&lt; stk[tt] &lt;&lt; ' ';
-        stk[++ tt] = x; // 新元素进栈
+        while(j &amp;&amp; p[i] != p[j + 1]) j = ne[j];
+        if(p[i] == p[j + 1]) ++ j;
+        ne[i] = j;  //一旦到i发现匹配不上，可以回退到j，j是啥？前面两步结局：要么完犊子j=0，要么位于j的字符匹配
+    }
+    
+    for(int i = 1, j = 0; i &lt;= m; ++ i)
+    {
+        while(j &amp;&amp; s[i] != p[j + 1]) j = ne[j]; // j还有退路(若j = 0则最坏打算，东山再起) &amp;&amp; 未匹配上
+        if(s[i] == p[j + 1]) ++ j; // 要么完犊子全失败，要么找到一个最大前缀下标
+        if(j == n)
+        {
+            cout &lt;&lt; i - n &lt;&lt; ' ';
+            j = ne[j];  //继续匹配，看能不能找到最长字串重新出发
+        }
     }
     
     return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <blockquote>
-<p>性质：数字序列中，某些元素永远不会作为答案输出。</p>
-<p>若a<sub>3</sub> &gt; a<sub>5</sub> , 那么a<sub>3</sub>永远也不会作为答案输出。</p>
-<p>只要维护一个栈，栈中元素都是严格单调上升，那么加入新元素时，一旦栈顶top比新元素e1大，则不会是答案，并且在也不会被用到，因为如果后续e2要找左侧第一个比他小的，并不会去找top,而是找e1, 因此一直弹出直到栈顶元素top &lt; 新元素e1。</p>
-</blockquote>
-<blockquote>
-<p>每个元素最多进栈一次，出栈一次，因此每个元素最多被访问2次，n个元素最多被访问2n次，因此时间复杂度O(n)</p>
+<p> 理解KMP模式串匹配，需要理解匹配原理，next代表的含义，求解next方法，以及为什么预处理next数组与匹配过程的原理如出一辙。</p>
+<p> 他们俩唯一的不同是预处理时记录next数组的值，而匹配时没有这一步，取而代之的是检查是否匹配结束。</p>
+<p> 预处理模板串p, next[]数组之和模板串p有关，与模式串S无关。<br> 找后缀和前缀相等的子串，并且力求长度最长。<br> next[i] = j的含义：p[1, j] = p[i - j + 1, i] 一旦模板串中下标j + 1的字符与模式串中下i的字符无法匹配<br> 模板串不吊死在一棵树上，j立马回退，去找max(前缀 == 后缀)的长度<br> 假设这个长度是len, 那么最长后缀的下标为[j - len + 1, j]， 而与之相匹配的前缀下标为[1, len]<br> 因此 next[j]的作用就是回退， 原本是下标j在与模式串比较，一旦不匹配执行next[j]，来到长度len对应的下标继续匹配</p>
 </blockquote>
 
                 
@@ -489,7 +503,7 @@ int main()
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/01/31/%E5%8D%95%E8%B0%83%E6%A0%88/">https://sakkana.github.io/2022/01/31/%E5%8D%95%E8%B0%83%E6%A0%88/</a>
+                    <a href="https://sakkana.github.io/2022/02/01/KMP/">https://sakkana.github.io/2022/02/01/KMP/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -527,8 +541,8 @@ int main()
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                                    <span class="chip bg-color">数据结构</span>
+                                <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                                    <span class="chip bg-color">字符串</span>
                                 </a>
                             
                         </div>
@@ -572,9 +586,56 @@ int main()
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2022/02/01/KMP/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="KMP字符串匹配">
+                        
+                        <span class="card-title">KMP字符串匹配</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-01
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ludovico
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                        <span class="chip bg-color">字符串</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2022/02/01/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97%20-%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
                     <div class="card-image">
@@ -592,9 +653,9 @@ int main()
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -608,51 +669,6 @@ int main()
                     
                     <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
                         <span class="chip bg-color">数据结构</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/01/31/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="区间合并">
-                        
-                        <span class="card-title">区间合并</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-31
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%B4%AA%E5%BF%83/">
-                        <span class="chip bg-color">贪心</span>
                     </a>
                     
                 </div>
