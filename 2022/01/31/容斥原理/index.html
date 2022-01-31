@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="No Title, 魚のブログ">
+    <meta name="keywords" content="能被整除的数 - 容斥原理, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>No Title | 魚のブログ</title>
+    <title>能被整除的数 - 容斥原理 | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">No Title</h1>
+                    <h1 class="description center-align post-title">能被整除的数 - 容斥原理</h1>
                 </div>
             </div>
         </div>
@@ -371,8 +371,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                <span class="chip bg-color">测试</span>
+                            <a href="/tags/%E6%95%B0%E8%AE%BA/">
+                                <span class="chip bg-color">数论</span>
                             </a>
                         
                     </div>
@@ -387,7 +387,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-01-30
+                    2022-01-31
                 </div>
                 
 
@@ -396,7 +396,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    261
+                    553
                 </div>
                 
 
@@ -416,29 +416,82 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>春江花月夜</p>
+                <p>给定一个整数 n 和 m 个不同的质数 p1,p2,…,pm。</p>
+<p>请你求出 1∼n中能被 p1,p2,…,pm中的至少一个数整除的整数有多少个。</p>
+<h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含整数 n 和 m。</p>
+<p>第二行包含 m 个质数。</p>
+<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>输出一个整数，表示满足条件的整数的个数。</p>
+<h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ m ≤ 16,<br>1 ≤ n, pi ≤ 109</p>
+<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">10 2
+2 3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">7<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+const int N = 20;   // m个质数， 1 &lt;= m &lt;= 16
+int primes[N]; 
+int n, m;
+
+int main()
+{
+    cin &gt;&gt; n &gt;&gt; m;  // 1-n, m个质数
+	for(int i = 0; i &lt; m; ++i) cin &gt;&gt; primes[i];
+
+	int res = 0;
+
+	// 枚举2 ^ m种情况
+	for(int i = 1; i &lt; (1 &lt;&lt; m); ++i)
+	{
+    	int t = 1, cnt = 0;
+    	for(int j = 0; j &lt; m; ++j)
+        if(i &gt;&gt; j &amp; 1)
+        {
+            ++ cnt; // 统计1的个数， 
+            if((long long)t * primes[j] &gt; n)    // 一旦乘积越界， 直接走人
+            {
+                t = -1;
+                	break;
+            }
+            t *= primes[j];
+        }
+    	if(t != -1)
+    	{
+        	if(cnt % 2) res += n / t;
+        	else res -= n / t;
+    	}
+	}   
+
+	cout &lt;&lt; res;
+
+	return 0; 
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
 <blockquote>
+<p>原本暴力遍历时间复杂度： O(n * m)<br>容斥原理：<br>S2 = {2, 4, 6, 8, 10}<br>s3 = {3, 6, 9}</p>
+<p>|S2 ∪ S3| = |S2| + |S3| - |S2 ∩ S3|   O(2 ^ m)<br>m &lt;= 16 —&gt; 65536 计算机1s —&gt; 1e7~ 1e8</p>
+<p>问题转换为， 如何求1 - n中p的倍数?  —&gt; count = ⌊n / p⌋<br>为什么是下取整?<br>hypo1 : n是p的倍数, count =  ⌊n / p⌋ = n / p = k，(p, 2p, 3p, …, kp) 严格等于， 刚好分完<br>hypo2 : n不是p的倍数, count =  ⌊n / p⌋ = k， (p, 2p, 3p, …, kp), n, n比kp大一点点</p>
+<p>|S1| = ⌊n / p1⌋<br>|S2| =  ⌊n / p2⌋<br>|S1 ∩ S2| = ⌊n / (p1 * p2)⌋<br>|S1 ∪ S2| =  ⌊n / p1⌋ + ⌊n / p2⌋   </p>
+<p>求一个交集是做k次乘法 ⌊n / (p1 * p2 * p3 * … * pk)⌋， O(k);<br>一共2 ^ m个集合，O(2 ^ m)<br>===&gt; 总时间复杂度 O(2 ^ m + k)<br>这道题 k = m</p>
+<p>容斥原理 枚举所有项 2 ^ n - 1 （除了所有集合都不选以外）<br>位运算 状态看成n位二进制数， 取1选取0不选<br>共 2 ^ n - 1 个数对应 2 ^ n - 1 种选法<br>检查有多少个1: lowbit把k位右移到最低位再 &amp; 1</p>
 </blockquote>
-<p>唐 · 张若虚</p>
-<p>春江潮水连海平，海上明月共潮生。</p>
-<p>滟滟随波千万里，何处春江无月明！</p>
-<p>江流宛转绕芳甸，月照花林皆似霰；</p>
-<p>空里流霜不觉飞，汀上白沙看不见。</p>
-<p>江天一色无纤尘，皎皎空中孤月轮。</p>
-<p>江畔何人初见月？江月何年初照人？</p>
-<p>人生代代无穷已，江月年年望相似。</p>
-<p>不知江月待何人，但见长江送流水。</p>
-<p>白云一片去悠悠，青枫浦上不胜愁。</p>
-<p>谁家今夜扁舟子？何处相思明月楼？</p>
-<p>可怜楼上月裴回，应照离人妆镜台。</p>
-<p>玉户帘中卷不去，捣衣砧上拂还来。</p>
-<p>此时相望不相闻，愿逐月华流照君。</p>
-<p>鸿雁长飞光不度，鱼龙潜跃水成文。</p>
-<p>昨夜闲潭梦落花，可怜春半不还家。</p>
-<p>江水流春去欲尽，江潭落月复西斜。</p>
-<p>斜月沉沉藏海雾，碣石潇湘无限路。</p>
-<p>不知乘月几人归，落月摇情满江树。</p>
+<h3 id="样例："><a href="#样例：" class="headerlink" title="样例："></a>样例：</h3><ul>
+<li>输入</li>
+</ul>
+<blockquote>
+<p>100 3<br>2 3 5</p>
+</blockquote>
+<ul>
+<li>输出</li>
+</ul>
+<blockquote>
+<p>i = 1 t = 2<br>i = 2 t = 3<br>i = 3 t = 6<br>i = 4 t = 5<br>i = 5 t = 10<br>i = 6 t = 15<br>i = 7 t = 30<br>74</p>
 </blockquote>
 
                 
@@ -466,7 +519,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/01/30/%E6%98%A5%E6%B1%9F%E8%8A%B1%E6%9C%88%E5%A4%9C/">https://sakkana.github.io/2022/01/30/%E6%98%A5%E6%B1%9F%E8%8A%B1%E6%9C%88%E5%A4%9C/</a>
+                    <a href="https://sakkana.github.io/2022/01/31/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/">https://sakkana.github.io/2022/01/31/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -504,8 +557,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                    <span class="chip bg-color">测试</span>
+                                <a href="/tags/%E6%95%B0%E8%AE%BA/">
+                                    <span class="chip bg-color">数论</span>
                                 </a>
                             
                         </div>
@@ -553,13 +606,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/01/31/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/">
+                <a href="/2022/01/31/%E5%8C%BA%E9%97%B4%E5%90%88%E5%B9%B6/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="能被整除的数 - 容斥原理">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="区间合并">
                         
-                        <span class="card-title">能被整除的数 - 容斥原理</span>
+                        <span class="card-title">区间合并</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -583,8 +636,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E8%AE%BA/">
-                        <span class="chip bg-color">数论</span>
+                    <a href="/tags/%E8%B4%AA%E5%BF%83/">
+                        <span class="chip bg-color">贪心</span>
                     </a>
                     
                 </div>
@@ -598,13 +651,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/01/30/%E9%AD%9A%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0/">
+                <a href="/2022/01/30/%E6%98%A5%E6%B1%9F%E8%8A%B1%E6%9C%88%E5%A4%9C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="はじめまして！">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="No Title">
                         
-                        <span class="card-title">はじめまして！</span>
+                        <span class="card-title">No Title</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
