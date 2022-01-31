@@ -396,7 +396,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    378
+                    424
                 </div>
                 
 
@@ -459,6 +459,9 @@ int main()
 <p>性质：数字序列中，某些元素永远不会作为答案输出。</p>
 <p>若a<sub>3</sub> &gt; a<sub>5</sub> , 那么a<sub>3</sub>永远也不会作为答案输出。</p>
 <p>只要维护一个栈，栈中元素都是严格单调上升，那么加入新元素时，一旦栈顶top比新元素e1大，则不会是答案，并且在也不会被用到，因为如果后续e2要找左侧第一个比他小的，并不会去找top,而是找e1, 因此一直弹出直到栈顶元素top &lt; 新元素e1。</p>
+</blockquote>
+<blockquote>
+<p>每个元素最多进栈一次，出栈一次，因此每个元素最多被访问2次，n个元素最多被访问2n次，因此时间复杂度O(n)</p>
 </blockquote>
 
                 
