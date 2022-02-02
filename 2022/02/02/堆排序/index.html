@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="KMP字符串匹配, 魚のブログ">
+    <meta name="keywords" content="堆排序, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>KMP字符串匹配 | 魚のブログ</title>
+    <title>堆排序 | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">KMP字符串匹配</h1>
+                    <h1 class="description center-align post-title">堆排序</h1>
                 </div>
             </div>
         </div>
@@ -371,8 +371,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
-                                <span class="chip bg-color">字符串</span>
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                                <span class="chip bg-color">数据结构</span>
                             </a>
                         
                     </div>
@@ -396,7 +396,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-01
+                    2022-02-02
                 </div>
                 
 
@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    736
+                    547
                 </div>
                 
 
@@ -425,66 +425,87 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>给定一个模式串 S，以及一个模板串 P，所有字符串中只包含大小写英文字母以及阿拉伯数字。</p>
-<p>模板串 P 在模式串 S 中多次作为子串出现。</p>
-<p>求出模板串 P 在模式串 S 中所有出现的位置的起始下标。</p>
-<h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含整数 N，表示数列长度。</p>
-<p>第二行包含 N 个整数，表示整数数列。</p>
-<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>第一行输入整数 N，表示字符串 P 的长度。</p>
-<p>第二行输入字符串 P。</p>
-<p>第三行输入整数 M，表示字符串 S 的长度。</p>
-<p>第四行输入字符串 S。</p>
-<h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ N ≤ 10<sup>5</sup><br>1 ≤ M ≤ 10<sup>6</sup></p>
-<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">3
-aba
-5
-ababa<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+                <p>输入一个长度为 n 的整数数列，从小到大输出前 m 小的数。</p>
+<h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含整数 n 和 m。</p>
+<p>第二行包含 n 个整数，表示整数数列。</p>
+<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>共一行，包含 m 个整数，表示整数数列中前 m 小的数。</p>
+<h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ m ≤ n ≤ 10<sup>5</sup>，<br>1 ≤ 数列中元素 ≤ 10<sup>9</sup></p>
+<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">5 3
+4 5 1 3 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">0 2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
+<h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">1 2 3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
 using namespace std;
 
-// 模式串 ———&gt; 大串
-// 模板串 ---&gt; 小串
-
-const int N = 1e5 + 10, M = 1e6 + 10;   //模板串， 模式串
-char s[M], p[N];    //模式串string， 模板串pattern
-int ne[N];  // core-&gt;求next数组
+const int N = 1e5 + 10;
+int h[N], _size;
 int n, m;
+
+void down(int u)
+{
+    int t = u;    // 三个元素中最小值的下标
+    if(u * 2 &lt;= _size &amp;&amp; h[u * 2] &lt; h[t]) t = u * 2;
+    if(u * 2 + 1 &lt;= _size &amp;&amp; h[u * 2 + 1] &lt; h[t]) t = u * 2 + 1;
+    if(t != u)
+    {
+        swap(h[u], h[t]);
+        down(t);
+    }
+}
 
 int main()
 {
-    cin &gt;&gt; n &gt;&gt; p + 1 &gt;&gt; m &gt;&gt; s + 1; 
-    
-    for(int i = 2, j = 0; i &lt;= n; ++ i)
+    cin &gt;&gt; n &gt;&gt; m;
+    for(int i = 1; i &lt;= n; ++ i) scanf("%d", &amp;h[i]);
+    _size = n;
+
+    // O(n)建堆
+    for(int i = n / 2; i; -- i) down(i);    // n / 2向下取整 是最后一个非叶子节点 差比数列求和 &lt; n
+
+    while(m--)
     {
-        while(j &amp;&amp; p[i] != p[j + 1]) j = ne[j];
-        if(p[i] == p[j + 1]) ++ j;
-        ne[i] = j;  //一旦到i发现匹配不上，可以回退到j，j是啥？前面两步结局：要么完犊子j=0，要么位于j的字符匹配
+        printf("%d ", h[1]);
+        h[1] = h[_size --];
+        down(1);
     }
-    
-    for(int i = 1, j = 0; i &lt;= m; ++ i)
-    {
-        while(j &amp;&amp; s[i] != p[j + 1]) j = ne[j]; // j还有退路(若j = 0则最坏打算，东山再起) &amp;&amp; 未匹配上
-        if(s[i] == p[j + 1]) ++ j; // 要么完犊子全失败，要么找到一个最大前缀下标
-        if(j == n)
-        {
-            cout &lt;&lt; i - n &lt;&lt; ' ';
-            j = ne[j];  //继续匹配，看能不能找到最长字串重新出发
-        }
-    }
-    
+
     return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">// down函数非递归写法
+void down(int u)
+{
+    int t = -1;
+    while(true)
+    {
+        t = u;    // 三个元素中最小值的下标
+        if(u * 2 &lt;= _size &amp;&amp; h[u * 2] &lt; h[t]) t = u * 2;
+        if(u * 2 + 1 &lt;= _size &amp;&amp; h[u * 2 + 1] &lt; h[t]) t = u * 2 + 1;
+        if(t == u) break;
+        swap(h[u], h[t]);
+        u = t;
+    }
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <blockquote>
-<p> 理解KMP模式串匹配，需要理解匹配原理，next代表的含义，求解next方法，以及为什么预处理next数组与匹配过程的原理如出一辙。</p>
-<p> 他们俩唯一的不同是预处理时记录next数组的值，而匹配时没有这一步，取而代之的是检查是否匹配结束。</p>
-<p> 预处理模板串p, next[]数组之和模板串p有关，与模式串S无关。<br> 找后缀和前缀相等的子串，并且力求长度最长。<br> next[i] = j的含义：p[1, j] = p[i - j + 1, i] 一旦模板串中下标j + 1的字符与模式串中下i的字符无法匹配<br> 模板串不吊死在一棵树上，j立马回退，去找max(前缀 == 后缀)的长度<br> 假设这个长度是len, 那么最长后缀的下标为[j - len + 1, j]， 而与之相匹配的前缀下标为[1, len]<br> 因此 next[j]的作用就是回退， 原本是下标j在与模式串比较，一旦不匹配执行next[j]，来到长度len对应的下标继续匹配</p>
+<p>  以小根堆为例</p>
+<p> 1.O(logn) 插入一个数    heap[ ++ size] = x, up(size)<br> 2.O(1) 求最小值      heap[1]<br> 3.O(logn) 删除最小值    heap[1] = heap[size –], down(1)<br> 4.O(logn) 删除任意元素  heap[k] = heap[size], down(k), up(k) 只有一个会执行<br> 5.O(logn) 修改任意元素  heap[k] = x, down(k), up(k)</p>
+<p> 堆是一个完全二叉树，除了最后一层节点，上面所有结点都是满的，最后一层节点从左到右排列<br> 每个节点都&lt;=左右儿子， 因此根节点是整个集合的最小值</p>
+<p> 全新存储方式：一维数组</p>
+<pre><code>                     1
+             2                3
+       4          5       6         7
+     8   9     10   11  12  13    14  15
+
+
+     x
+ 2x     2x+1
+</code></pre>
+<p> 某个结点x的左儿子：2x，右儿子：2x+1</p>
+<p> 核心操作： down() &amp; up() </p>
 </blockquote>
 
                 
@@ -512,7 +533,7 @@ int main()
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/02/01/KMP/">https://sakkana.github.io/2022/02/01/KMP/</a>
+                    <a href="https://sakkana.github.io/2022/02/02/%E5%A0%86%E6%8E%92%E5%BA%8F/">https://sakkana.github.io/2022/02/02/%E5%A0%86%E6%8E%92%E5%BA%8F/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -550,8 +571,8 @@ int main()
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
-                                    <span class="chip bg-color">字符串</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                                    <span class="chip bg-color">数据结构</span>
                                 </a>
                             
                         </div>
@@ -599,13 +620,13 @@ int main()
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/02/02/%E5%A0%86%E6%8E%92%E5%BA%8F/">
+                <a href="/2022/02/02/%E6%A8%A1%E6%8B%9F%E5%A0%86/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="堆排序">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="模拟堆">
                         
-                        <span class="card-title">堆排序</span>
+                        <span class="card-title">模拟堆</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -648,13 +669,13 @@ int main()
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/01/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97%20-%20%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
+                <a href="/2022/02/01/KMP/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="单调队列 - 滑动窗口">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="KMP字符串匹配">
                         
-                        <span class="card-title">单调队列 - 滑动窗口</span>
+                        <span class="card-title">KMP字符串匹配</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -682,8 +703,8 @@ int main()
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                        <span class="chip bg-color">数据结构</span>
+                    <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                        <span class="chip bg-color">字符串</span>
                     </a>
                     
                 </div>

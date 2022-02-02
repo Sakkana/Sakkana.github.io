@@ -6,7 +6,7 @@
   <link href="https://sakkana.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakkana.github.io/"/>
-  <updated>2022-01-31T18:04:06.282Z</updated>
+  <updated>2022-02-02T06:02:20.000Z</updated>
   <id>https://sakkana.github.io/</id>
   
   <author>
@@ -15,6 +15,87 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>并查集</title>
+    <link href="https://sakkana.github.io/2022/02/02/%E5%B9%B6%E6%9F%A5%E9%9B%86/"/>
+    <id>https://sakkana.github.io/2022/02/02/%E5%B9%B6%E6%9F%A5%E9%9B%86/</id>
+    <published>2022-02-02T06:00:01.000Z</published>
+    <updated>2022-02-02T06:02:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>一共有 n 个数，编号是  1 ~ n，最开始每个数各自在一个集合中。</p><p>现在要进行 $m$ 个操作，操作共有两种：</p><ol><li><code>M a b</code>，将编号为 a 和 $的两个数所在的集合合并，如果两个数已经在同一个集合中，则$忽略$这个操作；</li><li><code>Q a b</code>，询问编号为 a 和 b 的两个数是否在同一个集合中；</li></ol><h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行输入整数 n 和 m。</p><p>接下来 m 行，每行包含一个操作指令，指令为 <code>M a b</code> 或 <code>Q a b</code> 中的一种。</p><h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>对于每个询问指令 <code>Q a b</code>，都要输出一个结果，如果 $a$ 和 $b$ 在同一集合内，则输出 <code>Yes</code>，否则输出 <code>No</code>。</p><p>每个结果占一行。</p><h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ n, m ≤ 10<sup>5</sup></p><h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">4 5M 1 2M 3 4Q 1 2Q 1 3Q 3 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">YesNoYes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;#include &lt;cstdio&gt;using namespace std;const int N = 1e5 + 10;int p[N];int n, m;// 带路径压缩返回祖宗节点int find(int x){    if(p[x] != x) p[x] = find(p[x]);    return p[x];}int main(){    cin &gt;&gt; n &gt;&gt; m;    for(int i = 1; i &lt;= n; ++ i) p[i] = i;// 初始化， 刚开始p[i] = i, 每个人都是一个独立的集合        while(m--)    {        char op[2]; //%s吃掉空格，回车... %c会读乱七八糟的字符        int a, b;        scanf("%s%d%d", op, &amp;a, &amp;b);        if(op[0] == 'M') p[find(a)] = find(b);        else        {            if(find(a) == find(b)) puts("Yes");            else puts("No");        }    }        return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p> 并查集支持操作：</p><p> 1.将两个集合合并<br>  2.询问两个元素是否在同一个集合</p><p>  每一个集合都用一颗树来维护，树根的编号就是整个集合的编号</p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;一共有 n 个数，编号是  1 ~ n，最开始每个数各自在一个集合中。&lt;/p&gt;
+&lt;p&gt;现在要进行 $m$ 个操作，操作共有两种：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;M a b&lt;/code&gt;，将编号为 a 和 $的两个数所在的集合合并，如果两个数已经在同一个集合中，则$忽</summary>
+      
+    
+    
+    
+    <category term="算法" scheme="https://sakkana.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构" scheme="https://sakkana.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>模拟堆</title>
+    <link href="https://sakkana.github.io/2022/02/02/%E6%A8%A1%E6%8B%9F%E5%A0%86/"/>
+    <id>https://sakkana.github.io/2022/02/02/%E6%A8%A1%E6%8B%9F%E5%A0%86/</id>
+    <published>2022-02-02T05:54:01.000Z</published>
+    <updated>2022-02-02T06:03:03.751Z</updated>
+    
+    <content type="html"><![CDATA[<p>维护一个集合，初始时集合为空，支持如下几种操作：</p><ol><li><code>I x</code>，插入一个数 x；</li><li><code>PM</code>，输出当前集合中的最小值；</li><li><code>DM</code>，删除当前集合中的最小值（数据保证此时的最小值唯一）；</li><li><code>D k</code>，删除第 k 个插入的数；</li><li><code>C k x</code>，修改第 k 个插入的数，将其变为 $x$；</li></ol><p>现在要进行 N 次操作，对于所有第 2 个操作，输出当前集合的最小值。</p><h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含整数 N。</p><p>接下来 N 行，每行包含一个操作指令，操作指令为 <code>I x</code>，<code>PM</code>，<code>DM</code>，<code>D k</code> 或 <code>C k x</code> 中的一种。</p><h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>对于每个输出指令 <code>PM</code>，输出一个结果，表示当前集合中的最小值。</p><p>每个结果占一行。</p><h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ N ≤ 10<sup>5</sup></p><p>−10<sup>9</sup> ≤ x ≤ 10<sup>9</sup><br>数据保证合法。</p><h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">8I -10PMI -10D 1C 2 8I 6PMDM<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">-106<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;#include &lt;cstring&gt;#include &lt;algorithm&gt;using namespace std;const int N = 1e5 + 10;int h[N], _size, cnt;int in_h[N], h_in[N];   // 第k个插入的点是堆中in_h[k] = j点， 堆中的j号点是第h_in[j] = k个插入的点, 互为反映射void heap_swap(int a, int b) // a, b是堆中的两个下标{    swap(in_h[h_in[a]], in_h[h_in[b]]);  // 插入次序 指向 下标    swap(h_in[a], h_in[b]);     // 下标 指向 插入次序    swap(h[a], h[b]);}void down(int u){    int t = u;    // 三个元素中最小值的下标    if(u * 2 &lt;= _size &amp;&amp; h[u * 2] &lt; h[t]) t = u * 2;    if(u * 2 + 1 &lt;= _size &amp;&amp; h[u * 2 + 1] &lt; h[t]) t = u * 2 + 1;    if(t != u)    {        heap_swap(t, u);        down(t);    }}void up(int u){    if(u / 2 &amp;&amp; h[u / 2] &gt; h[u])    {        heap_swap(u / 2, u);        up(u &gt;&gt; 1);// 当时这里只除以2没有递归，WA了半天    }}int main(){    int _;    cin &gt;&gt; _;    while(_--)    {        int k, x;        char op[10];        scanf("%s", op);                if(!strcmp(op, "I"))    // 插入： 插入最后一个位置， 再up        {            scanf("%d", &amp;x);            ++ cnt, ++ _size;   // 第cnt个插入的元素            in_h[cnt] = _size, h_in[_size] = cnt;            h[_size] = x;            up(_size);        }        else if(!strcmp(op, "PM")) printf("%d\n", h[1]);   // 输出min        else if(!strcmp(op, "DM"))  // 删除min        {            heap_swap(1, _size);            -- _size;            down(1);        }        else if(!strcmp(op, "D"))  // 删除第k个插入的元素        {            scanf("%d", &amp;k);            k = in_h[k];            heap_swap(k, _size);            -- _size;            down(k), up(k);        }        else   // 将第k个插入的元素修改成x        {            scanf("%d%d", &amp;k, &amp;x);            k = in_h[k];            h[k] = x;            down(k), up(k);        }    }        return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p> 以小根堆为例</p><p> 1.O(logn) 插入一个数    heap[ ++ size] = x, up(size)<br> 2.O(1) 求最小值      heap[1]<br> 3.O(logn) 删除最小值    heap[1] = heap[size –], down(1)<br> 4.删除任意元素  heap[k] = heap[size], down(k), up(k) 只有一个会执行<br> 5.修改任意元素  heap[k] = x, down(k), up(k)</p><p> 堆是一个完全二叉树，除了最后一层节点，上面所有结点都是满的，最后一层节点从左到右排列<br> 每个节点都&lt;=左右儿子， 因此根节点是整个集合的最小值</p><p> 全新存储方式：一维数组</p><pre><code>                     1             2               3       4          5      6         7      8  9      10 11  12 13     14 15</code></pre><p> ​<br>         x<br>     2x     2x+1</p><p> 某个结点下标x的左儿子：2x，右儿子：2x+1</p><p> 核心操作： down() &amp; up() </p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;维护一个集合，初始时集合为空，支持如下几种操作：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;I x&lt;/code&gt;，插入一个数 x；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PM&lt;/code&gt;，输出当前集合中的最小值；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DM&lt;/code&gt;，删除当前集合中的最小</summary>
+      
+    
+    
+    
+    <category term="算法" scheme="https://sakkana.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构" scheme="https://sakkana.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>堆排序</title>
+    <link href="https://sakkana.github.io/2022/02/02/%E5%A0%86%E6%8E%92%E5%BA%8F/"/>
+    <id>https://sakkana.github.io/2022/02/02/%E5%A0%86%E6%8E%92%E5%BA%8F/</id>
+    <published>2022-02-02T05:50:01.000Z</published>
+    <updated>2022-02-02T06:02:44.380Z</updated>
+    
+    <content type="html"><![CDATA[<p>输入一个长度为 n 的整数数列，从小到大输出前 m 小的数。</p><h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含整数 n 和 m。</p><p>第二行包含 n 个整数，表示整数数列。</p><h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>共一行，包含 m 个整数，表示整数数列中前 m 小的数。</p><h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ m ≤ n ≤ 10<sup>5</sup>，<br>1 ≤ 数列中元素 ≤ 10<sup>9</sup></p><h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">5 34 5 1 3 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">1 2 3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;#include &lt;algorithm&gt;using namespace std;const int N = 1e5 + 10;int h[N], _size;int n, m;void down(int u){    int t = u;    // 三个元素中最小值的下标    if(u * 2 &lt;= _size &amp;&amp; h[u * 2] &lt; h[t]) t = u * 2;    if(u * 2 + 1 &lt;= _size &amp;&amp; h[u * 2 + 1] &lt; h[t]) t = u * 2 + 1;    if(t != u)    {        swap(h[u], h[t]);        down(t);    }}int main(){    cin &gt;&gt; n &gt;&gt; m;    for(int i = 1; i &lt;= n; ++ i) scanf("%d", &amp;h[i]);    _size = n;    // O(n)建堆    for(int i = n / 2; i; -- i) down(i);    // n / 2向下取整 是最后一个非叶子节点 差比数列求和 &lt; n    while(m--)    {        printf("%d ", h[1]);        h[1] = h[_size --];        down(1);    }    return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><pre class="line-numbers language-none"><code class="language-none">// down函数非递归写法void down(int u){    int t = -1;    while(true)    {        t = u;    // 三个元素中最小值的下标        if(u * 2 &lt;= _size &amp;&amp; h[u * 2] &lt; h[t]) t = u * 2;        if(u * 2 + 1 &lt;= _size &amp;&amp; h[u * 2 + 1] &lt; h[t]) t = u * 2 + 1;        if(t == u) break;        swap(h[u], h[t]);        u = t;    }}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><blockquote><p>  以小根堆为例</p><p> 1.O(logn) 插入一个数    heap[ ++ size] = x, up(size)<br> 2.O(1) 求最小值      heap[1]<br> 3.O(logn) 删除最小值    heap[1] = heap[size –], down(1)<br> 4.O(logn) 删除任意元素  heap[k] = heap[size], down(k), up(k) 只有一个会执行<br> 5.O(logn) 修改任意元素  heap[k] = x, down(k), up(k)</p><p> 堆是一个完全二叉树，除了最后一层节点，上面所有结点都是满的，最后一层节点从左到右排列<br> 每个节点都&lt;=左右儿子， 因此根节点是整个集合的最小值</p><p> 全新存储方式：一维数组</p><pre><code>                     1             2                3       4          5       6         7     8   9     10   11  12  13    14  15     x 2x     2x+1</code></pre><p> 某个结点x的左儿子：2x，右儿子：2x+1</p><p> 核心操作： down() &amp; up() </p></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;输入一个长度为 n 的整数数列，从小到大输出前 m 小的数。&lt;/p&gt;
+&lt;h4 id=&quot;输入格式&quot;&gt;&lt;a href=&quot;#输入格式&quot; class=&quot;headerlink&quot; title=&quot;输入格式&quot;&gt;&lt;/a&gt;输入格式&lt;/h4&gt;&lt;p&gt;第一行包含整数 n 和 m。&lt;/p&gt;
+&lt;p&gt;第二</summary>
+      
+    
+    
+    
+    <category term="算法" scheme="https://sakkana.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="数据结构" scheme="https://sakkana.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
   
   <entry>
     <title>KMP字符串匹配</title>
