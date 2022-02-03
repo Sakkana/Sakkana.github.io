@@ -6,7 +6,7 @@
   <link href="https://sakkana.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakkana.github.io/"/>
-  <updated>2022-02-02T06:07:10.736Z</updated>
+  <updated>2022-02-03T19:06:35.557Z</updated>
   <id>https://sakkana.github.io/</id>
   
   <author>
@@ -15,6 +15,84 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>BFS - 走迷宫</title>
+    <link href="https://sakkana.github.io/2022/02/04/%E5%8D%95%E8%B0%83%E6%A0%88%20-%20%E5%89%AF%E6%9C%AC%20(3)/"/>
+    <id>https://sakkana.github.io/2022/02/04/%E5%8D%95%E8%B0%83%E6%A0%88%20-%20%E5%89%AF%E6%9C%AC%20(3)/</id>
+    <published>2022-02-03T19:06:01.000Z</published>
+    <updated>2022-02-03T19:06:35.557Z</updated>
+    
+    <content type="html"><![CDATA[<p>给定一个 n×m 的二维整数数组，用来表示一个迷宫，数组中只包含 0 或 1，其中 0 表示可以走的路，1 表示不可通过的墙壁。</p><p>最初，有一个人位于左上角 (1,1) 处，已知该人每次可以向上、下、左、右任意一个方向移动一个位置。</p><p>请问，该人从左上角移动至右下角 (n,m) 处，至少需要移动多少次。</p><p>数据保证 (1,1) 处和 (n,m) 处的数字为 0，且一定至少存在一条通路。</p><h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行包含两个整数 n 和 m。</p><p>接下来 n 行，每行包含 m 个整数（0 或 1），表示完整的二维数组迷宫。</p><h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>输出一个整数，表示从左上角移动至右下角的最少移动次数。</p><h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ n, m ≤ 100</p><h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">5 50 1 0 0 00 1 0 1 00 0 0 0 00 1 1 1 00 0 0 1 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">8<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;bits/stdc++.h&gt;using namespace std;typedef pair&lt;int, int&gt; PII;const int N = 110;int g[N][N], d[N][N];PII q[N * N];   // 模拟队列int n, m;int bfs(){    int hh = 0, tt = 0;    q[0] = {0, 0};  // 起点进队        memset(d, -1, sizeof d);    d[0][0] = 0;        int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, -1, 0, 1};// 向量运算        while(hh &lt;= tt) //队列不空    {        auto t = q[hh ++];   // 队头出队                // 遍历四个方向，合法坐标入队        for(int i = 0; i &lt; 4; ++ i)        {            int x = t.first + dx[i], y = t.second + dy[i];  // 待扩展的点                        // 待扩展的点合法 &amp;&amp; 可以走 &amp;&amp; 第一次走            if(x &gt;= 0 &amp;&amp; x &lt; n &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; m &amp;&amp; g[x][y] == 0 &amp;&amp; d[x][y] == -1)            {                d[x][y] = d[t.first][t.second] + 1;// 更新距离                q[++ tt] = {x, y};  // 入队            }        }    }        return d[n - 1][m - 1];//由于weight都是1，所以第几层扩展到终点答案就等于多少}int main(){    cin &gt;&gt; n &gt;&gt; m;    for(int i = 0; i &lt; n; ++ i)        for(int j = 0; j &lt; m; ++ j)            cin &gt;&gt; g[i][j];        cout &lt;&lt; bfs();        return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;给定一个 n×m 的二维整数数组，用来表示一个迷宫，数组中只包含 0 或 1，其中 0 表示可以走的路，1 表示不可通过的墙壁。&lt;/p&gt;
+&lt;p&gt;最初，有一个人位于左上角 (1,1) 处，已知该人每次可以向上、下、左、右任意一个方向移动一个位置。&lt;/p&gt;
+&lt;p&gt;请问，该人从左</summary>
+      
+    
+    
+    
+    <category term="算法" scheme="https://sakkana.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="宽度优先搜索" scheme="https://sakkana.github.io/tags/%E5%AE%BD%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DFS - 全排列</title>
+    <link href="https://sakkana.github.io/2022/02/04/DFS%20-%20%E5%85%A8%E6%8E%92%E5%88%97/"/>
+    <id>https://sakkana.github.io/2022/02/04/DFS%20-%20%E5%85%A8%E6%8E%92%E5%88%97/</id>
+    <published>2022-02-03T19:03:01.000Z</published>
+    <updated>2022-02-03T19:03:28.807Z</updated>
+    
+    <content type="html"><![CDATA[<p>给定一个整数 n，将数字 1∼n 排成一排，将会有很多种排列方法。</p><p>现在，请你按照字典序将所有的排列方法输出。</p><h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>共一行，包含一个整数 n。</p><h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>按字典序输出所有排列方案，每个方案占一行。</p><h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ n ≤ 7</p><h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">1 2 31 3 22 1 32 3 13 1 23 2 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;using namespace std;const int N = 10;int n;int path[N];bool st[N];void dfs(int u){    // 填了n个数字，整条路经都填完了    if(u == n)    {        for(int i = 0; i &lt; n; ++ i) cout &lt;&lt; path[i] &lt;&lt; ' ';        cout &lt;&lt; endl;        return;    }        for(int i = 1; i &lt;= n; ++ i)        if(!st[i]) // 这个数字还没有用过        {            path[u] = i;            st[i] = true;                        dfs(u + 1); // 走到下一层                        st[i] = false;  // 恢复现场            //path[u] = 0; 会被不断覆盖，腹部覆盖都没有问题        }}int main(){    cin &gt;&gt; n;    dfs(0);    return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;给定一个整数 n，将数字 1∼n 排成一排，将会有很多种排列方法。&lt;/p&gt;
+&lt;p&gt;现在，请你按照字典序将所有的排列方法输出。&lt;/p&gt;
+&lt;h4 id=&quot;输入格式&quot;&gt;&lt;a href=&quot;#输入格式&quot; class=&quot;headerlink&quot; title=&quot;输入格式&quot;&gt;&lt;/a&gt;输入格式</summary>
+      
+    
+    
+    
+    <category term="算法" scheme="https://sakkana.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="深度优先搜索" scheme="https://sakkana.github.io/tags/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DFS - n皇后</title>
+    <link href="https://sakkana.github.io/2022/02/04/DFS%20-%20n%E7%9A%87%E5%90%8E/"/>
+    <id>https://sakkana.github.io/2022/02/04/DFS%20-%20n%E7%9A%87%E5%90%8E/</id>
+    <published>2022-02-03T19:02:01.000Z</published>
+    <updated>2022-02-03T19:02:43.695Z</updated>
+    
+    <content type="html"><![CDATA[<p>n−皇后问题是指将 n 个皇后放在 n×n 的国际象棋棋盘上，使得皇后不能相互攻击到，即任意两个皇后都不能处于同一行、同一列或同一斜线上。</p><p>现在给定整数 n，请你输出所有的满足条件的棋子摆法。</p><h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>共一行，包含整数 n。</p><h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>每个解决方案占 n 行，每行输出一个长度为 n 的字符串，用来表示完整的棋盘状态。</p><p>其中 <code>.</code> 表示某一个位置的方格状态为空，<code>Q</code> 表示某一个位置的方格上摆着皇后。</p><p>每个方案输出完成后，输出一个空行。</p><p><strong>注意：行末不能有多余空格。</strong></p><p>输出方案的顺序任意，只要不重复且没有遗漏即可。</p><h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ n ≤ 9</p><h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">4<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">.Q.....QQ.....Q...Q.Q......Q.Q..<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="AC代码1-优化版"><a href="#AC代码1-优化版" class="headerlink" title="AC代码1(优化版):"></a>AC代码1(优化版):</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;#include &lt;cstdio&gt;using namespace std;const int N = 20;int n;bool col[N], dg[N], udg[N]; // 对角线有2n-1条char g[N][N];void dfs(int u) // 第u行{    if(u == n)    {        for(int i = 0; i &lt; n; ++ i) puts(g[i]);        puts("");        return;    }    for(int i = 0; i &lt; n; ++ i) // 第i列        if(!col[i] &amp;&amp; !dg[i + u] &amp;&amp; !udg[u - i + n])        {            g[u][i] = 'Q';            col[i] = dg[u + i] = udg[u - i + n] = true;            dfs(u + 1);            col[i] = dg[u + i] = udg[u - i + n] = false;            g[u][i] = '.';        }}int main(){    cin &gt;&gt; n;    for(int i = 0; i &lt; n; ++ i)        for(int j = 0; j &lt; n; ++ j)            g[i][j] = '.';    dfs(0);    return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h3 id="AC代码1-更暴力版"><a href="#AC代码1-更暴力版" class="headerlink" title="AC代码1(更暴力版):"></a>AC代码1(更暴力版):</h3><pre class="line-numbers language-none"><code class="language-none">#include &lt;iostream&gt;#include &lt;cstdio&gt;using namespace std;const int N = 20;int n;bool row[N], col[N], dg[N], udg[N]; // 对角线有2n-1条char g[N][N];void dfs(int x, int y, int cnt) // 行标， 列标， 皇后数量{    if(y == n) y = 0, ++ x;    if(x == n)    {        if(cnt == n)        {            for(int i = 0; i &lt; n; ++ i) puts(g[i]);            puts("");        }        return;    }    // 不放皇后    dfs(x, y + 1, cnt);// 一个格子一个格子搜    // 放皇后    if(!row[x] &amp;&amp; !col[y] &amp;&amp; !dg[x + y] &amp;&amp; !udg[x - y + n])    {        row[x] = col[y] = dg[x + y] = udg[x - y + n] = true;        g[x][y] = 'Q';        dfs(x + 1, 0, cnt + 1);        row[x] = col[y] = dg[x + y] = udg[x - y + n] = false;        g[x][y] = '.';    }}int main(){    cin &gt;&gt; n;    for(int i = 0; i &lt; n; ++ i)        for(int j = 0; j &lt; n; ++ j)            g[i][j] = '.';    dfs(0, 0, 0);    return 0;}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h4 id="什么时候剪枝？"><a href="#什么时候剪枝？" class="headerlink" title="什么时候剪枝？"></a>什么时候剪枝？</h4><p>最优性：当前路径一定不如最优解<br>可行性：当前路径一定不合法</p><h4 id="关于u-i-n和i-u-n"><a href="#关于u-i-n和i-u-n" class="headerlink" title="关于u - i + n和i - u + n"></a>关于u - i + n和i - u + n</h4><p>最开始学的时候在这里迷惑了一下<br>udg的下标取u - i + n和i - u + n都可以<br>下面是n = 3时两种方式的打表</p><pre class="line-numbers language-none"><code class="language-none">u - i + n = 3   i - u + n = 3u - i + n = 4   i - u + n = 2u - i + n = 3   i - u + n = 3u - i + n = 2   i - u + n = 4u - i + n = 5   i - u + n = 1u - i + n = 4   i - u + n = 2u - i + n = 3   i - u + n = 3u - i + n = 2   i - u + n = 4u - i + n = 4   i - u + n = 2u - i + n = 3   i - u + n = 3u - i + n = 2   i - u + n = 4u - i + n = 1   i - u + n = 5u - i + n = 4   i - u + n = 2u - i + n = 5   i - u + n = 1u - i + n = 4   i - u + n = 2u - i + n = 3   i - u + n = 3u - i + n = 3   i - u + n = 3u - i + n = 2   i - u + n = 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;n−皇后问题是指将 n 个皇后放在 n×n 的国际象棋棋盘上，使得皇后不能相互攻击到，即任意两个皇后都不能处于同一行、同一列或同一斜线上。&lt;/p&gt;
+&lt;p&gt;现在给定整数 n，请你输出所有的满足条件的棋子摆法。&lt;/p&gt;
+&lt;h4 id=&quot;输入格式&quot;&gt;&lt;a href=&quot;#输入格式&quot;</summary>
+      
+    
+    
+    
+    <category term="算法" scheme="https://sakkana.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="深度优先搜索" scheme="https://sakkana.github.io/tags/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/"/>
+    
+  </entry>
   
   <entry>
     <title>并查集</title>
