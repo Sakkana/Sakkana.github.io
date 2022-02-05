@@ -438,46 +438,46 @@
 
 
 
-<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;bits/stdc++.h&gt;
-using namespace std;
+<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-const int N = 20;   // m个质数， 1 &lt;= m &lt;= 16
-int primes[N]; 
-int n, m;
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>   <span class="token comment">// m个质数， 1 &lt;= m &lt;= 16</span>
+<span class="token keyword">int</span> primes<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span> 
+<span class="token keyword">int</span> n<span class="token punctuation">,</span> m<span class="token punctuation">;</span>
 
-int main()
-{
-    cin &gt;&gt; n &gt;&gt; m;  // 1-n, m个质数
-	for(int i = 0; i &lt; m; ++i) cin &gt;&gt; primes[i];
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    cin <span class="token operator">&gt;&gt;</span> n <span class="token operator">&gt;&gt;</span> m<span class="token punctuation">;</span>  <span class="token comment">// 1-n, m个质数</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> cin <span class="token operator">&gt;&gt;</span> primes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-	int res = 0;
+	<span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
-	// 枚举2 ^ m种情况
-	for(int i = 1; i &lt; (1 &lt;&lt; m); ++i)
-	{
-    	int t = 1, cnt = 0;
-    	for(int j = 0; j &lt; m; ++j)
-        if(i &gt;&gt; j &amp; 1)
-        {
-            ++ cnt; // 统计1的个数， 
-            if((long long)t * primes[j] &gt; n)    // 一旦乘积越界， 直接走人
-            {
-                t = -1;
-                	break;
-            }
-            t *= primes[j];
-        }
-    	if(t != -1)
-    	{
-        	if(cnt % 2) res += n / t;
-        	else res -= n / t;
-    	}
-	}   
+	<span class="token comment">// 枚举2 ^ m种情况</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> m<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+    	<span class="token keyword">int</span> t <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> <span class="token operator">++</span>j<span class="token punctuation">)</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>i <span class="token operator">&gt;&gt;</span> j <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token operator">++</span> cnt<span class="token punctuation">;</span> <span class="token comment">// 统计1的个数， </span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">long</span> <span class="token keyword">long</span><span class="token punctuation">)</span>t <span class="token operator">*</span> primes<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&gt;</span> n<span class="token punctuation">)</span>    <span class="token comment">// 一旦乘积越界， 直接走人</span>
+            <span class="token punctuation">{</span>
+                t <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+                	<span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            t <span class="token operator">*=</span> primes<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    	<span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    	<span class="token punctuation">{</span>
+        	<span class="token keyword">if</span><span class="token punctuation">(</span>cnt <span class="token operator">%</span> <span class="token number">2</span><span class="token punctuation">)</span> res <span class="token operator">+=</span> n <span class="token operator">/</span> t<span class="token punctuation">;</span>
+        	<span class="token keyword">else</span> res <span class="token operator">-=</span> n <span class="token operator">/</span> t<span class="token punctuation">;</span>
+    	<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>   
 
-	cout &lt;&lt; res;
+	cout <span class="token operator">&lt;&lt;</span> res<span class="token punctuation">;</span>
 
-	return 0; 
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 

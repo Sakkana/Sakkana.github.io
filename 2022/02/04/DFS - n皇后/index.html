@@ -448,99 +448,99 @@ Q...
 
 
 
-<h3 id="AC代码1-优化版"><a href="#AC代码1-优化版" class="headerlink" title="AC代码1(优化版):"></a>AC代码1(优化版):</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;
-#include &lt;cstdio&gt;
-using namespace std;
+<h3 id="AC代码1-优化版"><a href="#AC代码1-优化版" class="headerlink" title="AC代码1(优化版):"></a>AC代码1(优化版):</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdio&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-const int N = 20;
-int n;
-bool col[N], dg[N], udg[N]; // 对角线有2n-1条
-char g[N][N];
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">;</span>
+<span class="token keyword">bool</span> col<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> dg<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> udg<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 对角线有2n-1条</span>
+<span class="token keyword">char</span> g<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-void dfs(int u) // 第u行
-{
-    if(u == n)
-    {
-        for(int i = 0; i &lt; n; ++ i) puts(g[i]);
-        puts("");
-        return;
-    }
+<span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">)</span> <span class="token comment">// 第u行</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>u <span class="token operator">==</span> n<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span> <span class="token function">puts</span><span class="token punctuation">(</span>g<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    for(int i = 0; i &lt; n; ++ i) // 第i列
-        if(!col[i] &amp;&amp; !dg[i + u] &amp;&amp; !udg[u - i + n])
-        {
-            g[u][i] = 'Q';
-            col[i] = dg[u + i] = udg[u - i + n] = true;
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span> <span class="token comment">// 第i列</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>col<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>dg<span class="token punctuation">[</span>i <span class="token operator">+</span> u<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>udg<span class="token punctuation">[</span>u <span class="token operator">-</span> i <span class="token operator">+</span> n<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            g<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token char">'Q'</span><span class="token punctuation">;</span>
+            col<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> dg<span class="token punctuation">[</span>u <span class="token operator">+</span> i<span class="token punctuation">]</span> <span class="token operator">=</span> udg<span class="token punctuation">[</span>u <span class="token operator">-</span> i <span class="token operator">+</span> n<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 
-            dfs(u + 1);
+            <span class="token function">dfs</span><span class="token punctuation">(</span>u <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            col[i] = dg[u + i] = udg[u - i + n] = false;
-            g[u][i] = '.';
-        }
-}
+            col<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> dg<span class="token punctuation">[</span>u <span class="token operator">+</span> i<span class="token punctuation">]</span> <span class="token operator">=</span> udg<span class="token punctuation">[</span>u <span class="token operator">-</span> i <span class="token operator">+</span> n<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+            g<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token char">'.'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-int main()
-{
-    cin &gt;&gt; n;
-    for(int i = 0; i &lt; n; ++ i)
-        for(int j = 0; j &lt; n; ++ j)
-            g[i][j] = '.';
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> j<span class="token punctuation">)</span>
+            g<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token char">'.'</span><span class="token punctuation">;</span>
 
-    dfs(0);
+    <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="AC代码1-更暴力版"><a href="#AC代码1-更暴力版" class="headerlink" title="AC代码1(更暴力版):"></a>AC代码1(更暴力版):</h3><pre class="line-numbers language-none"><code class="language-none">#include &lt;iostream&gt;
-#include &lt;cstdio&gt;
-using namespace std;
+<h3 id="AC代码1-更暴力版"><a href="#AC代码1-更暴力版" class="headerlink" title="AC代码1(更暴力版):"></a>AC代码1(更暴力版):</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdio&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-const int N = 20;
-int n;
-bool row[N], col[N], dg[N], udg[N]; // 对角线有2n-1条
-char g[N][N];
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">;</span>
+<span class="token keyword">bool</span> row<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> col<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> dg<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> udg<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 对角线有2n-1条</span>
+<span class="token keyword">char</span> g<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-void dfs(int x, int y, int cnt) // 行标， 列标， 皇后数量
-{
-    if(y == n) y = 0, ++ x;
+<span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> <span class="token keyword">int</span> cnt<span class="token punctuation">)</span> <span class="token comment">// 行标， 列标， 皇后数量</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>y <span class="token operator">==</span> n<span class="token punctuation">)</span> y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">++</span> x<span class="token punctuation">;</span>
 
-    if(x == n)
-    {
-        if(cnt == n)
-        {
-            for(int i = 0; i &lt; n; ++ i) puts(g[i]);
-            puts("");
-        }
-        return;
-    }
+    <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> n<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cnt <span class="token operator">==</span> n<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span> <span class="token function">puts</span><span class="token punctuation">(</span>g<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    // 不放皇后
-    dfs(x, y + 1, cnt);	// 一个格子一个格子搜
+    <span class="token comment">// 不放皇后</span>
+    <span class="token function">dfs</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> cnt<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">// 一个格子一个格子搜</span>
 
-    // 放皇后
-    if(!row[x] &amp;&amp; !col[y] &amp;&amp; !dg[x + y] &amp;&amp; !udg[x - y + n])
-    {
-        row[x] = col[y] = dg[x + y] = udg[x - y + n] = true;
-        g[x][y] = 'Q';
+    <span class="token comment">// 放皇后</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>row<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>col<span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>dg<span class="token punctuation">[</span>x <span class="token operator">+</span> y<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>udg<span class="token punctuation">[</span>x <span class="token operator">-</span> y <span class="token operator">+</span> n<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        row<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> col<span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">=</span> dg<span class="token punctuation">[</span>x <span class="token operator">+</span> y<span class="token punctuation">]</span> <span class="token operator">=</span> udg<span class="token punctuation">[</span>x <span class="token operator">-</span> y <span class="token operator">+</span> n<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        g<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token char">'Q'</span><span class="token punctuation">;</span>
 
-        dfs(x + 1, 0, cnt + 1);
+        <span class="token function">dfs</span><span class="token punctuation">(</span>x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> cnt <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        row[x] = col[y] = dg[x + y] = udg[x - y + n] = false;
-        g[x][y] = '.';
-    }
-}
+        row<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> col<span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">=</span> dg<span class="token punctuation">[</span>x <span class="token operator">+</span> y<span class="token punctuation">]</span> <span class="token operator">=</span> udg<span class="token punctuation">[</span>x <span class="token operator">-</span> y <span class="token operator">+</span> n<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        g<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token char">'.'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-int main()
-{
-    cin &gt;&gt; n;
-    for(int i = 0; i &lt; n; ++ i)
-        for(int j = 0; j &lt; n; ++ j)
-            g[i][j] = '.';
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> j<span class="token punctuation">)</span>
+            g<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token char">'.'</span><span class="token punctuation">;</span>
 
-    dfs(0, 0, 0);
+    <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 

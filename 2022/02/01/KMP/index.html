@@ -444,41 +444,41 @@ ababa<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
 
 
 
-<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;
-using namespace std;
+<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-// 模式串 ———&gt; 大串
-// 模板串 ---&gt; 小串
+<span class="token comment">// 模式串 ———&gt; 大串</span>
+<span class="token comment">// 模板串 ---&gt; 小串</span>
 
-const int N = 1e5 + 10, M = 1e6 + 10;   //模板串， 模式串
-char s[M], p[N];    //模式串string， 模板串pattern
-int ne[N];  // core-&gt;求next数组
-int n, m;
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">1e5</span> <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">,</span> M <span class="token operator">=</span> <span class="token number">1e6</span> <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">;</span>   <span class="token comment">//模板串， 模式串</span>
+<span class="token keyword">char</span> s<span class="token punctuation">[</span>M<span class="token punctuation">]</span><span class="token punctuation">,</span> p<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>    <span class="token comment">//模式串string， 模板串pattern</span>
+<span class="token keyword">int</span> ne<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// core-&gt;求next数组</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span> m<span class="token punctuation">;</span>
 
-int main()
-{
-    cin &gt;&gt; n &gt;&gt; p + 1 &gt;&gt; m &gt;&gt; s + 1; 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    cin <span class="token operator">&gt;&gt;</span> n <span class="token operator">&gt;&gt;</span> p <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&gt;&gt;</span> m <span class="token operator">&gt;&gt;</span> s <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> 
     
-    for(int i = 2, j = 0; i &lt;= n; ++ i)
-    {
-        while(j &amp;&amp; p[i] != p[j + 1]) j = ne[j];
-        if(p[i] == p[j + 1]) ++ j;
-        ne[i] = j;  //一旦到i发现匹配不上，可以回退到j，j是啥？前面两步结局：要么完犊子j=0，要么位于j的字符匹配
-    }
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>j <span class="token operator">&amp;&amp;</span> p<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> p<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> j <span class="token operator">=</span> ne<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> p<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">++</span> j<span class="token punctuation">;</span>
+        ne<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> j<span class="token punctuation">;</span>  <span class="token comment">//一旦到i发现匹配不上，可以回退到j，j是啥？前面两步结局：要么完犊子j=0，要么位于j的字符匹配</span>
+    <span class="token punctuation">}</span>
     
-    for(int i = 1, j = 0; i &lt;= m; ++ i)
-    {
-        while(j &amp;&amp; s[i] != p[j + 1]) j = ne[j]; // j还有退路(若j = 0则最坏打算，东山再起) &amp;&amp; 未匹配上
-        if(s[i] == p[j + 1]) ++ j; // 要么完犊子全失败，要么找到一个最大前缀下标
-        if(j == n)
-        {
-            cout &lt;&lt; i - n &lt;&lt; ' ';
-            j = ne[j];  //继续匹配，看能不能找到最长字串重新出发
-        }
-    }
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>j <span class="token operator">&amp;&amp;</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> p<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> j <span class="token operator">=</span> ne<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// j还有退路(若j = 0则最坏打算，东山再起) &amp;&amp; 未匹配上</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> p<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">++</span> j<span class="token punctuation">;</span> <span class="token comment">// 要么完犊子全失败，要么找到一个最大前缀下标</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>j <span class="token operator">==</span> n<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            cout <span class="token operator">&lt;&lt;</span> i <span class="token operator">-</span> n <span class="token operator">&lt;&lt;</span> <span class="token char">' '</span><span class="token punctuation">;</span>
+            j <span class="token operator">=</span> ne<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">//继续匹配，看能不能找到最长字串重新出发</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
     
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <blockquote>

@@ -444,48 +444,48 @@
 
 
 
-<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;bits/stdc++.h&gt;
-#define pb push_back
-#define x first
-#define y second
-using namespace std;
+<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">pb</span> <span class="token expression">push_back</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">x</span> <span class="token expression">first</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">y</span> <span class="token expression">second</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-typedef pair&lt;int, int&gt; PII;
-typedef vector&lt;PII&gt; vii;
+<span class="token keyword">typedef</span> pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">&gt;</span> PII<span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> vector<span class="token operator">&lt;</span>PII<span class="token operator">&gt;</span> vii<span class="token punctuation">;</span>
 
-int n;
-vii v;
+<span class="token keyword">int</span> n<span class="token punctuation">;</span>
+vii v<span class="token punctuation">;</span>
 
-int main()
-{
-    cin &gt;&gt; n;
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span>
 
-    for(int i = 0; i &lt; n; ++i)
-    {
-        int a, b;
-        scanf("%d%d", &amp;a, &amp;b);
-        v.pb({a, b});
-    }
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> a<span class="token punctuation">,</span> b<span class="token punctuation">;</span>
+        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>a<span class="token punctuation">,</span> <span class="token operator">&amp;</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        v<span class="token punctuation">.</span><span class="token function">pb</span><span class="token punctuation">(</span><span class="token punctuation">{</span>a<span class="token punctuation">,</span> b<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    sort(v.begin(), v.end());
+    <span class="token function">sort</span><span class="token punctuation">(</span>v<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> v<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    int ed = -2e9, res = 0;
+    <span class="token keyword">int</span> ed <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">2e9</span><span class="token punctuation">,</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
-    for(auto it : v)
-    {
-        int l = it.x, r = it.y;
-        if(l &lt;= ed) ed = max(ed, r); //考虑r可能包含在前一个区间里面，对区间拓展没有贡献
-        else
-        {
-            ++ res;
-            ed = r;
-        }
-    }
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">auto</span> it <span class="token operator">:</span> v<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> l <span class="token operator">=</span> it<span class="token punctuation">.</span>x<span class="token punctuation">,</span> r <span class="token operator">=</span> it<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>l <span class="token operator">&lt;=</span> ed<span class="token punctuation">)</span> ed <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>ed<span class="token punctuation">,</span> r<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//考虑r可能包含在前一个区间里面，对区间拓展没有贡献</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            <span class="token operator">++</span> res<span class="token punctuation">;</span>
+            ed <span class="token operator">=</span> r<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    cout &lt;&lt; res;
+    cout <span class="token operator">&lt;&lt;</span> res<span class="token punctuation">;</span>
 
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>核心还是用贪心的思想贪最长区间是多少，何时区间被打断要更新。</p>
 <blockquote>

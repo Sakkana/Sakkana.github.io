@@ -435,77 +435,77 @@
 
 <h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">1 2 3<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;
-#include &lt;algorithm&gt;
-using namespace std;
+<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;algorithm&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-const int N = 1e5 + 10;
-int h[N], _size;
-int n, m;
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">1e5</span> <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> h<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> _size<span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span> m<span class="token punctuation">;</span>
 
-void down(int u)
-{
-    int t = u;    // 三个元素中最小值的下标
-    if(u * 2 &lt;= _size &amp;&amp; h[u * 2] &lt; h[t]) t = u * 2;
-    if(u * 2 + 1 &lt;= _size &amp;&amp; h[u * 2 + 1] &lt; h[t]) t = u * 2 + 1;
-    if(t != u)
-    {
-        swap(h[u], h[t]);
-        down(t);
-    }
-}
+<span class="token keyword">void</span> <span class="token function">down</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> t <span class="token operator">=</span> u<span class="token punctuation">;</span>    <span class="token comment">// 三个元素中最小值的下标</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">&lt;=</span> _size <span class="token operator">&amp;&amp;</span> h<span class="token punctuation">[</span>u <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> h<span class="token punctuation">[</span>t<span class="token punctuation">]</span><span class="token punctuation">)</span> t <span class="token operator">=</span> u <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&lt;=</span> _size <span class="token operator">&amp;&amp;</span> h<span class="token punctuation">[</span>u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> h<span class="token punctuation">[</span>t<span class="token punctuation">]</span><span class="token punctuation">)</span> t <span class="token operator">=</span> u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">!=</span> u<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">swap</span><span class="token punctuation">(</span>h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> h<span class="token punctuation">[</span>t<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">down</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-int main()
-{
-    cin &gt;&gt; n &gt;&gt; m;
-    for(int i = 1; i &lt;= n; ++ i) scanf("%d", &amp;h[i]);
-    _size = n;
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    cin <span class="token operator">&gt;&gt;</span> n <span class="token operator">&gt;&gt;</span> m<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span> <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>h<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _size <span class="token operator">=</span> n<span class="token punctuation">;</span>
 
-    // O(n)建堆
-    for(int i = n / 2; i; -- i) down(i);    // n / 2向下取整 是最后一个非叶子节点 差比数列求和 &lt; n
+    <span class="token comment">// O(n)建堆</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> n <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span> i<span class="token punctuation">;</span> <span class="token operator">--</span> i<span class="token punctuation">)</span> <span class="token function">down</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment">// n / 2向下取整 是最后一个非叶子节点 差比数列求和 &lt; n</span>
 
-    while(m--)
-    {
-        printf("%d ", h[1]);
-        h[1] = h[_size --];
-        down(1);
-    }
+    <span class="token keyword">while</span><span class="token punctuation">(</span>m<span class="token operator">--</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span> h<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        h<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> h<span class="token punctuation">[</span>_size <span class="token operator">--</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">down</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">// down函数非递归写法
-void down(int u)
-{
-    int t = -1;
-    while(true)
-    {
-        t = u;    // 三个元素中最小值的下标
-        if(u * 2 &lt;= _size &amp;&amp; h[u * 2] &lt; h[t]) t = u * 2;
-        if(u * 2 + 1 &lt;= _size &amp;&amp; h[u * 2 + 1] &lt; h[t]) t = u * 2 + 1;
-        if(t == u) break;
-        swap(h[u], h[t]);
-        u = t;
-    }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// down函数非递归写法</span>
+<span class="token keyword">void</span> <span class="token function">down</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> t <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        t <span class="token operator">=</span> u<span class="token punctuation">;</span>    <span class="token comment">// 三个元素中最小值的下标</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">&lt;=</span> _size <span class="token operator">&amp;&amp;</span> h<span class="token punctuation">[</span>u <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> h<span class="token punctuation">[</span>t<span class="token punctuation">]</span><span class="token punctuation">)</span> t <span class="token operator">=</span> u <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&lt;=</span> _size <span class="token operator">&amp;&amp;</span> h<span class="token punctuation">[</span>u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> h<span class="token punctuation">[</span>t<span class="token punctuation">]</span><span class="token punctuation">)</span> t <span class="token operator">=</span> u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">==</span> u<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token function">swap</span><span class="token punctuation">(</span>h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> h<span class="token punctuation">[</span>t<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        u <span class="token operator">=</span> t<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <blockquote>
 <p>  以小根堆为例</p>
-<p> 1.O(logn) 插入一个数    heap[ ++ size] = x, up(size)<br> 2.O(1) 求最小值      heap[1]<br> 3.O(logn) 删除最小值    heap[1] = heap[size –], down(1)<br> 4.O(logn) 删除任意元素  heap[k] = heap[size], down(k), up(k) 只有一个会执行<br> 5.O(logn) 修改任意元素  heap[k] = x, down(k), up(k)</p>
-<p> 堆是一个完全二叉树，除了最后一层节点，上面所有结点都是满的，最后一层节点从左到右排列<br> 每个节点都&lt;=左右儿子， 因此根节点是整个集合的最小值</p>
-<p> 全新存储方式：一维数组</p>
-<pre><code>                     1
-             2                3
-       4          5       6         7
-     8   9     10   11  12  13    14  15
+<p>  1.O(logn) 插入一个数    heap[ ++ size] = x, up(size)<br>  2.O(1) 求最小值      heap[1]<br>  3.O(logn) 删除最小值    heap[1] = heap[size –], down(1)<br>  4.O(logn) 删除任意元素  heap[k] = heap[size], down(k), up(k) 只有一个会执行<br>  5.O(logn) 修改任意元素  heap[k] = x, down(k), up(k)</p>
+<p>  堆是一个完全二叉树，除了最后一层节点，上面所有结点都是满的，最后一层节点从左到右排列<br>  每个节点都&lt;=左右儿子， 因此根节点是整个集合的最小值</p>
+<p>  全新存储方式：一维数组</p>
+  <pre class="line-numbers language-c" data-language="c"><code class="language-c">                <span class="token number">1</span>
+        <span class="token number">2</span>                <span class="token number">3</span>
+  <span class="token number">4</span>          <span class="token number">5</span>       <span class="token number">6</span>         <span class="token number">7</span>
+<span class="token number">8</span>   <span class="token number">9</span>     <span class="token number">10</span>   <span class="token number">11</span>  <span class="token number">12</span>  <span class="token number">13</span>    <span class="token number">14</span>  <span class="token number">15</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-     x
- 2x     2x+1
+<pre><code>    x
+2x     2x+1
 </code></pre>
-<p> 某个结点x的左儿子：2x，右儿子：2x+1</p>
-<p> 核心操作： down() &amp; up() </p>
+<p>  某个结点x的左儿子：2x，右儿子：2x+1</p>
+<p>  核心操作： down() &amp; up() </p>
 </blockquote>
 
                 

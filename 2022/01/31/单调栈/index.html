@@ -437,31 +437,31 @@
 
 
 
-<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;
-using namespace std;
+<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-const int N = 1e5 + 10;
-int stk[N], tt, n, x;
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">1e5</span> <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> stk<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> tt<span class="token punctuation">,</span> n<span class="token punctuation">,</span> x<span class="token punctuation">;</span>
 
-int main()
-{
-    cin &gt;&gt; n;
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    cin <span class="token operator">&gt;&gt;</span> n<span class="token punctuation">;</span>
     
-    for(int i = 0; i &lt; n; ++ i)
-    {
-        scanf("%d", &amp;x);
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
         
-        while(tt &amp;&amp; stk[tt] &gt;= x) -- tt; // stack不为空 &amp;&amp; 栈顶 &gt; 新元素
+        <span class="token keyword">while</span><span class="token punctuation">(</span>tt <span class="token operator">&amp;&amp;</span> stk<span class="token punctuation">[</span>tt<span class="token punctuation">]</span> <span class="token operator">&gt;=</span> x<span class="token punctuation">)</span> <span class="token operator">--</span> tt<span class="token punctuation">;</span> <span class="token comment">// stack不为空 &amp;&amp; 栈顶 &gt; 新元素</span>
         
-        if(!tt) // 第一个元素 || 序列Min
-            cout &lt;&lt; -1 &lt;&lt; ' ';
-        else 
-            cout &lt;&lt; stk[tt] &lt;&lt; ' ';
-        stk[++ tt] = x; // 新元素进栈
-    }
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>tt<span class="token punctuation">)</span> <span class="token comment">// 第一个元素 || 序列Min</span>
+            cout <span class="token operator">&lt;&lt;</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token char">' '</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> 
+            cout <span class="token operator">&lt;&lt;</span> stk<span class="token punctuation">[</span>tt<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token char">' '</span><span class="token punctuation">;</span>
+        stk<span class="token punctuation">[</span><span class="token operator">++</span> tt<span class="token punctuation">]</span> <span class="token operator">=</span> x<span class="token punctuation">;</span> <span class="token comment">// 新元素进栈</span>
+    <span class="token punctuation">}</span>
     
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <blockquote>

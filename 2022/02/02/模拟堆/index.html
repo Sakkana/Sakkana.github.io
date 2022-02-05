@@ -453,87 +453,87 @@ DM<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><
 <h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">-10
 6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;iostream&gt;
-#include &lt;cstring&gt;
-#include &lt;algorithm&gt;
-using namespace std;
+<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;algorithm&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-const int N = 1e5 + 10;
-int h[N], _size, cnt;
-int in_h[N], h_in[N];   // 第k个插入的点是堆中in_h[k] = j点， 堆中的j号点是第h_in[j] = k个插入的点, 互为反映射
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">1e5</span> <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> h<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> _size<span class="token punctuation">,</span> cnt<span class="token punctuation">;</span>
+<span class="token keyword">int</span> in_h<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> h_in<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">// 第k个插入的点是堆中in_h[k] = j点， 堆中的j号点是第h_in[j] = k个插入的点, 互为反映射</span>
 
-void heap_swap(int a, int b) // a, b是堆中的两个下标
-{
-    swap(in_h[h_in[a]], in_h[h_in[b]]);  // 插入次序 指向 下标
-    swap(h_in[a], h_in[b]);     // 下标 指向 插入次序
-    swap(h[a], h[b]);
-}
+<span class="token keyword">void</span> <span class="token function">heap_swap</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span> <span class="token comment">// a, b是堆中的两个下标</span>
+<span class="token punctuation">{</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>in_h<span class="token punctuation">[</span>h_in<span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> in_h<span class="token punctuation">[</span>h_in<span class="token punctuation">[</span>b<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 插入次序 指向 下标</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>h_in<span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token punctuation">,</span> h_in<span class="token punctuation">[</span>b<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 下标 指向 插入次序</span>
+    <span class="token function">swap</span><span class="token punctuation">(</span>h<span class="token punctuation">[</span>a<span class="token punctuation">]</span><span class="token punctuation">,</span> h<span class="token punctuation">[</span>b<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-void down(int u)
-{
-    int t = u;    // 三个元素中最小值的下标
-    if(u * 2 &lt;= _size &amp;&amp; h[u * 2] &lt; h[t]) t = u * 2;
-    if(u * 2 + 1 &lt;= _size &amp;&amp; h[u * 2 + 1] &lt; h[t]) t = u * 2 + 1;
-    if(t != u)
-    {
-        heap_swap(t, u);
-        down(t);
-    }
-}
+<span class="token keyword">void</span> <span class="token function">down</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> t <span class="token operator">=</span> u<span class="token punctuation">;</span>    <span class="token comment">// 三个元素中最小值的下标</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">&lt;=</span> _size <span class="token operator">&amp;&amp;</span> h<span class="token punctuation">[</span>u <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> h<span class="token punctuation">[</span>t<span class="token punctuation">]</span><span class="token punctuation">)</span> t <span class="token operator">=</span> u <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&lt;=</span> _size <span class="token operator">&amp;&amp;</span> h<span class="token punctuation">[</span>u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> h<span class="token punctuation">[</span>t<span class="token punctuation">]</span><span class="token punctuation">)</span> t <span class="token operator">=</span> u <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">!=</span> u<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">heap_swap</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">down</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-void up(int u)
-{
-    if(u / 2 &amp;&amp; h[u / 2] &gt; h[u])
-    {
-        heap_swap(u / 2, u);
-        up(u &gt;&gt; 1);	// 当时这里只除以2没有递归，WA了半天
-    }
-}
+<span class="token keyword">void</span> <span class="token function">up</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>u <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">&amp;&amp;</span> h<span class="token punctuation">[</span>u <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> h<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">heap_swap</span><span class="token punctuation">(</span>u <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">,</span> u<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">up</span><span class="token punctuation">(</span>u <span class="token operator">&gt;&gt;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">// 当时这里只除以2没有递归，WA了半天</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-int main()
-{
-    int _;
-    cin &gt;&gt; _;
-    while(_--)
-    {
-        int k, x;
-        char op[10];
-        scanf("%s", op);
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> _<span class="token punctuation">;</span>
+    cin <span class="token operator">&gt;&gt;</span> _<span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>_<span class="token operator">--</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> k<span class="token punctuation">,</span> x<span class="token punctuation">;</span>
+        <span class="token keyword">char</span> op<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%s"</span><span class="token punctuation">,</span> op<span class="token punctuation">)</span><span class="token punctuation">;</span>
         
-        if(!strcmp(op, "I"))    // 插入： 插入最后一个位置， 再up
-        {
-            scanf("%d", &amp;x);
-            ++ cnt, ++ _size;   // 第cnt个插入的元素
-            in_h[cnt] = _size, h_in[_size] = cnt;
-            h[_size] = x;
-            up(_size);
-        }
-        else if(!strcmp(op, "PM")) printf("%d\n", h[1]);   // 输出min
-        else if(!strcmp(op, "DM"))  // 删除min
-        {
-            heap_swap(1, _size);
-            -- _size;
-            down(1);
-        }
-        else if(!strcmp(op, "D"))  // 删除第k个插入的元素
-        {
-            scanf("%d", &amp;k);
-            k = in_h[k];
-            heap_swap(k, _size);
-            -- _size;
-            down(k), up(k);
-        }
-        else   // 将第k个插入的元素修改成x
-        {
-            scanf("%d%d", &amp;k, &amp;x);
-            k = in_h[k];
-            h[k] = x;
-            down(k), up(k);
-        }
-    }
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">strcmp</span><span class="token punctuation">(</span>op<span class="token punctuation">,</span> <span class="token string">"I"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token comment">// 插入： 插入最后一个位置， 再up</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">++</span> cnt<span class="token punctuation">,</span> <span class="token operator">++</span> _size<span class="token punctuation">;</span>   <span class="token comment">// 第cnt个插入的元素</span>
+            in_h<span class="token punctuation">[</span>cnt<span class="token punctuation">]</span> <span class="token operator">=</span> _size<span class="token punctuation">,</span> h_in<span class="token punctuation">[</span>_size<span class="token punctuation">]</span> <span class="token operator">=</span> cnt<span class="token punctuation">;</span>
+            h<span class="token punctuation">[</span>_size<span class="token punctuation">]</span> <span class="token operator">=</span> x<span class="token punctuation">;</span>
+            <span class="token function">up</span><span class="token punctuation">(</span>_size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">strcmp</span><span class="token punctuation">(</span>op<span class="token punctuation">,</span> <span class="token string">"PM"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> h<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 输出min</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">strcmp</span><span class="token punctuation">(</span>op<span class="token punctuation">,</span> <span class="token string">"DM"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment">// 删除min</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">heap_swap</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> _size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">--</span> _size<span class="token punctuation">;</span>
+            <span class="token function">down</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">strcmp</span><span class="token punctuation">(</span>op<span class="token punctuation">,</span> <span class="token string">"D"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment">// 删除第k个插入的元素</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            k <span class="token operator">=</span> in_h<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token function">heap_swap</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span> _size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">--</span> _size<span class="token punctuation">;</span>
+            <span class="token function">down</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">up</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>   <span class="token comment">// 将第k个插入的元素修改成x</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>k<span class="token punctuation">,</span> <span class="token operator">&amp;</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            k <span class="token operator">=</span> in_h<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            h<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> x<span class="token punctuation">;</span>
+            <span class="token function">down</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">up</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
     
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <blockquote>
@@ -541,12 +541,13 @@ int main()
 <p> 1.O(logn) 插入一个数    heap[ ++ size] = x, up(size)<br> 2.O(1) 求最小值      heap[1]<br> 3.O(logn) 删除最小值    heap[1] = heap[size –], down(1)<br> 4.删除任意元素  heap[k] = heap[size], down(k), up(k) 只有一个会执行<br> 5.修改任意元素  heap[k] = x, down(k), up(k)</p>
 <p> 堆是一个完全二叉树，除了最后一层节点，上面所有结点都是满的，最后一层节点从左到右排列<br> 每个节点都&lt;=左右儿子， 因此根节点是整个集合的最小值</p>
 <p> 全新存储方式：一维数组</p>
-<pre><code>                     1
-             2               3
-       4          5      6         7
-      8  9      10 11  12 13     14 15
-</code></pre>
-<p> ​<br>         x<br>     2x     2x+1</p>
+ <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">               1
+       2               3
+ 4          5      6         7
+8  9      10 11  12 13     14 15<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p> ​<br>       x<br>   2x     2x+1</p>
 <p> 某个结点下标x的左儿子：2x，右儿子：2x+1</p>
 <p> 核心操作： down() &amp; up() </p>
 </blockquote>

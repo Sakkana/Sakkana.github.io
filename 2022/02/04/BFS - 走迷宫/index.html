@@ -444,57 +444,57 @@
 
 
 
-<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">#include &lt;bits/stdc++.h&gt;
-using namespace std;
+<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
-typedef pair&lt;int, int&gt; PII;
-const int N = 110;
-int g[N][N], d[N][N];
-PII q[N * N];   // 模拟队列
-int n, m;
+<span class="token keyword">typedef</span> pair<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">&gt;</span> PII<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">110</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> g<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> d<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+PII q<span class="token punctuation">[</span>N <span class="token operator">*</span> N<span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">// 模拟队列</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span> m<span class="token punctuation">;</span>
 
-int bfs()
-{
-    int hh = 0, tt = 0;
-    q[0] = {0, 0};  // 起点进队
+<span class="token keyword">int</span> <span class="token function">bfs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> hh <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> tt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    q<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// 起点进队</span>
     
-    memset(d, -1, sizeof d);
-    d[0][0] = 0;
+    <span class="token function">memset</span><span class="token punctuation">(</span>d<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    d<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
     
-    int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, -1, 0, 1};	// 向量运算
+    <span class="token keyword">int</span> dx<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">,</span> dy<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">;</span>	<span class="token comment">// 向量运算</span>
     
-    while(hh &lt;= tt) //队列不空
-    {
-        auto t = q[hh ++];   // 队头出队
+    <span class="token keyword">while</span><span class="token punctuation">(</span>hh <span class="token operator">&lt;=</span> tt<span class="token punctuation">)</span> <span class="token comment">//队列不空</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">auto</span> t <span class="token operator">=</span> q<span class="token punctuation">[</span>hh <span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">// 队头出队</span>
         
-        // 遍历四个方向，合法坐标入队
-        for(int i = 0; i &lt; 4; ++ i)
-        {
-            int x = t.first + dx[i], y = t.second + dy[i];  // 待扩展的点
+        <span class="token comment">// 遍历四个方向，合法坐标入队</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> x <span class="token operator">=</span> t<span class="token punctuation">.</span>first <span class="token operator">+</span> dx<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> y <span class="token operator">=</span> t<span class="token punctuation">.</span>second <span class="token operator">+</span> dy<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// 待扩展的点</span>
             
-            // 待扩展的点合法 &amp;&amp; 可以走 &amp;&amp; 第一次走
-            if(x &gt;= 0 &amp;&amp; x &lt; n &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; m &amp;&amp; g[x][y] == 0 &amp;&amp; d[x][y] == -1)
-            {
-                d[x][y] = d[t.first][t.second] + 1;	// 更新距离
-                q[++ tt] = {x, y};  // 入队
-            }
-        }
-    }
+            <span class="token comment">// 待扩展的点合法 &amp;&amp; 可以走 &amp;&amp; 第一次走</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">&gt;=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> x <span class="token operator">&lt;</span> n <span class="token operator">&amp;&amp;</span> y <span class="token operator">&gt;=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> y <span class="token operator">&lt;</span> m <span class="token operator">&amp;&amp;</span> g<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> d<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                d<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>y<span class="token punctuation">]</span> <span class="token operator">=</span> d<span class="token punctuation">[</span>t<span class="token punctuation">.</span>first<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">.</span>second<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>	<span class="token comment">// 更新距离</span>
+                q<span class="token punctuation">[</span><span class="token operator">++</span> tt<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span>x<span class="token punctuation">,</span> y<span class="token punctuation">}</span><span class="token punctuation">;</span>  <span class="token comment">// 入队</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
     
-    return d[n - 1][m - 1];	//由于weight都是1，所以第几层扩展到终点答案就等于多少
-}
+    <span class="token keyword">return</span> d<span class="token punctuation">[</span>n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>m <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//由于weight都是1，所以第几层扩展到终点答案就等于多少</span>
+<span class="token punctuation">}</span>
 
-int main()
-{
-    cin &gt;&gt; n &gt;&gt; m;
-    for(int i = 0; i &lt; n; ++ i)
-        for(int j = 0; j &lt; m; ++ j)
-            cin &gt;&gt; g[i][j];
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    cin <span class="token operator">&gt;&gt;</span> n <span class="token operator">&gt;&gt;</span> m<span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> <span class="token operator">++</span> j<span class="token punctuation">)</span>
+            cin <span class="token operator">&gt;&gt;</span> g<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
     
-    cout &lt;&lt; bfs();
+    cout <span class="token operator">&lt;&lt;</span> <span class="token function">bfs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     
-    return 0;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -521,7 +521,7 @@ int main()
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/02/04/%E5%8D%95%E8%B0%83%E6%A0%88%20-%20%E5%89%AF%E6%9C%AC%20(3)/">https://sakkana.github.io/2022/02/04/%E5%8D%95%E8%B0%83%E6%A0%88%20-%20%E5%89%AF%E6%9C%AC%20(3)/</a>
+                    <a href="https://sakkana.github.io/2022/02/04/BFS%20-%20%E8%B5%B0%E8%BF%B7%E5%AE%AB/">https://sakkana.github.io/2022/02/04/BFS%20-%20%E8%B5%B0%E8%BF%B7%E5%AE%AB/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -609,7 +609,7 @@ int main()
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/02/04/%E5%8D%95%E8%B0%83%E6%A0%88%20-%20%E5%89%AF%E6%9C%AC%20(3)/">
+                <a href="/2022/02/04/BFS%20-%20%E8%B5%B0%E8%BF%B7%E5%AE%AB/">
                     <div class="card-image">
                         
                         
