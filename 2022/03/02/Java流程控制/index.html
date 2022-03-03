@@ -451,24 +451,24 @@
 <p>1.以enter为结束符，换而言之，nextLine()返回输入回车前的所有字符</p>
 <p>2.可以获得空白</p>
 </blockquote>
-<pre class="line-numbers language-none"><code class="language-none">import java.util.Scanner;
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span><span class="token class-name">Scanner</span><span class="token punctuation">;</span>
 
-public class Hello{
-    public static void main(String[] args) {
-        // 创建一个扫描器对象
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please input:");
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Hello</span><span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 创建一个扫描器对象</span>
+        <span class="token class-name">Scanner</span> scanner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Scanner</span><span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Please input:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        // 判断用户有没有输入
-        if(scanner.hasNextLine()){
-            String str = scanner.nextLine();
-            System.out.println(str);
-        }
+        <span class="token comment">// 判断用户有没有输入</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>scanner<span class="token punctuation">.</span><span class="token function">hasNextLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token class-name">String</span> str <span class="token operator">=</span> scanner<span class="token punctuation">.</span><span class="token function">nextLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        // 关闭io流，否则占用资源
-        scanner.close();
-    }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token comment">// 关闭io流，否则占用资源</span>
+        scanner<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <blockquote>
 <p>Hello World<br>Hello World</p>
