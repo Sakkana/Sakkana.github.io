@@ -6,7 +6,7 @@
   <link href="https://sakkana.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakkana.github.io/"/>
-  <updated>2022-03-03T17:42:55.077Z</updated>
+  <updated>2022-03-04T17:42:27.979Z</updated>
   <id>https://sakkana.github.io/</id>
   
   <author>
@@ -15,6 +15,72 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySql - 3 操作数据</title>
+    <link href="https://sakkana.github.io/2022/03/05/Mysql3%20%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE/"/>
+    <id>https://sakkana.github.io/2022/03/05/Mysql3%20%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE/</id>
+    <published>2022-03-04T16:05:01.000Z</published>
+    <updated>2022-03-04T17:42:27.979Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="操作数据"><a href="#操作数据" class="headerlink" title="操作数据"></a>操作数据</h1><h2 id="1-添加数据"><a href="#1-添加数据" class="headerlink" title="1. 添加数据"></a>1. 添加数据</h2><h3 id="1-1-给【指定字段】添加数据"><a href="#1-1-给【指定字段】添加数据" class="headerlink" title="1.1  给【指定字段】添加数据"></a>1.1  给【指定字段】添加数据</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> 表名<span class="token punctuation">(</span>字段<span class="token number">1</span><span class="token punctuation">,</span>字段<span class="token number">2</span><span class="token punctuation">,</span>字段<span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token keyword">VALUES</span><span class="token punctuation">(</span>值<span class="token number">1</span><span class="token punctuation">,</span>值<span class="token number">2</span><span class="token punctuation">,</span>值<span class="token number">3</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="1-2-给【所有字段】添加数据"><a href="#1-2-给【所有字段】添加数据" class="headerlink" title="1.2  给【所有字段】添加数据"></a>1.2  给【所有字段】添加数据</h3><pre class="line-numbers language-SQL" data-language="SQL"><code class="language-SQL">INSERT INTO 表名 VALUES(值1,值2,值3, ...);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="1-3-批量添加数据"><a href="#1-3-批量添加数据" class="headerlink" title="1.3  批量添加数据"></a>1.3  批量添加数据</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> 表名<span class="token punctuation">(</span>字段<span class="token number">1</span><span class="token punctuation">,</span>字段<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token keyword">VALUES</span><span class="token punctuation">(</span>值<span class="token number">1</span><span class="token punctuation">,</span>值<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span>值<span class="token number">1</span><span class="token punctuation">,</span>值<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">(</span>值<span class="token number">1</span><span class="token punctuation">,</span>值<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>INSER <span class="token keyword">INTO</span> 表名 <span class="token keyword">VALUES</span><span class="token punctuation">(</span>值<span class="token number">1</span><span class="token punctuation">,</span>值<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span>值<span class="token number">1</span><span class="token punctuation">,</span>值<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">(</span>值<span class="token number">1</span><span class="token punctuation">,</span>值<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><blockquote><p>1.插入数据的字段顺序必须与值的书讯一一对应。</p><p>2.字符串和日期必须被包含在引号内。</p><p>3.插入数据的大小必须在字段的规定范围内。</p></blockquote><h2 id="2-修改数据"><a href="#2-修改数据" class="headerlink" title="2. 修改数据"></a>2. 修改数据</h2><p>如果没有条件就修改整张表</p><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">UPDATE</span> 表名 <span class="token keyword">SET</span> 字段名<span class="token number">1</span> <span class="token operator">=</span> 值<span class="token number">1</span><span class="token punctuation">,</span> 字段名<span class="token number">2</span> <span class="token operator">=</span> 值<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">[</span><span class="token keyword">WHERE</span> 条件<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h2><h4 id="3-1"><a href="#3-1" class="headerlink" title="3.1"></a>3.1</h4><h4 id="3-2"><a href="#3-2" class="headerlink" title="3.2"></a>3.2</h4><h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><h4 id="4-1"><a href="#4-1" class="headerlink" title="4.1"></a>4.1</h4><h4 id="4-2"><a href="#4-2" class="headerlink" title="4.2"></a>4.2</h4><h5 id="4-2-1"><a href="#4-2-1" class="headerlink" title="4.2.1"></a>4.2.1</h5><h5 id="4-2-2"><a href="#4-2-2" class="headerlink" title="4.2.2"></a>4.2.2</h5><h4 id="4-3"><a href="#4-3" class="headerlink" title="4.3"></a>4.3</h4><h4 id="4-4"><a href="#4-4" class="headerlink" title="4.4"></a>4.4</h4><h2 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h2><h4 id="5-1"><a href="#5-1" class="headerlink" title="5.1"></a>5.1</h4><h4 id="5-2"><a href="#5-2" class="headerlink" title="5.2"></a>5.2</h4>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;操作数据&quot;&gt;&lt;a href=&quot;#操作数据&quot; class=&quot;headerlink&quot; title=&quot;操作数据&quot;&gt;&lt;/a&gt;操作数据&lt;/h1&gt;&lt;h2 id=&quot;1-添加数据&quot;&gt;&lt;a href=&quot;#1-添加数据&quot; class=&quot;headerlink&quot; title=&quot;1. 添加</summary>
+      
+    
+    
+    
+    
+    <category term="数据库" scheme="https://sakkana.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySql - 2 操作数据表</title>
+    <link href="https://sakkana.github.io/2022/03/04/Mysql2%20%E6%93%8D%E4%BD%9C%E8%A1%A8/"/>
+    <id>https://sakkana.github.io/2022/03/04/Mysql2%20%E6%93%8D%E4%BD%9C%E8%A1%A8/</id>
+    <published>2022-03-04T15:39:01.000Z</published>
+    <updated>2022-03-04T17:41:25.548Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="操作数据表"><a href="#操作数据表" class="headerlink" title="操作数据表"></a>操作数据表</h1><h2 id="1-查询"><a href="#1-查询" class="headerlink" title="1. 查询"></a>1. 查询</h2><h3 id="1-1-查询当前数据库中的【所有表】"><a href="#1-1-查询当前数据库中的【所有表】" class="headerlink" title="1.1  查询当前数据库中的【所有表】"></a>1.1  查询当前数据库中的【所有表】</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="1-2-查询【表结构】"><a href="#1-2-查询【表结构】" class="headerlink" title="1.2 查询【表结构】"></a>1.2 查询【表结构】</h3><pre class="line-numbers language-SQL" data-language="SQL"><code class="language-SQL">DESC 表名;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="1-3-查询指定表的【建表语句】"><a href="#1-3-查询指定表的【建表语句】" class="headerlink" title="1.3 查询指定表的【建表语句】"></a>1.3 查询指定表的【建表语句】</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> 表名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="2-创建"><a href="#2-创建" class="headerlink" title="2. 创建"></a>2. 创建</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> 表名<span class="token punctuation">(</span>字段<span class="token number">1</span> 字段<span class="token number">1</span>类型 <span class="token punctuation">[</span><span class="token keyword">COMMENT</span> <span class="token string">'字段注释1'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>字段<span class="token number">2</span> 字段<span class="token number">2</span>类型 <span class="token punctuation">[</span><span class="token keyword">COMMENT</span> <span class="token string">'字段注释2'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>字段<span class="token number">3</span> 字段<span class="token number">3</span>类型 <span class="token punctuation">[</span><span class="token keyword">COMMENT</span> <span class="token string">'字段注释3'</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>字段n 字段n类型 <span class="token punctuation">[</span><span class="token keyword">COMMENT</span> <span class="token string">'字段注释4]'</span><span class="token comment">//这里没有逗号</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token keyword">COMMENT</span> <span class="token string">'表注释'</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><h2 id="3-数据类型"><a href="#3-数据类型" class="headerlink" title="3. 数据类型"></a>3. 数据类型</h2><h4 id="3-1-数值类型"><a href="#3-1-数值类型" class="headerlink" title="3.1 数值类型"></a>3.1 数值类型</h4><table><thead><tr><th align="center">数据类型</th><th align="center">格式</th><th align="center">描述</th></tr></thead><tbody><tr><td align="center">定长字符串</td><td align="center">CHAR (10)</td><td align="center">就算存1个字符也会占用10个字符的空间 性能高</td></tr><tr><td align="center">变长字符串</td><td align="center">VARCHAR(10)</td><td align="center">存几个占几个 超出会报错 根据内容计算</td></tr></tbody></table><h4 id="3-2-日期和时间类型"><a href="#3-2-日期和时间类型" class="headerlink" title="3.2 日期和时间类型"></a>3.2 日期和时间类型</h4><table><thead><tr><th align="center">数据类型</th><th align="center">大小</th><th align="center">范围</th></tr></thead><tbody><tr><td align="center">DATE</td><td align="center">3</td><td align="center">1000-01-01 to 9999-12-32</td></tr><tr><td align="center">TIME</td><td align="center">3</td><td align="center">-838:59:59 to 838:59:59</td></tr><tr><td align="center">YEAR 1</td><td align="center">1</td><td align="center">1901 to 2155</td></tr><tr><td align="center">DATATIME</td><td align="center">8</td><td align="center">1000-01-01 00:00:00 to 9999-12-32 23:59:59</td></tr><tr><td align="center">TIMESTAMP</td><td align="center">4</td><td align="center">1970-01-01 00:00:01 to 2038-01-19 03:14:07</td></tr></tbody></table><h2 id="4-修改表"><a href="#4-修改表" class="headerlink" title="4. 修改表"></a>4. 修改表</h2><h4 id="4-1-添加字段"><a href="#4-1-添加字段" class="headerlink" title="4.1 添加字段"></a>4.1 添加字段</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">ADD</span> 字段名 类型<span class="token punctuation">(</span>长度<span class="token punctuation">)</span> <span class="token punctuation">[</span><span class="token keyword">COMMENT</span> 注释<span class="token punctuation">]</span> <span class="token punctuation">[</span>约束<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>concretely,</p><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> employee <span class="token keyword">ADD</span> nickname<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="4-2-修改字段"><a href="#4-2-修改字段" class="headerlink" title="4.2 修改字段"></a>4.2 修改字段</h4><h5 id="4-2-1-修改【数据类型】"><a href="#4-2-1-修改【数据类型】" class="headerlink" title="4.2.1 修改【数据类型】"></a>4.2.1 修改【数据类型】</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">MODIFY</span> 字段名 新数据类型<span class="token punctuation">(</span>长度<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h5 id="4-2-2-修改【字段名】和【字段类型】"><a href="#4-2-2-修改【字段名】和【字段类型】" class="headerlink" title="4.2.2 修改【字段名】和【字段类型】"></a>4.2.2 修改【字段名】和【字段类型】</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 CHANGE 旧字段名 新字段名 类型<span class="token punctuation">(</span>长度<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="4-3-删除字段"><a href="#4-3-删除字段" class="headerlink" title="4.3 删除字段"></a>4.3 删除字段</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">DROP</span> 字段名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="4-4-修改表名"><a href="#4-4-修改表名" class="headerlink" title="4.4 修改表名"></a>4.4 修改表名</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">RENAME</span> <span class="token keyword">TO</span> 新表名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h2 id="5-删除表"><a href="#5-删除表" class="headerlink" title="5.删除表"></a>5.删除表</h2><h4 id="5-1-删除表"><a href="#5-1-删除表" class="headerlink" title="5.1 删除表"></a>5.1 删除表</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 表名；<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="5-2-删除表并重新创建-格式化-表结构留下了-数据没了"><a href="#5-2-删除表并重新创建-格式化-表结构留下了-数据没了" class="headerlink" title="5.2 删除表并重新创建(格式化 表结构留下了 数据没了)"></a>5.2 删除表并重新创建(格式化 表结构留下了 数据没了)</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">TRUNCATE</span> <span class="token keyword">TABLE</span> 表名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;操作数据表&quot;&gt;&lt;a href=&quot;#操作数据表&quot; class=&quot;headerlink&quot; title=&quot;操作数据表&quot;&gt;&lt;/a&gt;操作数据表&lt;/h1&gt;&lt;h2 id=&quot;1-查询&quot;&gt;&lt;a href=&quot;#1-查询&quot; class=&quot;headerlink&quot; title=&quot;1. 查询</summary>
+      
+    
+    
+    
+    
+    <category term="数据库" scheme="https://sakkana.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySql - 1 数据库操作</title>
+    <link href="https://sakkana.github.io/2022/03/04/Mysql1%20%E6%93%8D%E4%BD%9C%E5%BA%93/"/>
+    <id>https://sakkana.github.io/2022/03/04/Mysql1%20%E6%93%8D%E4%BD%9C%E5%BA%93/</id>
+    <published>2022-03-04T12:03:01.000Z</published>
+    <updated>2022-03-04T15:41:19.750Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h1><h3 id="1-显示所有的数据库"><a href="#1-显示所有的数据库" class="headerlink" title="1. 显示所有的数据库"></a>1. 显示所有的数据库</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">DATABASES</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="2-创建"><a href="#2-创建" class="headerlink" title="2. 创建"></a>2. 创建</h3><p>通用语法 括号内可选</p><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 数据库名 <span class="token punctuation">[</span><span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> 字符集<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">COLLATE</span> 排序规则<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h5 id="如果不存在会直接创建，如果存在会创建失败"><a href="#如果不存在会直接创建，如果存在会创建失败" class="headerlink" title="如果不存在会直接创建，如果存在会创建失败"></a>如果不存在会直接创建，如果存在会创建失败</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h5 id="创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。"><a href="#创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。" class="headerlink" title="创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。"></a>创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h5 id="指定字符集"><a href="#指定字符集" class="headerlink" title="指定字符集"></a>指定字符集</h5><h6 id="utf8存储长度为3字节"><a href="#utf8存储长度为3字节" class="headerlink" title="utf8存储长度为3字节"></a>utf8存储长度为3字节</h6><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名 <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> utf8<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h6 id="utf8mb4支持4字节"><a href="#utf8mb4支持4字节" class="headerlink" title="utf8mb4支持4字节"></a>utf8mb4支持4字节</h6><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名 <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> utf8mb4<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="3-删除"><a href="#3-删除" class="headerlink" title="3.  删除"></a>3.  删除</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">DROP</span> <span class="token keyword">DATABASE</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="4-使用"><a href="#4-使用" class="headerlink" title="4. 使用"></a>4. 使用</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">USE</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h3 id="5-查看当前处于哪个数据库"><a href="#5-查看当前处于哪个数据库" class="headerlink" title="5. 查看当前处于哪个数据库"></a>5. 查看当前处于哪个数据库</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">DATABASE</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;数据库操作&quot;&gt;&lt;a href=&quot;#数据库操作&quot; class=&quot;headerlink&quot; title=&quot;数据库操作&quot;&gt;&lt;/a&gt;数据库操作&lt;/h1&gt;&lt;h3 id=&quot;1-显示所有的数据库&quot;&gt;&lt;a href=&quot;#1-显示所有的数据库&quot; class=&quot;headerlink&quot; </summary>
+      
+    
+    
+    
+    
+    <category term="数据库" scheme="https://sakkana.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>Java - OOP</title>
@@ -447,77 +513,6 @@
     
     
     <category term="测试" scheme="https://sakkana.github.io/tags/%E6%B5%8B%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>はじめまして！</title>
-    <link href="https://sakkana.github.io/2022/01/30/%E9%AD%9A%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0/"/>
-    <id>https://sakkana.github.io/2022/01/30/%E9%AD%9A%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0/</id>
-    <published>2022-01-29T18:29:01.000Z</published>
-    <updated>2022-01-30T18:06:07.350Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>I’m a test blog.</p><p>Omit me.</p><p>Farwell.</p></blockquote>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;I’m a test blog.&lt;/p&gt;
-&lt;p&gt;Omit me.&lt;/p&gt;
-&lt;p&gt;Farwell.&lt;/p&gt;
-&lt;/blockquote&gt;
-</summary>
-      
-    
-    
-    
-    
-    <category term="测试" scheme="https://sakkana.github.io/tags/%E6%B5%8B%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL - 语法0</title>
-    <link href="https://sakkana.github.io/2022/01/30/MySql/"/>
-    <id>https://sakkana.github.io/2022/01/30/MySql/</id>
-    <published>2022-01-29T18:29:01.000Z</published>
-    <updated>2022-03-04T12:16:56.344Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="‘-xxx-’-指定查找-12345xxx54321"><a href="#‘-xxx-’-指定查找-12345xxx54321" class="headerlink" title="‘%xxx%’ 指定查找 12345xxx54321"></a>‘%xxx%’ 指定查找 12345xxx54321</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name LIKE '%field%'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p>结果</p><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150010713.png" alt="image-20220302150010713"></p></blockquote><p>这句话用正则表达式可以这么写</p><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP 'field'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>输出结果是一模一样的</p><h3 id="‘-xxx’-表示开头必须为xxx"><a href="#‘-xxx’-表示开头必须为xxx" class="headerlink" title="‘^xxx’ 表示开头必须为xxx"></a>‘^xxx’ 表示开头必须为xxx</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP '^B'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150244625.png" alt="image-20220302150244625"></p></blockquote><h3 id="‘xxx-’-结尾必须是xxx"><a href="#‘xxx-’-结尾必须是xxx" class="headerlink" title="‘xxx$’ 结尾必须是xxx"></a>‘xxx$’ 结尾必须是xxx</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP 'y$'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150506128.png" alt="image-20220302150506128"></p></blockquote><h3 id="‘-’-or运算符"><a href="#‘-’-or运算符" class="headerlink" title="‘|’ or运算符"></a>‘|’ or运算符</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP 'field|mac'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150736979.png" alt="image-20220302150736979"></p></blockquote><h3 id="‘-abc-x’-表示中间选一个-ax-bx-cx"><a href="#‘-abc-x’-表示中间选一个-ax-bx-cx" class="headerlink" title="‘[abc]x’ []表示中间选一个 ax | bx | cx"></a>‘[abc]x’ []表示中间选一个 ax | bx | cx</h3><h3 id="‘-a-h-x’-是-abcdefgh-x的缩写"><a href="#‘-a-h-x’-是-abcdefgh-x的缩写" class="headerlink" title="‘[a-h]x’ 是[abcdefgh]x的缩写"></a>‘[a-h]x’ 是[abcdefgh]x的缩写</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP '[gim]e'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302151052462.png" alt="image-20220302151052462"></p></blockquote>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h3 id=&quot;‘-xxx-’-指定查找-12345xxx54321&quot;&gt;&lt;a href=&quot;#‘-xxx-’-指定查找-12345xxx54321&quot; class=&quot;headerlink&quot; title=&quot;‘%xxx%’ 指定查找 12345xxx54321&quot;&gt;&lt;/a&gt;‘%xxx%’ </summary>
-      
-    
-    
-    
-    
-    <category term="数据库" scheme="https://sakkana.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySql - 1</title>
-    <link href="https://sakkana.github.io/2022/01/30/Mysql%201/"/>
-    <id>https://sakkana.github.io/2022/01/30/Mysql%201/</id>
-    <published>2022-01-29T18:29:01.000Z</published>
-    <updated>2022-03-04T12:31:12.457Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h1><h3 id="1-显示所有的数据库"><a href="#1-显示所有的数据库" class="headerlink" title="1. 显示所有的数据库"></a>1. 显示所有的数据库</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">DATABASES</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="D:\Sakanablog\source_data\PICTS\s1.JPG" alt="s1"></p><h3 id="2-创建"><a href="#2-创建" class="headerlink" title="2. 创建"></a>2. 创建</h3><h5 id="如果不存在会直接创建，如果存在会创建失败"><a href="#如果不存在会直接创建，如果存在会创建失败" class="headerlink" title="如果不存在会直接创建，如果存在会创建失败"></a>如果不存在会直接创建，如果存在会创建失败</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> test1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h5 id="创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。"><a href="#创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。" class="headerlink" title="创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。"></a>创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token keyword">if</span> <span class="token operator">not</span> <span class="token keyword">exists</span> test1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;数据库操作&quot;&gt;&lt;a href=&quot;#数据库操作&quot; class=&quot;headerlink&quot; title=&quot;数据库操作&quot;&gt;&lt;/a&gt;数据库操作&lt;/h1&gt;&lt;h3 id=&quot;1-显示所有的数据库&quot;&gt;&lt;a href=&quot;#1-显示所有的数据库&quot; class=&quot;headerlink&quot; </summary>
-      
-    
-    
-    
-    
-    <category term="数据库" scheme="https://sakkana.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
