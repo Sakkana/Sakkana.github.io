@@ -412,11 +412,30 @@
     
     
     <entry>
-      <title>MySQL语法</title>
+      <title>MySQL - 语法0</title>
       <link href="/2022/01/30/MySql/"/>
       <url>/2022/01/30/MySql/</url>
       
         <content type="html"><![CDATA[<h3 id="‘-xxx-’-指定查找-12345xxx54321"><a href="#‘-xxx-’-指定查找-12345xxx54321" class="headerlink" title="‘%xxx%’ 指定查找 12345xxx54321"></a>‘%xxx%’ 指定查找 12345xxx54321</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name LIKE '%field%'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p>结果</p><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150010713.png" alt="image-20220302150010713"></p></blockquote><p>这句话用正则表达式可以这么写</p><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP 'field'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p>输出结果是一模一样的</p><h3 id="‘-xxx’-表示开头必须为xxx"><a href="#‘-xxx’-表示开头必须为xxx" class="headerlink" title="‘^xxx’ 表示开头必须为xxx"></a>‘^xxx’ 表示开头必须为xxx</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP '^B'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150244625.png" alt="image-20220302150244625"></p></blockquote><h3 id="‘xxx-’-结尾必须是xxx"><a href="#‘xxx-’-结尾必须是xxx" class="headerlink" title="‘xxx$’ 结尾必须是xxx"></a>‘xxx$’ 结尾必须是xxx</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP 'y$'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150506128.png" alt="image-20220302150506128"></p></blockquote><h3 id="‘-’-or运算符"><a href="#‘-’-or运算符" class="headerlink" title="‘|’ or运算符"></a>‘|’ or运算符</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP 'field|mac'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150736979.png" alt="image-20220302150736979"></p></blockquote><h3 id="‘-abc-x’-表示中间选一个-ax-bx-cx"><a href="#‘-abc-x’-表示中间选一个-ax-bx-cx" class="headerlink" title="‘[abc]x’ []表示中间选一个 ax | bx | cx"></a>‘[abc]x’ []表示中间选一个 ax | bx | cx</h3><h3 id="‘-a-h-x’-是-abcdefgh-x的缩写"><a href="#‘-a-h-x’-是-abcdefgh-x的缩写" class="headerlink" title="‘[a-h]x’ 是[abcdefgh]x的缩写"></a>‘[a-h]x’ 是[abcdefgh]x的缩写</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *FROM customersWHERE last_name REGEXP '[gim]e'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><blockquote><p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302151052462.png" alt="image-20220302151052462"></p></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MySql - 1</title>
+      <link href="/2022/01/30/Mysql%201/"/>
+      <url>/2022/01/30/Mysql%201/</url>
+      
+        <content type="html"><![CDATA[<h1 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h1><h3 id="1-显示所有的数据库"><a href="#1-显示所有的数据库" class="headerlink" title="1. 显示所有的数据库"></a>1. 显示所有的数据库</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">DATABASES</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p><img src="D:\Sakanablog\source_data\PICTS\s1.JPG" alt="s1"></p><h3 id="2-创建"><a href="#2-创建" class="headerlink" title="2. 创建"></a>2. 创建</h3><h5 id="如果不存在会直接创建，如果存在会创建失败"><a href="#如果不存在会直接创建，如果存在会创建失败" class="headerlink" title="如果不存在会直接创建，如果存在会创建失败"></a>如果不存在会直接创建，如果存在会创建失败</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> test1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h5 id="创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。"><a href="#创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。" class="headerlink" title="创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。"></a>创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token keyword">if</span> <span class="token operator">not</span> <span class="token keyword">exists</span> test1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
       
       
       
