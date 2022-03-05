@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySql - 3 操作数据, 魚のブログ">
+    <meta name="keywords" content="MySql - 3 操作数据 DML, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySql - 3 操作数据 | 魚のブログ</title>
+    <title>MySql - 3 操作数据 DML | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySql - 3 操作数据</h1>
+                    <h1 class="description center-align post-title">MySql - 3 操作数据 DML</h1>
                 </div>
             </div>
         </div>
@@ -380,6 +380,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -396,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    218
+                    236
                 </div>
                 
 
@@ -431,9 +440,10 @@ INSER <span class="token keyword">INTO</span> 表名 <span class="token keyword"
 <h2 id="2-修改数据"><a href="#2-修改数据" class="headerlink" title="2. 修改数据"></a>2. 修改数据</h2><p>如果没有条件就修改整张表</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">UPDATE</span> 表名 <span class="token keyword">SET</span> 字段名<span class="token number">1</span> <span class="token operator">=</span> 值<span class="token number">1</span><span class="token punctuation">,</span> 字段名<span class="token number">2</span> <span class="token operator">=</span> 值<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">[</span><span class="token keyword">WHERE</span> 条件<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<h2 id="3-删除数据"><a href="#3-删除数据" class="headerlink" title="3. 删除数据"></a>3. 删除数据</h2><p>如果不加WHERE会删除整张表</p>
+<p>DELETE不能删除某个字段的值</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> 表名 <span class="token punctuation">[</span><span class="token keyword">WHERE</span> 条件<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-
-<h2 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h2><h4 id="3-1"><a href="#3-1" class="headerlink" title="3.1"></a>3.1</h4><h4 id="3-2"><a href="#3-2" class="headerlink" title="3.2"></a>3.2</h4><h2 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h2><h4 id="4-1"><a href="#4-1" class="headerlink" title="4.1"></a>4.1</h4><h4 id="4-2"><a href="#4-2" class="headerlink" title="4.2"></a>4.2</h4><h5 id="4-2-1"><a href="#4-2-1" class="headerlink" title="4.2.1"></a>4.2.1</h5><h5 id="4-2-2"><a href="#4-2-2" class="headerlink" title="4.2.2"></a>4.2.2</h5><h4 id="4-3"><a href="#4-3" class="headerlink" title="4.3"></a>4.3</h4><h4 id="4-4"><a href="#4-4" class="headerlink" title="4.4"></a>4.4</h4><h2 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h2><h4 id="5-1"><a href="#5-1" class="headerlink" title="5.1"></a>5.1</h4><h4 id="5-2"><a href="#5-2" class="headerlink" title="5.2"></a>5.2</h4>
                 
             </div>
             <hr/>
@@ -542,18 +552,17 @@ INSER <span class="token keyword">INTO</span> 表名 <span class="token keyword"
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/03/05/Mysql3%20%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE/">
+                <a href="/2022/03/05/Mysql4%20%E6%9F%A5%E8%AF%A2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="MySql - 3 操作数据">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="mySql - 4 查询 DQL">
                         
-                        <span class="card-title">MySql - 3 操作数据</span>
+                        <span class="card-title">mySql - 4 查询 DQL</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -563,18 +572,21 @@ INSER <span class="token keyword">INTO</span> 表名 <span class="token keyword"
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-05
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-05
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -597,9 +609,9 @@ INSER <span class="token keyword">INTO</span> 表名 <span class="token keyword"
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="MySql - 2 操作数据表">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="MySql - 2 操作数据表 DDL">
                         
-                        <span class="card-title">MySql - 2 操作数据表</span>
+                        <span class="card-title">MySql - 2 操作数据表 DDL</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -614,8 +626,12 @@ INSER <span class="token keyword">INTO</span> 表名 <span class="token keyword"
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -810,7 +826,7 @@ INSER <span class="token keyword">INTO</span> 表名 <span class="token keyword"
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">13.1k</span>&nbsp;字
+                class="white-color">14.3k</span>&nbsp;字
             
             
             
