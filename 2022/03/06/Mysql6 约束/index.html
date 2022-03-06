@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySql - 1 数据库操作, 魚のブログ">
+    <meta name="keywords" content="MySql - 7 约束, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySql - 1 数据库操作 | 魚のブログ</title>
+    <title>MySql - 7 约束 | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySql - 1 数据库操作</h1>
+                    <h1 class="description center-align post-title">MySql - 7 约束</h1>
                 </div>
             </div>
         </div>
@@ -396,7 +396,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-03-04
+                    2022-03-06
                 </div>
                 
 
@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    181
+                    714
                 </div>
                 
 
@@ -425,32 +425,98 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h1><h3 id="1-显示所有的数据库"><a href="#1-显示所有的数据库" class="headerlink" title="1. 显示所有的数据库"></a>1. 显示所有的数据库</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">DATABASES</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h1 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h1><h5 id="Defination：作用于表中字段上的规则，限制表结构中存储的数据"><a href="#Defination：作用于表中字段上的规则，限制表结构中存储的数据" class="headerlink" title="Defination：作用于表中字段上的规则，限制表结构中存储的数据"></a>Defination：作用于表中字段上的规则，限制表结构中存储的数据</h5><h5 id="Target：保证数据库中数据的正确、有效性和完整性"><a href="#Target：保证数据库中数据的正确、有效性和完整性" class="headerlink" title="Target：保证数据库中数据的正确、有效性和完整性"></a>Target：保证数据库中数据的正确、有效性和完整性</h5><h5 id="Classification："><a href="#Classification：" class="headerlink" title="Classification："></a>Classification：</h5><table>
+<thead>
+<tr>
+<th align="center">约束</th>
+<th align="center">描述</th>
+<th align="center">关键字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">非空约束</td>
+<td align="center">限制该字段的数据不能为NULL</td>
+<td align="center">NOT NULL</td>
+</tr>
+<tr>
+<td align="center">唯一约束</td>
+<td align="center">保证该字段的所有数据都是唯一、不重复的</td>
+<td align="center">UNIQUE</td>
+</tr>
+<tr>
+<td align="center">主键约束</td>
+<td align="center">主键是一行数据的唯一标识，要求【非空】且【唯一】</td>
+<td align="center">PRIMARY KEY</td>
+</tr>
+<tr>
+<td align="center">默认约束</td>
+<td align="center">保存数据时，如果未指定该字段的值，则采用默认值</td>
+<td align="center">DEFAULT</td>
+</tr>
+<tr>
+<td align="center">检查约束(8.0.16版本之后)</td>
+<td align="center">保证字段值满足某一个条件</td>
+<td align="center">CHECK</td>
+</tr>
+<tr>
+<td align="center">外键约束</td>
+<td align="center">让两张表的数据之间建立连接，保证数据的一致性和完整性</td>
+<td align="center">FOREIGN KEY</td>
+</tr>
+</tbody></table>
+<p>约束是作用于表中【字段】上的，可以在【创建表/修改表】的时候添加约束</p>
+<p>对于一个字段可以添加【多个】约束</p>
+<p>多个约束之间用【空格分隔】即可</p>
+<h5 id="如果插入一条【非法数据】，会提示插入失败，然而数据库还是为他申请了主键，因此自增的主键会空缺一条。"><a href="#如果插入一条【非法数据】，会提示插入失败，然而数据库还是为他申请了主键，因此自增的主键会空缺一条。" class="headerlink" title="如果插入一条【非法数据】，会提示插入失败，然而数据库还是为他申请了主键，因此自增的主键会空缺一条。"></a>如果插入一条【非法数据】，会提示插入失败，然而数据库还是为他申请了主键，因此自增的主键会空缺一条。</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> stu<span class="token punctuation">(</span>
+    id <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span> <span class="token keyword">auto_increment</span> <span class="token keyword">COMMENT</span> <span class="token string">'主键，自动增长'</span><span class="token punctuation">,</span>
+    name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span> <span class="token operator">NOT</span> <span class="token boolean">NULL</span> <span class="token keyword">UNIQUE</span> <span class="token keyword">COMMENT</span> <span class="token string">'不为空，且唯一'</span><span class="token punctuation">,</span>
+    age <span class="token keyword">tinyint</span> <span class="token keyword">unsigned</span> <span class="token keyword">CHECK</span> <span class="token punctuation">(</span> age <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">AND</span> age <span class="token operator">&lt;=</span> <span class="token number">120</span> <span class="token punctuation">)</span> <span class="token keyword">COMMENT</span> <span class="token string">'大于0，且小于等于120'</span><span class="token punctuation">,</span>
+    <span class="token keyword">status</span> <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token number">1</span> <span class="token keyword">COMMENT</span> <span class="token string">'状态，默认为1'</span><span class="token punctuation">,</span>
+    gender <span class="token keyword">char</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">COMMENT</span> <span class="token string">'性别'</span>
+<span class="token punctuation">)</span> <span class="token keyword">comment</span> <span class="token string">'学生信息表'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h4 id="外键约束"><a href="#外键约束" class="headerlink" title="外键约束"></a>外键约束</h4><h5 id="父表：具有【外键具体内容】的表"><a href="#父表：具有【外键具体内容】的表" class="headerlink" title="父表：具有【外键具体内容】的表"></a>父表：具有【外键具体内容】的表</h5><h5 id="子表：被外键约束的表"><a href="#子表：被外键约束的表" class="headerlink" title="子表：被外键约束的表"></a>子表：被外键约束的表</h5><h5 id="添加外键"><a href="#添加外键" class="headerlink" title="添加外键"></a>添加外键</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 创建时添加</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> 表名<span class="token punctuation">(</span>
+	字段名 数据名
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token punctuation">[</span><span class="token keyword">CONSTRAINT</span><span class="token punctuation">]</span> <span class="token punctuation">[</span>外键名称<span class="token punctuation">]</span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>外键字段名<span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> 主表（主表中字段名）
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
+<span class="token comment">-- 创建后添加</span>
+<span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">ADD</span> <span class="token keyword">CONSTRAINT</span> 外键名称 <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>子表中外键字段名<span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> 主表<span class="token punctuation">(</span>主表中字段名<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="2-创建"><a href="#2-创建" class="headerlink" title="2. 创建"></a>2. 创建</h3><p>通用语法 括号内可选</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 数据库名 <span class="token punctuation">[</span><span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> 字符集<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">COLLATE</span> 排序规则<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="删除外键"><a href="#删除外键" class="headerlink" title="删除外键"></a>删除外键</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">DROP</span> <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span> 外键名；<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h5 id="如果不存在会直接创建，如果存在会创建失败"><a href="#如果不存在会直接创建，如果存在会创建失败" class="headerlink" title="如果不存在会直接创建，如果存在会创建失败"></a>如果不存在会直接创建，如果存在会创建失败</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="删除-更新行为"><a href="#删除-更新行为" class="headerlink" title="删除/更新行为"></a>删除/更新行为</h5><table>
+<thead>
+<tr>
+<th>行为</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NO ACTION / RESTRICT</td>
+<td>当父表中删除/更新对应记录时，首先检查该纪录是否有对应外键，如有，则不允许删除/更新。(默认行为)</td>
+</tr>
+<tr>
+<td>CASCADE</td>
+<td>当父表中删除/更新对应记录时，首先检查该纪录是否有对应外键，如有，则也删除/更新外键在子表中的记录。</td>
+</tr>
+<tr>
+<td>SET NULL</td>
+<td>当父表中删除/更新对应记录时，首先检查该纪录是否有对应外键，如有，则设置子表中该外键值为NULL(这就要求该外键允许取NULL)。</td>
+</tr>
+<tr>
+<td>SET DEFAULT</td>
+<td>父表有变更时，子表将外键列设置成一个默认的值(lnnobd不支持)。</td>
+</tr>
+</tbody></table>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> 表名 <span class="token keyword">ADD</span> <span class="token keyword">CONSTRAINT</span> 外键名称 <span class="token keyword">FOREIGN</span> <span class="token keyword">KEY</span><span class="token punctuation">(</span>外键字段<span class="token punctuation">)</span> <span class="token keyword">REFERENCES</span> 主表名<span class="token punctuation">(</span>主表字段名<span class="token punctuation">)</span> <span class="token keyword">ON</span> <span class="token keyword">UPDATE</span> <span class="token keyword">CASCADE</span> <span class="token keyword">ON</span> <span class="token keyword">DELETE</span> <span class="token keyword">CASCADE</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h5 id="创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。"><a href="#创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。" class="headerlink" title="创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。"></a>创建之前进行存在性检查，如果不存在会创建，已存在则不理会该命令。</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h5 id="指定字符集"><a href="#指定字符集" class="headerlink" title="指定字符集"></a>指定字符集</h5><h6 id="utf8存储长度为3字节"><a href="#utf8存储长度为3字节" class="headerlink" title="utf8存储长度为3字节"></a>utf8存储长度为3字节</h6><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名 <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> utf8<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h6 id="utf8mb4支持4字节"><a href="#utf8mb4支持4字节" class="headerlink" title="utf8mb4支持4字节"></a>utf8mb4支持4字节</h6><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> 数据库名 <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARSET</span> utf8mb4<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h3 id="3-删除"><a href="#3-删除" class="headerlink" title="3.  删除"></a>3.  删除</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">DROP</span> <span class="token keyword">DATABASE</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h3 id="4-使用"><a href="#4-使用" class="headerlink" title="4. 使用"></a>4. 使用</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">USE</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h3 id="5-查看当前处于哪个数据库"><a href="#5-查看当前处于哪个数据库" class="headerlink" title="5. 查看当前处于哪个数据库"></a>5. 查看当前处于哪个数据库</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">DATABASE</span> 数据库名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">alter</span> <span class="token keyword">table</span> emp
+    <span class="token keyword">add</span> <span class="token keyword">constraint</span> fk_emp_dept_id
+        <span class="token keyword">foreign</span> <span class="token keyword">key</span><span class="token punctuation">(</span>dept_id<span class="token punctuation">)</span> <span class="token keyword">references</span> dept<span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+            <span class="token keyword">on</span> <span class="token keyword">update</span> <span class="token keyword">set</span> <span class="token boolean">null</span> <span class="token keyword">on</span> <span class="token keyword">delete</span> <span class="token keyword">set</span> <span class="token boolean">null</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -478,7 +544,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/03/04/Mysql1%20%E6%93%8D%E4%BD%9C%E5%BA%93/">https://sakkana.github.io/2022/03/04/Mysql1%20%E6%93%8D%E4%BD%9C%E5%BA%93/</a>
+                    <a href="https://sakkana.github.io/2022/03/06/Mysql6%20%E7%BA%A6%E6%9D%9F/">https://sakkana.github.io/2022/03/06/Mysql6%20%E7%BA%A6%E6%9D%9F/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -561,17 +627,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/03/04/Mysql2%20%E6%93%8D%E4%BD%9C%E8%A1%A8/">
+                <a href="/2022/03/06/Mysql6%20%E7%BA%A6%E6%9D%9F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="MySql - 2 操作数据表 DDL">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="MySql - 7 约束">
                         
-                        <span class="card-title">MySql - 2 操作数据表 DDL</span>
+                        <span class="card-title">MySql - 7 约束</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -581,9 +648,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-06
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -596,6 +663,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -614,13 +682,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/03/03/Java%20OOP/">
+                <a href="/2022/03/06/Mysql6%20%E5%87%BD%E6%95%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Java - OOP">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="MySql - 6 函数">
                         
-                        <span class="card-title">Java - OOP</span>
+                        <span class="card-title">MySql - 6 函数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -631,12 +699,16 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-06
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -644,8 +716,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Java/">
-                        <span class="chip bg-color">Java</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
                     </a>
                     
                 </div>
