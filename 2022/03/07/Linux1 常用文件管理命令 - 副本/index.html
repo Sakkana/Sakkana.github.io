@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="并查集, 魚のブログ">
+    <meta name="keywords" content="Linux - 1 常用文件管理命令, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>并查集 | 魚のブログ</title>
+    <title>Linux - 1 常用文件管理命令 | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">并查集</h1>
+                    <h1 class="description center-align post-title">Linux - 1 常用文件管理命令</h1>
                 </div>
             </div>
         </div>
@@ -371,8 +371,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                                <span class="chip bg-color">数据结构</span>
+                            <a href="/tags/Linux/">
+                                <span class="chip bg-color">Linux</span>
                             </a>
                         
                     </div>
@@ -383,8 +383,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                算法
+                            <a href="/categories/Linux/" class="post-category">
+                                Linux
                             </a>
                         
                     </div>
@@ -396,7 +396,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-02
+                    2022-03-07
                 </div>
                 
 
@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    441
+                    659
                 </div>
                 
 
@@ -425,71 +425,59 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>一共有 n 个数，编号是  1 ~ n，最开始每个数各自在一个集合中。</p>
-<p>现在要进行 m 个操作，操作共有两种：</p>
-<ol>
-<li><code>M a b</code>，将编号为 a 和 b 的两个数所在的集合合并，如果两个数已经在同一个集合中，则忽略这个操作；</li>
-<li><code>Q a b</code>，询问编号为 a 和 b 的两个数是否在同一个集合中；</li>
-</ol>
-<h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行输入整数 n 和 m。</p>
-<p>接下来 m 行，每行包含一个操作指令，指令为 <code>M a b</code> 或 <code>Q a b</code> 中的一种。</p>
-<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>对于每个询问指令 <code>Q a b</code>，都要输出一个结果，如果 a 和 b 在同一集合内，则输出 <code>Yes</code>，否则输出 <code>No</code>。</p>
-<p>每个结果占一行。</p>
-<h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ n, m ≤ 10<sup>5</sup></p>
-<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">4 5
-M 1 2
-M 3 4
-Q 1 2
-Q 1 3
-Q 3 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><h5 id="1-ctrl-c"><a href="#1-ctrl-c" class="headerlink" title="(1) ctrl c"></a>(1) ctrl c</h5><p>​    取消命令，并且换行</p>
+<p>​    杀死某个进程</p>
+<h5 id="2-ctrl-u"><a href="#2-ctrl-u" class="headerlink" title="(2) ctrl u"></a>(2) ctrl u</h5><p>​    清空本行命令</p>
+<h5 id="3-tab键"><a href="#3-tab键" class="headerlink" title="(3) tab键"></a>(3) tab键</h5><p>​    可以补全命令和文件名，如果补全不了快速按两下tab键，可以显示备选选项</p>
+<p>​    此外， ↑↓方向键可以显示上一条命令或者下一条命令</p>
+<h5 id="4-ls"><a href="#4-ls" class="headerlink" title="(4) ls"></a>(4) ls</h5><p>​    列出当前目录下所有文件，</p>
+<p>​    蓝色的是文件夹，</p>
+<p>​    白色的是普通文件，</p>
+<p>​    绿色的是可执行文件</p>
+<h5 id="ls-l"><a href="#ls-l" class="headerlink" title="ls -l"></a>ls -l</h5><p>​        查看每一个文件的详细信息</p>
+<h5 id="ls-lh"><a href="#ls-lh" class="headerlink" title="ls -lh"></a>ls -lh</h5><p>​        假如某个文件大小是30952Byte，这个单位不容易查看，输入参数h就会显示31K</p>
+<h5 id="ls-a-all"><a href="#ls-a-all" class="headerlink" title="ls -a      (all)"></a>ls -a      (all)</h5><p>​    可以看到很多被隐藏的文件(如果文件名以【.】一个点开头就是隐藏文件)</p>
+<h5 id="ls-A"><a href="#ls-A" class="headerlink" title="ls -A"></a>ls -A</h5><p>​    不显示当前目录，上层目录</p>
+<h5 id="5-pwd"><a href="#5-pwd" class="headerlink" title="(5) pwd:"></a>(5) pwd:</h5><p>​    显示当前路径</p>
+<h5 id="6-cd-文件名-change-directory"><a href="#6-cd-文件名-change-directory" class="headerlink" title="(6) cd 文件名     (change directory)"></a>(6) cd 文件名     (change directory)</h5><p>​    进入该文件目录下, </p>
+<h5 id="cd"><a href="#cd" class="headerlink" title="cd .."></a>cd ..</h5><p>​    返回上层目录</p>
+<h5 id="cd-1"><a href="#cd-1" class="headerlink" title="cd -"></a>cd -</h5><pre><code> 返回上一个呆过的目录
+</code></pre>
+<h5 id="7-cp-已有文件a-新建文件b-复制-粘贴-重命名"><a href="#7-cp-已有文件a-新建文件b-复制-粘贴-重命名" class="headerlink" title="(7) cp 已有文件a 新建文件b      (复制+粘贴+重命名)"></a>(7) cp 已有文件a 新建文件b      (复制+粘贴+重命名)</h5><p>​    将文件a复制成文件b，b可以是一个路径，比如../dir_c/b.txt，表示上层目录下的dir_c文件夹下的文件b.txt</p>
+<h5 id="8-mkdir-文件夹名a"><a href="#8-mkdir-文件夹名a" class="headerlink" title="(8) mkdir 文件夹名a"></a>(8) mkdir 文件夹名a</h5><p>​    创建目录a</p>
+<pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">创建有空格个文件夹名
+mkdir a\ b ---&gt; 文件名为'a b'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">Yes
-No
-Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdio&gt;</span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-
-<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">1e5</span> <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> p<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> n<span class="token punctuation">,</span> m<span class="token punctuation">;</span>
-
-<span class="token comment">// 带路径压缩返回祖宗节点</span>
-<span class="token keyword">int</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">!=</span> x<span class="token punctuation">)</span> p<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> p<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    cin <span class="token operator">&gt;&gt;</span> n <span class="token operator">&gt;&gt;</span> m<span class="token punctuation">;</span>
-    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span> p<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>	<span class="token comment">// 初始化， 刚开始p[i] = i, 每个人都是一个独立的集合</span>
-    
-    <span class="token keyword">while</span><span class="token punctuation">(</span>m<span class="token operator">--</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">char</span> op<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">//%s吃掉空格，回车... %c会读乱七八糟的字符</span>
-        <span class="token keyword">int</span> a<span class="token punctuation">,</span> b<span class="token punctuation">;</span>
-        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%s%d%d"</span><span class="token punctuation">,</span> op<span class="token punctuation">,</span> <span class="token operator">&amp;</span>a<span class="token punctuation">,</span> <span class="token operator">&amp;</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>op<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token char">'M'</span><span class="token punctuation">)</span> p<span class="token punctuation">[</span><span class="token function">find</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">else</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">find</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">find</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Yes"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">else</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"No"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="mkdir-a-b-c-p"><a href="#mkdir-a-b-c-p" class="headerlink" title="mkdir a/b/c -p"></a>mkdir a/b/c -p</h5><p>​     创建嵌套的父子文件夹</p>
+<h5 id="9-rm-文件名a"><a href="#9-rm-文件名a" class="headerlink" title="(9) rm 文件名a"></a>(9) rm 文件名a</h5><p>​    删除普通文件</p>
+<h5 id="rm-文件夹名a-r"><a href="#rm-文件夹名a-r" class="headerlink" title="rm 文件夹名a -r:"></a>rm 文件夹名a -r:</h5><p>​    删除文件夹</p>
+<p>​     -r 递归删除</p>
+<p>​     rm *.txt 删除所有的txt文件</p>
+<p>​     rm a.txt b.txt 同时删除两个</p>
+<h5 id="10-mv-旧文件a-旧文件b-剪切-粘贴"><a href="#10-mv-旧文件a-旧文件b-剪切-粘贴" class="headerlink" title="(10) mv 旧文件a 旧文件b      (剪切+粘贴)"></a>(10) mv 旧文件a 旧文件b      (剪切+粘贴)</h5><p>​    将XXX文件移动到YYY，和cp命令一样，XXX和YYY可以是一个路径；</p>
+<p>​    <em>重命名</em>也是用这个命令</p>
+<h5 id="11-touch-XXX"><a href="#11-touch-XXX" class="headerlink" title="(11) touch XXX:"></a>(11) touch XXX:</h5><p>​    创建一个文件</p>
+<h5 id="12-cat-文件a"><a href="#12-cat-文件a" class="headerlink" title="(12) cat 文件a:"></a>(12) cat 文件a:</h5><p>​    展示文件a中的内容</p>
+<h5 id="13-复制文本"><a href="#13-复制文本" class="headerlink" title="(13) 复制文本"></a>(13) 复制文本</h5><p>​    windows/Linux下：Ctrl + insert，Mac下：command + c</p>
+<h5 id="14-粘贴文本"><a href="#14-粘贴文本" class="headerlink" title="(14) 粘贴文本"></a>(14) 粘贴文本</h5><p>​    windows/Linux下：Shift + insert，Mac下：command + v</p>
+<p>一套后端框架可以服务多个应用(app, web…)</p>
+<p>当前端点击一个链接，将这个URL作为函数参数传到后端，后端返回一个HTML文件，前端渲染成精美的网页。‘</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">string f(URL)
+{
+	......
+	return HTML;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<blockquote>
-<p> 并查集支持操作：</p>
-<p> 1.将两个集合合并<br>  2.询问两个元素是否在同一个集合</p>
-<p>  每一个集合都用一颗树来维护，树根的编号就是整个集合的编号</p>
-</blockquote>
 
+<p>根目录： /</p>
+<p>home：所有用户的家目录</p>
+<p>bin：存常用可执行文件命令</p>
+<p>etc：配置文件(部署一个网页 如nginx)</p>
+<p>var : log -文件日志</p>
+<p>lib：安装包，头文件</p>
+<p>proc：进程相关信息</p>
+<h3 id="一个点代表当前目录"><a href="#一个点代表当前目录" class="headerlink" title=". 一个点代表当前目录"></a>. 一个点代表当前目录</h3><h3 id="两个点代表上一层目录"><a href="#两个点代表上一层目录" class="headerlink" title=".. 两个点代表上一层目录"></a>.. 两个点代表上一层目录</h3><h3 id="代表home里面某个用户的家目录-俗称回城"><a href="#代表home里面某个用户的家目录-俗称回城" class="headerlink" title="~/ 代表home里面某个用户的家目录 俗称回城"></a>~/ 代表home里面某个用户的家目录 俗称回城</h3>
                 
             </div>
             <hr/>
@@ -515,7 +503,7 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/02/02/%E5%B9%B6%E6%9F%A5%E9%9B%86/">https://sakkana.github.io/2022/02/02/%E5%B9%B6%E6%9F%A5%E9%9B%86/</a>
+                    <a href="https://sakkana.github.io/2022/03/07/Linux1%20%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4%20-%20%E5%89%AF%E6%9C%AC/">https://sakkana.github.io/2022/03/07/Linux1%20%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4%20-%20%E5%89%AF%E6%9C%AC/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -553,8 +541,8 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                                    <span class="chip bg-color">数据结构</span>
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                         </div>
@@ -602,13 +590,13 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/02/04/DFS%20-%20n%E7%9A%87%E5%90%8E/">
+                <a href="/2022/03/07/Linux2%20tmux%E5%92%8Cvim/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="DFS - n皇后">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Linux - 2 tmux和vim">
                         
-                        <span class="card-title">DFS - n皇后</span>
+                        <span class="card-title">Linux - 2 tmux和vim</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -619,14 +607,14 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-04
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-07
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
                                 </a>
                             
                             
@@ -636,8 +624,8 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/">
-                        <span class="chip bg-color">深度优先搜索</span>
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
                 </div>
@@ -651,13 +639,13 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/02/%E6%A8%A1%E6%8B%9F%E5%A0%86/">
+                <a href="/2022/03/06/Mysql7%20%E7%BA%A6%E6%9D%9F/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="模拟堆">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="MySql - 7 约束">
                         
-                        <span class="card-title">模拟堆</span>
+                        <span class="card-title">MySql - 7 约束</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -668,14 +656,14 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-06
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
                                 </a>
                             
                             
@@ -685,8 +673,8 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                        <span class="chip bg-color">数据结构</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
                     </a>
                     
                 </div>

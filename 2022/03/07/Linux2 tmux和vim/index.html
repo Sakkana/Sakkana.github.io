@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Linux - 1 常用文件管理命令, 魚のブログ">
+    <meta name="keywords" content="Linux - 2 tmux和vim, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Linux - 1 常用文件管理命令 | 魚のブログ</title>
+    <title>Linux - 2 tmux和vim | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -255,7 +255,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Linux - 1 常用文件管理命令</h1>
+                    <h1 class="description center-align post-title">Linux - 2 tmux和vim</h1>
                 </div>
             </div>
         </div>
@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    659
+                    1.5k
                 </div>
                 
 
@@ -425,59 +425,135 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><h5 id="1-ctrl-c"><a href="#1-ctrl-c" class="headerlink" title="(1) ctrl c"></a>(1) ctrl c</h5><p>​    取消命令，并且换行</p>
-<p>​    杀死某个进程</p>
-<h5 id="2-ctrl-u"><a href="#2-ctrl-u" class="headerlink" title="(2) ctrl u"></a>(2) ctrl u</h5><p>​    清空本行命令</p>
-<h5 id="3-tab键"><a href="#3-tab键" class="headerlink" title="(3) tab键"></a>(3) tab键</h5><p>​    可以补全命令和文件名，如果补全不了快速按两下tab键，可以显示备选选项</p>
-<p>​    此外， ↑↓方向键可以显示上一条命令或者下一条命令</p>
-<h5 id="4-ls"><a href="#4-ls" class="headerlink" title="(4) ls"></a>(4) ls</h5><p>​    列出当前目录下所有文件，</p>
-<p>​    蓝色的是文件夹，</p>
-<p>​    白色的是普通文件，</p>
-<p>​    绿色的是可执行文件</p>
-<h5 id="ls-l"><a href="#ls-l" class="headerlink" title="ls -l"></a>ls -l</h5><p>​        查看每一个文件的详细信息</p>
-<h5 id="ls-lh"><a href="#ls-lh" class="headerlink" title="ls -lh"></a>ls -lh</h5><p>​        假如某个文件大小是30952Byte，这个单位不容易查看，输入参数h就会显示31K</p>
-<h5 id="ls-a-all"><a href="#ls-a-all" class="headerlink" title="ls -a      (all)"></a>ls -a      (all)</h5><p>​    可以看到很多被隐藏的文件(如果文件名以【.】一个点开头就是隐藏文件)</p>
-<h5 id="ls-A"><a href="#ls-A" class="headerlink" title="ls -A"></a>ls -A</h5><p>​    不显示当前目录，上层目录</p>
-<h5 id="5-pwd"><a href="#5-pwd" class="headerlink" title="(5) pwd:"></a>(5) pwd:</h5><p>​    显示当前路径</p>
-<h5 id="6-cd-文件名-change-directory"><a href="#6-cd-文件名-change-directory" class="headerlink" title="(6) cd 文件名     (change directory)"></a>(6) cd 文件名     (change directory)</h5><p>​    进入该文件目录下, </p>
-<h5 id="cd"><a href="#cd" class="headerlink" title="cd .."></a>cd ..</h5><p>​    返回上层目录</p>
-<h5 id="cd-1"><a href="#cd-1" class="headerlink" title="cd -"></a>cd -</h5><pre><code> 返回上一个呆过的目录
-</code></pre>
-<h5 id="7-cp-已有文件a-新建文件b-复制-粘贴-重命名"><a href="#7-cp-已有文件a-新建文件b-复制-粘贴-重命名" class="headerlink" title="(7) cp 已有文件a 新建文件b      (复制+粘贴+重命名)"></a>(7) cp 已有文件a 新建文件b      (复制+粘贴+重命名)</h5><p>​    将文件a复制成文件b，b可以是一个路径，比如../dir_c/b.txt，表示上层目录下的dir_c文件夹下的文件b.txt</p>
-<h5 id="8-mkdir-文件夹名a"><a href="#8-mkdir-文件夹名a" class="headerlink" title="(8) mkdir 文件夹名a"></a>(8) mkdir 文件夹名a</h5><p>​    创建目录a</p>
-<pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">创建有空格个文件夹名
-mkdir a\ b ---&gt; 文件名为'a b'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+                <h1 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h1><h5 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h5><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">(1) 分屏。
+(2) 允许断开Terminal连接后，继续运行进程。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h5 id="mkdir-a-b-c-p"><a href="#mkdir-a-b-c-p" class="headerlink" title="mkdir a/b/c -p"></a>mkdir a/b/c -p</h5><p>​     创建嵌套的父子文件夹</p>
-<h5 id="9-rm-文件名a"><a href="#9-rm-文件名a" class="headerlink" title="(9) rm 文件名a"></a>(9) rm 文件名a</h5><p>​    删除普通文件</p>
-<h5 id="rm-文件夹名a-r"><a href="#rm-文件夹名a-r" class="headerlink" title="rm 文件夹名a -r:"></a>rm 文件夹名a -r:</h5><p>​    删除文件夹</p>
-<p>​     -r 递归删除</p>
-<p>​     rm *.txt 删除所有的txt文件</p>
-<p>​     rm a.txt b.txt 同时删除两个</p>
-<h5 id="10-mv-旧文件a-旧文件b-剪切-粘贴"><a href="#10-mv-旧文件a-旧文件b-剪切-粘贴" class="headerlink" title="(10) mv 旧文件a 旧文件b      (剪切+粘贴)"></a>(10) mv 旧文件a 旧文件b      (剪切+粘贴)</h5><p>​    将XXX文件移动到YYY，和cp命令一样，XXX和YYY可以是一个路径；</p>
-<p>​    <em>重命名</em>也是用这个命令</p>
-<h5 id="11-touch-XXX"><a href="#11-touch-XXX" class="headerlink" title="(11) touch XXX:"></a>(11) touch XXX:</h5><p>​    创建一个文件</p>
-<h5 id="12-cat-文件a"><a href="#12-cat-文件a" class="headerlink" title="(12) cat 文件a:"></a>(12) cat 文件a:</h5><p>​    展示文件a中的内容</p>
-<h5 id="13-复制文本"><a href="#13-复制文本" class="headerlink" title="(13) 复制文本"></a>(13) 复制文本</h5><p>​    windows/Linux下：Ctrl + insert，Mac下：command + c</p>
-<h5 id="14-粘贴文本"><a href="#14-粘贴文本" class="headerlink" title="(14) 粘贴文本"></a>(14) 粘贴文本</h5><p>​    windows/Linux下：Shift + insert，Mac下：command + v</p>
-<p>一套后端框架可以服务多个应用(app, web…)</p>
-<p>当前端点击一个链接，将这个URL作为函数参数传到后端，后端返回一个HTML文件，前端渲染成精美的网页。‘</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">string f(URL)
-{
-	......
-	return HTML;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h5><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">一个tmux可以包含多个session，一个session可以包含多个window，一个window可以包含多个pane。
+  实例：
+      tmux:
+          session 0:
+              window 0:
+                  pane 0
+                  pane 1
+                  pane 2
+                  ...
+              window 1
+              window 2
+              ...
+          session 1
+          session 2
+          ...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h5><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">(1) tmux：新建一个session，其中包含一个window，
+	window中包含一个pane，pane里打开了一个shell对话框。
+(2) 按下Ctrl + b后手指松开，然后按%：
+		将当前pane左右平分成两个pane。
+(3) 按下Ctrl + b后手指松开，然后按"（注意是双引号"）：
+		将当前pane上下平分成两个pane。
+(4) Ctrl + d：
+	关闭当前pane；
+	如果当前window的所有pane均已关闭，则自动关闭window；
+	如果当前session的所有window均已关闭，则自动关闭session。
+(5) 鼠标点击可以选pane。
+(6) 按下ctrl + b后手指松开，然后按方向键：
+	选择相邻的pane。
+(7) 鼠标拖动pane之间的分割线，
+	可以调整分割线的位置。
+(8) 按住ctrl + b的同时按方向键，
+	可以调整pane之间分割线的位置。
+(9) 按下ctrl + b后手指松开，然后按z：
+	将当前pane全屏/取消全屏。
+(10) 按下ctrl + b后手指松开，然后按d：
+	挂起当前session。
+(11) tmux a：
+	打开之前挂起的session。
+(12) 按下ctrl + b后手指松开，然后按s：
+	选择其它session。
+     方向键 —— 上：选择上一项 session/window/pane
+     方向键 —— 下：选择下一项 session/window/pane
+     方向键 —— 右：展开当前项 session/window
+     方向键 —— 左：闭合当前项 session/window
+(13) 按下Ctrl + b后手指松开，然后按c：
+	在当前session中创建一个新的window。
+(14) 按下Ctrl + b后手指松开，然后按w：
+	选择其他window，操作方法与(12)完全相同。
+(15) 按下Ctrl + b后手指松开，然后按PageUp：
+	翻阅当前pane内的内容。
+	用ctrl+c退出阅读模式。
+(16) 鼠标滚轮：翻阅当前pane内的内容。
+(17) 在tmux中选中文本时，需要按住shift键。（仅支持Windows和Linux，不支持Mac，不过该操作并不是必须的，因此影响不大）
+(18) tmux中复制/粘贴文本的通用方式：
+    (1) 按下Ctrl + b后松开手指，然后按[
+    (2) 用鼠标选中文本，被选中的文本会被自动复制到tmux的剪贴板
+    (3) 按下Ctrl + b后松开手指，然后按]，会将剪贴板中的内容粘贴到光标处<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>ctrl+s 暂停屏幕输出<br>ctrl+q 恢复屏幕输出<br>ctrl+l 清屏，等同于Clear</p>
+<h1 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h1><p>功能</p>
+<pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">(1) 命令行模式下的文本编辑器。
+(2) 根据文件扩展名自动判别编程语言。支持代码缩进、代码高亮等功能。
+(3) 使用方式：vim filename
+	如果已有该文件，则打开它。
+	如果没有该文件，则打开个一个新的文件，并命名为filename<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h5><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">(1) 一般命令模式
+	默认模式。命令输入方式：类似于打游戏放技能，按不同字符，即可进行不同操作。可以复制、粘贴、删除文本等。
+(2) 编辑模式
+	在一般命令模式里按下i，会进入编辑模式。
+	按下ESC会退出编辑模式，返回到一般命令模式。
+(3) 命令行模式
+	在一般命令模式里按下:/?三个字母中的任意一个，会进入命令行模式。命令行在最下面。
+	可以查找、替换、保存、退出、配置编辑器等。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h5><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">(1) i：进入编辑模式
+(2) ESC：进入一般命令模式
+(3) h 或 左箭头键：光标向左移动一个字符
+(4) j 或 向下箭头：光标向下移动一个字符
+(5) k 或 向上箭头：光标向上移动一个字符
+(6) l 或 向右箭头：光标向右移动一个字符
+(7) n&lt;Space&gt;：n表示数字，按下数字后再按空格，光标会向右移动这一行的n个字符
+(8) 0 或 功能键[Home]：光标移动到本行开头
+(9) $ 或 功能键[End]：光标移动到本行末尾
+(10) G：光标移动到最后一行
+(11) :n 或 nG：n为数字，光标移动到第n行
+(12) gg：光标移动到第一行，相当于1G
+(13) n&lt;Enter&gt;：n为数字，光标向下移动n行
+(14) /word：向光标之下寻找第一个值为word的字符串。
+(15) ?word：向光标之上寻找第一个值为word的字符串。
+(16) n：重复前一个查找操作
+(17) N：反向重复前一个查找操作
+(18) :n1,n2s/word1/word2/g：n1与n2为数字，在第n1行与n2行之间寻找word1这个字符串，并将该字符串替换为	  word2
+(19) :1,$s/word1/word2/g：将全文的word1替换为word2
+(20) :1,$s/word1/word2/gc：将全文的word1替换为word2，且在替换前要求用户确认。
+(21) v：选中文本
+(22) d：删除选中的文本
+(23) dd: 删除当前行
+(24) y：复制选中的文本
+(25) yy: 复制当前行
+(26) p: 将复制的数据在光标的下一行/下一个位置粘贴
+(27) u：撤销
+(28) Ctrl + r：取消撤销
+(29) 大于号 &gt;：将选中的文本整体向右缩进一次
+(30) 小于号 &lt;：将选中的文本整体向左缩进一次
+(31) :w 保存
+(32) :w! 强制保存
+(33) :q 退出
+(34) :q! 强制退出
+(35) :wq 保存并退出
+(36) :set paste 设置成粘贴模式，取消代码自动缩进
+(37) :set nopaste 取消粘贴模式，开启代码自动缩进
+(38) :set nu 显示行号
+(39) :set nonu 隐藏行号
+(40) gg=G：将全文代码格式化
+(41) :noh 关闭查找关键词高亮
+(42) Ctrl + q：当vim卡死时，可以取消当前正在执行的命令<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h5><pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">每次用vim编辑文件时，会自动创建一个.filename.swp的临时文件。
+如果打开某个文件时，该文件的swp文件已存在，则会报错。
+此时解决办法有两种：
+	(1) 找到正在打开该文件的程序，并退出
+	(2) 直接删掉该swp文件即可<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-
-<p>根目录： /</p>
-<p>home：所有用户的家目录</p>
-<p>bin：存常用可执行文件命令</p>
-<p>etc：配置文件(部署一个网页 如nginx)</p>
-<p>var : log -文件日志</p>
-<p>lib：安装包，头文件</p>
-<p>proc：进程相关信息</p>
-<h3 id="一个点代表当前目录"><a href="#一个点代表当前目录" class="headerlink" title=". 一个点代表当前目录"></a>. 一个点代表当前目录</h3><h3 id="两个点代表上一层目录"><a href="#两个点代表上一层目录" class="headerlink" title=".. 两个点代表上一层目录"></a>.. 两个点代表上一层目录</h3><h3 id="代表home里面某个用户的家目录-俗称回城"><a href="#代表home里面某个用户的家目录-俗称回城" class="headerlink" title="~/ 代表home里面某个用户的家目录 俗称回城"></a>~/ 代表home里面某个用户的家目录 俗称回城</h3>
                 
             </div>
             <hr/>
@@ -503,7 +579,7 @@ mkdir a\ b ---&gt; 文件名为'a b'<span aria-hidden="true" class="line-numbers
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/03/07/Linux1%20%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4/">https://sakkana.github.io/2022/03/07/Linux1%20%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4/</a>
+                    <a href="https://sakkana.github.io/2022/03/07/Linux2%20tmux%E5%92%8Cvim/">https://sakkana.github.io/2022/03/07/Linux2%20tmux%E5%92%8Cvim/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -591,13 +667,13 @@ mkdir a\ b ---&gt; 文件名为'a b'<span aria-hidden="true" class="line-numbers
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2022/03/07/Linux1%20%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4/">
+                <a href="/2022/03/07/Linux2%20tmux%E5%92%8Cvim/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Linux - 1 常用文件管理命令">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Linux - 2 tmux和vim">
                         
-                        <span class="card-title">Linux - 1 常用文件管理命令</span>
+                        <span class="card-title">Linux - 2 tmux和vim</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -641,13 +717,13 @@ mkdir a\ b ---&gt; 文件名为'a b'<span aria-hidden="true" class="line-numbers
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/03/06/Mysql7%20%E7%BA%A6%E6%9D%9F/">
+                <a href="/2022/03/07/Linux1%20%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4%20-%20%E5%89%AF%E6%9C%AC/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="MySql - 7 约束">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Linux - 1 常用文件管理命令">
                         
-                        <span class="card-title">MySql - 7 约束</span>
+                        <span class="card-title">Linux - 1 常用文件管理命令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -658,14 +734,14 @@ mkdir a\ b ---&gt; 文件名为'a b'<span aria-hidden="true" class="line-numbers
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
                                 </a>
                             
                             
@@ -675,8 +751,8 @@ mkdir a\ b ---&gt; 文件名为'a b'<span aria-hidden="true" class="line-numbers
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
                 </div>
@@ -862,7 +938,7 @@ mkdir a\ b ---&gt; 文件名为'a b'<span aria-hidden="true" class="line-numbers
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">16.6k</span>&nbsp;字
+                class="white-color">18.1k</span>&nbsp;字
             
             
             
