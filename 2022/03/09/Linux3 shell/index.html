@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="はじめまして！, 魚のブログ">
+    <meta name="keywords" content="Linux-3 Shell, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>はじめまして！ | 魚のブログ</title>
+    <title>Linux-3 Shell | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">はじめまして！</h1>
+                    <h1 class="description center-align post-title">Linux-3 Shell</h1>
                 </div>
             </div>
         </div>
@@ -371,14 +371,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                <span class="chip bg-color">测试</span>
+                            <a href="/tags/Linux/">
+                                <span class="chip bg-color">Linux</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Linux/" class="post-category">
+                                Linux
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -387,7 +396,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-01-30
+                    2022-03-09
                 </div>
                 
 
@@ -396,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    8
+                    513
                 </div>
                 
 
@@ -416,11 +425,80 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>I’m a test blog.</p>
-<p>Omit me.</p>
-<p>Farwell.</p>
+                <h1 id="Shell-语法"><a href="#Shell-语法" class="headerlink" title="Shell 语法"></a>Shell 语法</h1><h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><h5 id="1-概论"><a href="#1-概论" class="headerlink" title="1.概论"></a>1.<a href="#index1">概论</a></h5><h5 id="2-注释"><a href="#2-注释" class="headerlink" title="2.注释"></a>2.<a href="#index2">注释</a></h5><h5 id="3-变量"><a href="#3-变量" class="headerlink" title="3.变量"></a>3.<a href="#index3">变量</a></h5><h5 id="4-默认变量"><a href="#4-默认变量" class="headerlink" title="4.默认变量"></a>4.<a href="#index4">默认变量</a></h5><h5 id="5-数组"><a href="#5-数组" class="headerlink" title="5.数组"></a>5.<a href="#index5">数组</a></h5><h5 id="6-expr命令"><a href="#6-expr命令" class="headerlink" title="6.expr命令"></a>6.<a href="#index6">expr命令</a></h5><h5 id="7-read命令"><a href="#7-read命令" class="headerlink" title="7.read命令"></a>7.<a href="#index7">read命令</a></h5><h5 id="8-echo命令"><a href="#8-echo命令" class="headerlink" title="8.echo命令"></a>8.<a href="#index8">echo命令</a></h5><h5 id="9-printf命令test命令与判断符号"><a href="#9-printf命令test命令与判断符号" class="headerlink" title="9.printf命令test命令与判断符号[]"></a>9.<a href="#index9">printf命令test命令与判断符号[]</a></h5><h5 id="10-判断语句"><a href="#10-判断语句" class="headerlink" title="10.判断语句"></a>10.<a href="#index10">判断语句</a></h5><h5 id="11-循环语句"><a href="#11-循环语句" class="headerlink" title="11.循环语句"></a>11.<a href="#index11">循环语句</a></h5><h5 id="12-函数"><a href="#12-函数" class="headerlink" title="12.函数"></a>12.<a href="#index12">函数</a></h5><h5 id="13-exit命令"><a href="#13-exit命令" class="headerlink" title="13.exit命令"></a>13.<a href="#index13">exit命令</a></h5><h5 id="14-文件重定向"><a href="#14-文件重定向" class="headerlink" title="14.文件重定向"></a>14.<a href="#index14">文件重定向</a></h5><h5 id="15-引入外部脚本"><a href="#15-引入外部脚本" class="headerlink" title="15.引入外部脚本"></a>15.<a href="#index15">引入外部脚本</a></h5><h3 id="1-概论-1"><a href="#1-概论-1" class="headerlink" title="1.概论"></a><span id="index1">1.概论</span></h3><h3 id="2-注释-1"><a href="#2-注释-1" class="headerlink" title="2.注释"></a><span id="index2">2.注释</span></h3><h3 id="3-变量-1"><a href="#3-变量-1" class="headerlink" title="3.变量"></a><span id="index3">3.变量</span></h3><h5 id="3-1定义变量"><a href="#3-1定义变量" class="headerlink" title="3.1定义变量"></a>3.1定义变量</h5><p>定义变量的三种方式</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">a='variable1' # 单引号定义
+b="variable2" # 双引号定义
+c=variable3   # 啥都不用加<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="3-2使用变量"><a href="#3-2使用变量" class="headerlink" title="3.2使用变量"></a>3.2使用变量</h5><p>使用变量的值需要加<code>$</code>或者<code>${}</code>,花括号主要是为了辅助解释器识别变量边界</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#! /bin/bash
+
+v1='variable1'
+v2="variable2"
+v3=variable3
+
+echo $v1
+echo ${v2}
+echo ${v3}是个大坏蛋<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>variable1<br>variable2<br>variable3是个大坏蛋</p>
 </blockquote>
+<h5 id="3-3-只读变量"><a href="#3-3-只读变量" class="headerlink" title="3.3 只读变量"></a>3.3 只读变量</h5><p>关键字<code>readonly</code>和<code>declare -r</code>都可以将一个变量声明为只读，相当于C/C++中的const</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">a="fish"                                                        
+echo $a
+
+readonly a		# 方式一
+declare -r a	# 方式二
+
+a="pig"
+echo $a	# 会报错，因为前面把它声明为readonly了<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>fish<br>./test.sh: line 9: a: readonly variable<br>fish</p>
+</blockquote>
+<h5 id="3-4-删除变量"><a href="#3-4-删除变量" class="headerlink" title="3.4 删除变量"></a>3.4 删除变量</h5><p>关键词<code>unset</code>删除变量</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">a="fish"
+echo $a
+
+unset a
+echo ${a}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>fish</p>
+</blockquote>
+<h5 id="3-5-变量类型"><a href="#3-5-变量类型" class="headerlink" title="3.5 变量类型"></a>3.5 变量类型</h5><ol>
+<li><p>自定义变量(局部变量)</p>
+<p>子进程不可以访问</p>
+</li>
+<li><p>环境变量(全局变量)</p>
+<p>子进程可以访问</p>
+</li>
+</ol>
+<p>局部变量 —&gt; 全局变量</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">acs@9e0ebfcd82d7:~$ name=yxc  # 定义变量
+acs@9e0ebfcd82d7:~$ export name  # 第一种方法
+acs@9e0ebfcd82d7:~$ declare -x name  # 第二种方法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>全局变量 —&gt; 局部变量</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">acs@9e0ebfcd82d7:~$ export name=yxc  # 定义全局变量
+acs@9e0ebfcd82d7:~$ declare +x name  # 改为局部变量<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h5 id="3-6-字符串"><a href="#3-6-字符串" class="headerlink" title="3.6 字符串"></a>3.6 字符串</h5><p>字符串可以用<code>单引号</code>，也可以用<code>双引号</code>,也可以<code>不用引号</code></p>
+<p>区别：</p>
+<ul>
+<li>单引号中的内容会原样输出，不会执行，不会取变量的值</li>
+<li>双引号中的内容可以执行，可以取变量的值</li>
+</ul>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">name=fish                                                                                                                                            
+echo '$hello, name \"hh\"'	# 单引号没啥用
+echo "hello, $name \"hh\""	# 双引号会小心翼翼地全部执行
+echo hello, $name \"hh\"	# 不带引号也会小心翼翼地全部执行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>$hello, name \ “hh\ “<br>hello, fish “hh”<br>hello, fish “hh”</p>
+</blockquote>
+<h6 id="获取字符长度"><a href="#获取字符长度" class="headerlink" title="获取字符长度"></a>获取字符长度</h6><p>`$</p>
 
                 
             </div>
@@ -447,7 +525,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/01/30/%E9%AD%9A%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0/">https://sakkana.github.io/2022/01/30/%E9%AD%9A%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0/</a>
+                    <a href="https://sakkana.github.io/2022/03/09/Linux3%20shell/">https://sakkana.github.io/2022/03/09/Linux3%20shell/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -485,8 +563,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                    <span class="chip bg-color">测试</span>
+                                <a href="/tags/Linux/">
+                                    <span class="chip bg-color">Linux</span>
                                 </a>
                             
                         </div>
@@ -530,17 +608,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/01/30/%E6%98%A5%E6%B1%9F%E8%8A%B1%E6%9C%88%E5%A4%9C/">
+                <a href="/2022/03/09/Linux3%20shell/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="No Title">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Linux-3 Shell">
                         
-                        <span class="card-title">No Title</span>
+                        <span class="card-title">Linux-3 Shell</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -550,22 +629,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-09
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                        <span class="chip bg-color">测试</span>
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
                 </div>
@@ -579,13 +663,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/01/30/MySql/">
+                <a href="/2022/03/07/Linux2%20tmux%E5%92%8Cvim/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="MySQL - 语法0">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Linux - 2 tmux和vim">
                         
-                        <span class="card-title">MySQL - 语法0</span>
+                        <span class="card-title">Linux - 2 tmux和vim</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -596,12 +680,16 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-07
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -609,8 +697,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
                 </div>
