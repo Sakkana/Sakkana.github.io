@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="はじめまして！, 魚のブログ">
+    <meta name="keywords" content="MySql - 8 多表查询, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>はじめまして！ | 魚のブログ</title>
+    <title>MySql - 8 多表查询 | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -255,7 +255,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">はじめまして！</h1>
+                    <h1 class="description center-align post-title">MySql - 8 多表查询</h1>
                 </div>
             </div>
         </div>
@@ -371,14 +371,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                <span class="chip bg-color">测试</span>
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                <span class="chip bg-color">数据库</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -387,7 +396,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-01-30
+                    2022-03-10
                 </div>
                 
 
@@ -396,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    8
+                    224
                 </div>
                 
 
@@ -416,11 +425,40 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>I’m a test blog.</p>
-<p>Omit me.</p>
-<p>Farwell.</p>
-</blockquote>
+                <h1 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h1><h2 id="1-多表关系"><a href="#1-多表关系" class="headerlink" title="1.多表关系"></a>1.多表关系</h2><ul>
+<li><p>一对多</p>
+<p>案例：部门 - 员工</p>
+<p>关系：一个员工只能归属一个部门，但一个部门可以对应多个员工</p>
+<p>实现：在多的一方建立<code>外键</code>，指向一的一方的<code>主键</code></p>
+</li>
+<li><p>多对多</p>
+<p>案例：学生 - 课程</p>
+<p>关系：一个学生可以选修多门课程，一门课程可以供多个学生选择</p>
+<p>实现：建立第三张中间表，中间表至少包含两个外键，分别关联两方的主键</p>
+<h5 id="学生表"><a href="#学生表" class="headerlink" title="学生表"></a>学生表</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> student<span class="token punctuation">(</span>
+    id <span class="token keyword">int</span> <span class="token keyword">auto_increment</span> <span class="token keyword">primary</span> <span class="token keyword">key</span> <span class="token punctuation">,</span>
+    name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">no</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">comment</span> <span class="token string">'学生表'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="课程表"><a href="#课程表" class="headerlink" title="课程表"></a>课程表</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> course<span class="token punctuation">(</span>
+    id <span class="token keyword">int</span> <span class="token keyword">auto_increment</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+    name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">comment</span> <span class="token string">'课程表'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="中间表"><a href="#中间表" class="headerlink" title="中间表"></a>中间表</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> stuent_course<span class="token punctuation">(</span>
+  id <span class="token keyword">int</span> <span class="token keyword">auto_increment</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>
+  studentid <span class="token keyword">int</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">comment</span> <span class="token string">'学生id'</span><span class="token punctuation">,</span>
+  courseid <span class="token keyword">int</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">comment</span> <span class="token string">'课程id'</span><span class="token punctuation">,</span>
+  <span class="token keyword">constraint</span> fk_courseid <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>courseid<span class="token punctuation">)</span> <span class="token keyword">references</span> course <span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token punctuation">,</span>
+  <span class="token keyword">constraint</span> fk_studentid <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>studentid<span class="token punctuation">)</span> <span class="token keyword">references</span> student <span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">comment</span> <span class="token string">'学生课程中间表'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://img-blog.csdnimg.cn/4bc81f972452447aad104167e8e44414.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+</li>
+<li><p>一对一</p>
+</li>
+</ul>
 
                 
             </div>
@@ -447,7 +485,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/01/30/%E9%AD%9A%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0/">https://sakkana.github.io/2022/01/30/%E9%AD%9A%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0/</a>
+                    <a href="https://sakkana.github.io/2022/03/10/Mysql8%20%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/">https://sakkana.github.io/2022/03/10/Mysql8%20%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -485,8 +523,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                    <span class="chip bg-color">测试</span>
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                    <span class="chip bg-color">数据库</span>
                                 </a>
                             
                         </div>
@@ -530,17 +568,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/01/30/%E6%98%A5%E6%B1%9F%E8%8A%B1%E6%9C%88%E5%A4%9C/">
+                <a href="/2022/03/10/Mysql8%20%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="No Title">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="MySql - 8 多表查询">
                         
-                        <span class="card-title">No Title</span>
+                        <span class="card-title">MySql - 8 多表查询</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -550,22 +589,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-10
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                        <span class="chip bg-color">测试</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
                     </a>
                     
                 </div>
@@ -579,13 +623,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/01/30/MySql/">
+                <a href="/2022/03/09/Linux3%20shell/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="MySQL - 语法0">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Linux - 3 Shell">
                         
-                        <span class="card-title">MySQL - 语法0</span>
+                        <span class="card-title">Linux - 3 Shell</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -596,12 +640,16 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-09
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -609,8 +657,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
                     </a>
                     
                 </div>

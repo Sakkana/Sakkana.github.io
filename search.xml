@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>MySql - 8 多表查询</title>
+      <link href="/2022/03/10/Mysql8%20%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/"/>
+      <url>/2022/03/10/Mysql8%20%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</url>
+      
+        <content type="html"><![CDATA[<h1 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h1><h2 id="1-多表关系"><a href="#1-多表关系" class="headerlink" title="1.多表关系"></a>1.多表关系</h2><ul><li><p>一对多</p><p>案例：部门 - 员工</p><p>关系：一个员工只能归属一个部门，但一个部门可以对应多个员工</p><p>实现：在多的一方建立<code>外键</code>，指向一的一方的<code>主键</code></p></li><li><p>多对多</p><p>案例：学生 - 课程</p><p>关系：一个学生可以选修多门课程，一门课程可以供多个学生选择</p><p>实现：建立第三张中间表，中间表至少包含两个外键，分别关联两方的主键</p><h5 id="学生表"><a href="#学生表" class="headerlink" title="学生表"></a>学生表</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> student<span class="token punctuation">(</span>    id <span class="token keyword">int</span> <span class="token keyword">auto_increment</span> <span class="token keyword">primary</span> <span class="token keyword">key</span> <span class="token punctuation">,</span>    name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>    <span class="token keyword">no</span> <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">comment</span> <span class="token string">'学生表'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><h5 id="课程表"><a href="#课程表" class="headerlink" title="课程表"></a>课程表</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> course<span class="token punctuation">(</span>    id <span class="token keyword">int</span> <span class="token keyword">auto_increment</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>    name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">comment</span> <span class="token string">'课程表'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><h5 id="中间表"><a href="#中间表" class="headerlink" title="中间表"></a>中间表</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> stuent_course<span class="token punctuation">(</span>  id <span class="token keyword">int</span> <span class="token keyword">auto_increment</span> <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">,</span>  studentid <span class="token keyword">int</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">comment</span> <span class="token string">'学生id'</span><span class="token punctuation">,</span>  courseid <span class="token keyword">int</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">comment</span> <span class="token string">'课程id'</span><span class="token punctuation">,</span>  <span class="token keyword">constraint</span> fk_courseid <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>courseid<span class="token punctuation">)</span> <span class="token keyword">references</span> course <span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token punctuation">,</span>  <span class="token keyword">constraint</span> fk_studentid <span class="token keyword">foreign</span> <span class="token keyword">key</span> <span class="token punctuation">(</span>studentid<span class="token punctuation">)</span> <span class="token keyword">references</span> student <span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">comment</span> <span class="token string">'学生课程中间表'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p><img src="https://img-blog.csdnimg.cn/4bc81f972452447aad104167e8e44414.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p></li><li><p>一对一</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Linux - 3 Shell</title>
       <link href="/2022/03/09/Linux3%20shell/"/>
       <url>/2022/03/09/Linux3%20shell/</url>
