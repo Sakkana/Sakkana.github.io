@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>MySql - 9 事务，并发问题</title>
+      <link href="/2022/03/14/Mysql9%20%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/"/>
+      <url>/2022/03/14/Mysql9%20%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h1 id="事务，并发问题"><a href="#事务，并发问题" class="headerlink" title="事务，并发问题"></a>事务，并发问题</h1><h3 id="事务操作"><a href="#事务操作" class="headerlink" title="事务操作"></a>事务操作</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">START</span> <span class="token keyword">TRANSACTION</span><span class="token punctuation">;</span><span class="token comment">-- 开启事务</span><span class="token keyword">COMMIT</span><span class="token punctuation">;</span> <span class="token operator">/</span> <span class="token keyword">ROLLBACK</span><span class="token punctuation">;</span><span class="token comment">-- 提交、回滚事务</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3 id="事务四大特性"><a href="#事务四大特性" class="headerlink" title="事务四大特性"></a>事务四大特性</h3><ul><li><p>原子性 - 事务中的一系列操作同生共死</p></li><li><p>一致性 - 能量守恒</p></li><li><p>隔离性 - 互不干扰</p></li><li><p>持久性 - 永久写入磁盘</p></li></ul><h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p><img src="https://img-blog.csdnimg.cn/f48e1a3807ad4955adc2baf97aa1ecd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="隔离级别"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p><h4 id="查看事务隔离级别"><a href="#查看事务隔离级别" class="headerlink" title="查看事务隔离级别"></a>查看事务隔离级别</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> @<span class="token variable">@TRANSACTION</span> IOSLATION<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="设置事务隔离级别"><a href="#设置事务隔离级别" class="headerlink" title="设置事务隔离级别"></a>设置事务隔离级别</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SET</span> <span class="token punctuation">[</span><span class="token keyword">SESSION</span><span class="token operator">|</span><span class="token keyword">GLOBAL</span><span class="token punctuation">]</span> <span class="token keyword">TRANSACTION</span> <span class="token keyword">ISOLATION</span> <span class="token keyword">LEVEL</span> <span class="token punctuation">[</span>隔离级别<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Linux - 4 ssh</title>
+      <link href="/2022/03/11/Linux4%20ssh/"/>
+      <url>/2022/03/11/Linux4%20ssh/</url>
+      
+        <content type="html"><![CDATA[<h1 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySql - 8 多表查询</title>
       <link href="/2022/03/10/Mysql8%20%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/"/>
       <url>/2022/03/10/Mysql8%20%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/</url>
