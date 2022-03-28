@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    906
+                    1.8k
                 </div>
                 
 
@@ -483,19 +483,19 @@
 <p>​        .a：后缀（固定）</p>
 <ul>
 <li><p>gcc 获得 .o文件</p>
-</li>
+<pre class="line-numbers language-gcc" data-language="gcc"><code class="language-gcc">gcc -c a.c b.c ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li><p>将 .o 文件打包，利用 ar 工具 （archive）</p>
-<pre class="line-numbers language-linux" data-language="linux"><code class="language-linux">ar rcs libxxx.a xxx.o xxx.o ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<pre class="line-numbers language-gcc" data-language="gcc"><code class="language-gcc">ar rcs libxxx.a a.o b.o ...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 </ul>
 <blockquote>
 <p>r - 将文件插入备存文件中</p>
 <p>c - 建立备存文件</p>
 <p>s - 索引</p>
 </blockquote>
-<h3 id="静态库制作流程"><a href="#静态库制作流程" class="headerlink" title="静态库制作流程"></a>静态库制作流程</h3><h5 id="1-写好库中的代码并生成静态库"><a href="#1-写好库中的代码并生成静态库" class="headerlink" title="1. 写好库中的代码并生成静态库"></a>1. 写好库中的代码并生成静态库</h5><p>该库只包含四个简单的函数：add, sub, multi,div</p>
+<h4 id="静态库制作流程"><a href="#静态库制作流程" class="headerlink" title="静态库制作流程"></a>静态库制作流程</h4><h5 id="1-写好库中的代码并生成静态库"><a href="#1-写好库中的代码并生成静态库" class="headerlink" title="1. 写好库中的代码并生成静态库"></a>1. 写好库中的代码并生成静态库</h5><p>该库只包含四个简单的函数：add, sub, multi,div</p>
 <p>此外，还有个head.h包含这四个函数的声明</p>
 <p>还有个main.c用于测试</p>
-<p><img src="https://img-blog.csdnimg.cn/b78289ecdca6450f8eebe8ba982c284c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="所需文件"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/b78289ecdca6450f8eebe8ba982c284c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="所需文件"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
 <p>这部分代码如下</p>
 <p><img src="https://img-blog.csdnimg.cn/b83e724ebcc2464a9e6cb3c04a624bef.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="所需文件代码"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
 <p>生成静态库需要用到四个库函数的.o文件(.o文件经过链接之后就生成了可执行文件)</p>
@@ -513,19 +513,97 @@
 <p>解决办法有二：</p>
 <ul>
 <li>将head.h与main.c置于同一个目录下</li>
-<li>利用-I（大写i） dir<br>　　在你是用#include”file”的时候,gcc/g++会先在当前目录查找你所制定的头文件,如果没有找到,他回到缺省的头文件目录找,如果使用-I制定了目录,他会先在你所制定的目录查找,然后再按常规的顺序去找.<br>　　对于#include<file>,gcc/g++会到-I制定的目录查找,查找不到,然后将到系统的缺省的头文件目录查找 </file></li>
+<li>利用-I（大写i） dir<br>　　在你是用#include”file”的时候,gcc/g++会先在当前目录查找你所制定的头文件,如果没有找到,他回到缺省的头文件目录找,如果使用-I制定了目录,他会先在你所制定的目录查找,然后再按常规的顺序去找.<br>  　　对于#include<file>,gcc/g++会到-I制定的目录查找,查找不到,然后将到系统的缺省的头文件目录查找 </file></li>
 </ul>
 <p>这里采用第二种</p>
 <p>然而，这样子还会报错，因为gcc找不到calc这个库</p>
 <ul>
-<li><p>-l（小写L） library （库的名字，不是库文件的名字）<br>　　制定编译的时候使用的库<br>　　例子用法 ： gcc -l curses hello.c  —&gt; 使用ncurses库编译程序 
-　　 </p>
-</li>
+<li>-l（小写L） library （库的名字，不是库文件的名字）<br>　　制定编译的时候使用的库<br>  　　例子用法 ： gcc -l curses hello.c  —&gt; 使用ncurses库编译程序 </li>
+</ul>
+<ul>
 <li><p>-L dir<br>　　制定编译的时候，搜索库的路径。</p>
 <p>​        比如你自己的库，可以用它制定目录，不然编译器将只在标准库的目录找。这个dir就是目录的名称。 </p>
 </li>
 </ul>
 <p><img src="https://img-blog.csdnimg.cn/6857841f045f4a698c315cdfb01729c5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="链接静态库编译"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h3 id="动态库的制作"><a href="#动态库的制作" class="headerlink" title="动态库的制作"></a>动态库的制作</h3><h4 id="Linux-libxxx-so"><a href="#Linux-libxxx-so" class="headerlink" title="Linux : libxxx.so"></a>Linux : libxxx.so</h4><blockquote>
+<p>windows: libxxx.dll</p>
+</blockquote>
+<ul>
+<li><p>gcc 得到 .o 文件，得到和<code>位置无关</code>的代码</p>
+<p>静态库链接时代码的位置已经固定，加载到内存中，但是动态库并不知道什么时候加载，加载到内存哪里</p>
+<pre class="line-numbers language-gcc" data-language="gcc"><code class="language-gcc">  gcc -c fpic/fPIC a.c b.c
+
+* gcc 得到动态库
+
+  ```gcc
+  gcc -shared a.o b.o -o libxxx.so<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<p>前面的制作过程和静态库大同小异，唯一的区别就是命令不同</p>
+<p>然而当我们做好动态库之后，却运行不了可执行文件，说找不到libcalc.so这个动态库</p>
+<p><img src="https://img-blog.csdnimg.cn/e5fa1282b5334250a21a1282ff285a4e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="ERROR"></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>使用 ldd 命令检查<code>动态库依赖关系</code></p>
+<p>可以看到 libcalc.so 这个动态库对应的结果是 not found</p>
+<p><img src="https://img-blog.csdnimg.cn/a4a2b72896dc4e05862fa178f40028da.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="ldd"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>这就涉及到动态库的实现原理了</p>
+<p>链接时，只有信息信息会被放入可执行程序，但是具体的代码却不会放入可执行程序</p>
+<p>只有在调用库中某个api的时候才会去获取动态库的绝对路径</p>
+<p><img src="https://img-blog.csdnimg.cn/3bca6981a23747998e5cf4fc645fc7ad.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="动态库工作原理"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><p>终端实际上也是一个应用程序</p>
+<p>输入指令 ls 之后，<code>shell解析器</code> 解析该指令</p>
+<p>shell解析器根据环境变量找到这条指令的路径</p>
+<p>使用 <code>env</code> 指令可以查看所有的环境变量</p>
+<p>里面都是一些键值对</p>
+<p>key - value</p>
+<p>key - value1 : value2 : value3 ….</p>
+<p>每一个value都是一条路径</p>
+<p>value1找不到该命令，就去value2找，再找不到再去value3找…</p>
+<p>因此，要想运行动态库，要先配置环境变量</p>
+<p>使用env命令可以查看所有环境变量</p>
+<p><img src="https://img-blog.csdnimg.cn/f1c8c1a07b764a269b1de3ff0e6fbcd3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="查看环境变量"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>找到动态库的绝对路径，并将其配置到LD_LIBRARY_PATH下</p>
+<p><img src="https://img-blog.csdnimg.cn/9ef519cf65bb4c0b8044e186b7fc5327.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="配置环境变量"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>此时使用 <code>ldd</code> 便可以看到该可执行程序已经可以找到动态库的绝对路径了</p>
+<p>直接运行，成功</p>
+<p><img src="https://img-blog.csdnimg.cn/cba73810503d4a968c9966713f4a3c7f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="配置完成"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h3 id="然而，这样只是暂时的，关掉终端重启就失效了"><a href="#然而，这样只是暂时的，关掉终端重启就失效了" class="headerlink" title="然而，这样只是暂时的，关掉终端重启就失效了"></a>然而，这样只是暂时的，关掉终端重启就失效了</h3><h5 id="永久配置-用户级别"><a href="#永久配置-用户级别" class="headerlink" title="永久配置 - 用户级别"></a>永久配置 - 用户级别</h5><p>进入home/.bashrc, 添加配置信息</p>
+<p><img src="https://img-blog.csdnimg.cn/21834d370b92419cbcebe13c7bafe869.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="添加配置信息"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>并用 <code>source .bash</code> 或 <code>. .bashrc</code>来激活配置文件</p>
+<h5 id="永久配置-系统级别"><a href="#永久配置-系统级别" class="headerlink" title="永久配置 - 系统级别"></a>永久配置 - 系统级别</h5><p>进入 /etc/profile, 添加配置信息</p>
+<p>并用 source /etc/profile激活配置文件</p>
+<h4 id="修改-etc-ld-so-cache"><a href="#修改-etc-ld-so-cache" class="headerlink" title="修改/etc/ld.so.cache"></a>修改/etc/ld.so.cache</h4><p>进入 <code>/etc/ld.so.conf</code> ，直接将路径粘贴进去</p>
+<p><img src="https://img-blog.csdnimg.cn/c0e0d36c39824b968ec4bdc63f01d132.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="ld.so.conf"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h4 id="最粗暴-直接将库文件放到-lib或-usr-lib目录下"><a href="#最粗暴-直接将库文件放到-lib或-usr-lib目录下" class="headerlink" title="最粗暴 - 直接将库文件放到/lib或/usr/lib目录下"></a>最粗暴 - 直接将库文件放到<code>/lib</code>或<code>/usr/lib</code>目录下</h4><p>不推荐，因为这两个目录下面原先就放了很多系统的库文件，如果把自己的放进去万一名称冲突会出带问题</p>
+<p><img src="https://img-blog.csdnimg.cn/474f2d2865a94f5697a1ae181ad1b927.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="完整流程"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>静态库</p>
+<p>​    链接阶段直接把<code>静态库代码</code>打包到可执行文件中</p>
+<p>​    优点：</p>
+<ul>
+<li>静态库被打包到应用程序中，加载速度快</li>
+<li>发布程序无需提供静态库，移植方便 </li>
+</ul>
+<p>​    缺点：</p>
+<ul>
+<li><p>消耗系统资源，浪费内存</p>
+</li>
+<li><p>更新、部署、发布麻烦</p>
+<p><img src="https://img-blog.csdnimg.cn/2565bc00369144db93093263bc8c05bf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="占用内存"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+</li>
+</ul>
+<p>动态库</p>
+<p>​    链接阶段把<code>动态库信息</code>(如动态库名称)打包到可执行文件中，可执行程序运行时找到动态库文件，并加载到内存中，使用其代码</p>
+<p>​    优点：</p>
+<ul>
+<li>可以实现进程间资源共享（共享库），如果有个程序使用了动态库，该库已经加载到内存当中了，其他进程可以直接使用</li>
+<li>更新、部署、发布简单</li>
+<li>可以控制何时加载动态库，没有使用到不会加载</li>
+</ul>
+<p>​    缺点：</p>
+<ul>
+<li>加载速度比静态库慢</li>
+<li>发布程序时需要提供依赖的动态库</li>
+</ul>
 
                 
             </div>
@@ -552,7 +630,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/03/24/GCC/">https://sakkana.github.io/2022/03/24/GCC/</a>
+                    <a href="https://sakkana.github.io/2022/03/24/gcc&%E5%BA%93%E7%9A%84%E5%88%B6%E4%BD%9C/">https://sakkana.github.io/2022/03/24/gcc&%E5%BA%93%E7%9A%84%E5%88%B6%E4%BD%9C/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -635,18 +713,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/03/24/GCC/">
+                <a href="/2022/03/28/Makefile/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="gcc/库的制作">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Makefile">
                         
-                        <span class="card-title">gcc/库的制作</span>
+                        <span class="card-title">Makefile</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -656,9 +733,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-24
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-28
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -671,7 +748,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -911,7 +987,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">23.9k</span>&nbsp;字
+                class="white-color">25k</span>&nbsp;字
             
             
             
