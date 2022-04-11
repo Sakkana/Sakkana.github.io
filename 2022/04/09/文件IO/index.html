@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.1k
+                    8.6k
                 </div>
                 
 
@@ -430,6 +430,13 @@
 <p>对于内存，input为文件-&gt;内存</p>
 <p>​                    output为内存-&gt;文件</p>
 <p>我们站在<code>内存的角度</code>看，因为我们系的程序会被加载到内存中，因此output是从内存到文件，input是从内存到文件</p>
+<p>这一章节会频繁查看Linux的man手册</p>
+<p>1   Executable programs or shell commands （标准命令）</p>
+<p>2   System calls (functions provided by the kernel)    （系统调用）</p>
+<p>3   Library calls (functions within program libraries)（库函数）</p>
+<p>man 1 mkdir 是shell命令 mkdir</p>
+<p>man 2 mkdir 是Linux系统调用 mkdir</p>
+<p>man 3 printf 是库函数 printf</p>
 <h2 id="1-Linux系统IO-amp-标准C库IO"><a href="#1-Linux系统IO-amp-标准C库IO" class="headerlink" title="1. Linux系统IO &amp; 标准C库IO"></a>1. Linux系统IO &amp; 标准C库IO</h2><p><img src="https://img-blog.csdnimg.cn/eb9e955eccd44b7eb4a3457db10c4d9c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="IO函数"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
 <p>Java跨平台：为不同的操作系统做一个<code>JVM</code></p>
 <p>标准C库函数跨平台（操作系统）：C库是第三方库跑在不同的操作系统上底层会调用不同操作系统的API。</p>
@@ -513,7 +520,7 @@
 <p><code>一切皆文件</code>，在Linux中所有的硬件设备都会被虚拟成一个文件，通过这个文件管理这些设备。 </p>
 <h5 id="如何得到一个文件描述符？"><a href="#如何得到一个文件描述符？" class="headerlink" title="如何得到一个文件描述符？"></a>如何得到一个文件描述符？</h5><p><code>open</code>：Linux系统API，可以得到一个文件描述符，从而操作该文件描述符指向的文件。下次用 <code>read</code> 或 <code>write</code> 时，就不是传递标准C库的API—— FILE* 了，而是Linux的系统API——文件描述符。</p>
 <h2 id="4-Linux系统IO函数"><a href="#4-Linux系统IO函数" class="headerlink" title="4. Linux系统IO函数"></a>4. Linux系统IO函数</h2><p><img src="https://img-blog.csdnimg.cn/684da67d1cda47e38e26be8e6cc7e062.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
-<h3 id="4-1-open"><a href="#4-1-open" class="headerlink" title="4.1 open"></a>4.1 open</h3><h4 id="I-打开文件"><a href="#I-打开文件" class="headerlink" title="(I) 打开文件"></a>(I) 打开文件</h4><p>关于open函数的介绍</p>
+<h3 id="4-1-open"><a href="#4-1-open" class="headerlink" title="4.1 open"></a>4.1 open</h3><h4 id="I-open-打开旧文件"><a href="#I-open-打开旧文件" class="headerlink" title="(I) open 打开旧文件"></a>(I) open 打开旧文件</h4><p>关于open函数的介绍</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/*
 NAME
        open, openat, creat - open and possibly create a file
@@ -643,16 +650,16 @@ RETURN VALUE
 <blockquote>
 <p>由于我们当前目录下没有 <code>a.txt</code> 这个文件，因此使用 <code>open</code> 打开必然会出错，perror会捕捉最近的出错标记 errno, 并将错误打印出来。</p>
 </blockquote>
-<h4 id="II-创建新文件"><a href="#II-创建新文件" class="headerlink" title="(II)创建新文件"></a>(II)创建新文件</h4><p>一些可选项的man</p>
-<h5 id="O-APPEND"><a href="#O-APPEND" class="headerlink" title="O_APPEND"></a>O_APPEND</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c">O_APPEND
-   The file is opened in append mode<span class="token punctuation">.</span>  Before each <span class="token function">write</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> the file offset is positioned
-   at the end of the file<span class="token punctuation">,</span> as <span class="token keyword">if</span> with <span class="token function">lseek</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span>  The modification of the file  offset  and
-   the write operation are performed as a single atomic step<span class="token punctuation">.</span>
+<h4 id="II-open-创建新文件"><a href="#II-open-创建新文件" class="headerlink" title="(II) open 创建新文件"></a>(II) open 创建新文件</h4><p>一些可选项的man</p>
+<h5 id="O-APPEND"><a href="#O-APPEND" class="headerlink" title="O_APPEND"></a>O_APPEND</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/*
 
-   O_APPEND  may  lead  to corrupted files on NFS filesystems <span class="token keyword">if</span> more than one process ap‐
-   pends data to a file at once<span class="token punctuation">.</span>  This is because NFS does  not  support  appending  to  a
-   file<span class="token punctuation">,</span>  so the client kernel has to simulate it<span class="token punctuation">,</span> which can't be done without a race con‐
-    dition<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+O_APPEND
+    The file is opened in append mode.  Before each write(2), the file offset is positioned at the end of the file, as if with lseek(2).  The modification of the file  offset  and the write operation are performed as a single atomic step.
+
+    O_APPEND  may  lead  to corrupted files on NFS filesystems if more than one process appends data to a file at once.  This is because NFS does  not  support  appending  to  a
+ file,  so the client kernel has to simulate it, which can't be done without a race condition.
+ 
+ */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -661,14 +668,10 @@ RETURN VALUE
 
     The <span class="token function">owner</span> <span class="token punctuation">(</span>user ID<span class="token punctuation">)</span> of the new file is set to the effective user ID of the process<span class="token punctuation">.</span>
 
-    The group <span class="token function">ownership</span> <span class="token punctuation">(</span>group ID<span class="token punctuation">)</span> of the new file is set either to the effective group  ID
-    of the <span class="token function">process</span> <span class="token punctuation">(</span>System V semantics<span class="token punctuation">)</span> or to the group ID of the parent <span class="token function">directory</span> <span class="token punctuation">(</span>BSD semantics<span class="token punctuation">)</span><span class="token punctuation">.</span>  
-    On Linux<span class="token punctuation">,</span> the behavior depends on whether the set<span class="token operator">-</span>group<span class="token operator">-</span>ID mode bit  is  set
-    on  the parent directory<span class="token operator">:</span> <span class="token keyword">if</span> that bit is set<span class="token punctuation">,</span> then BSD semantics apply<span class="token punctuation">;</span> otherwise<span class="token punctuation">,</span> 
-	System V semantics apply<span class="token punctuation">.</span>  For some filesystems<span class="token punctuation">,</span> the behavior also  depends  on  the  bsd‐
-    groups and sysvgroups mount options described in <span class="token function">mount</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
-
-    <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    The group <span class="token function">ownership</span> <span class="token punctuation">(</span>group ID<span class="token punctuation">)</span> of the new file is set either to the effective group  ID of the <span class="token function">process</span> <span class="token punctuation">(</span>System V semantics<span class="token punctuation">)</span> or to the group ID of the parent <span class="token function">directory</span> <span class="token punctuation">(</span>BSD semantics<span class="token punctuation">)</span><span class="token punctuation">.</span>  
+    On Linux<span class="token punctuation">,</span> the behavior depends on whether the set<span class="token operator">-</span>group<span class="token operator">-</span>ID mode bit  is  set on  the parent directory<span class="token operator">:</span> <span class="token keyword">if</span> that bit is set<span class="token punctuation">,</span> then BSD semantics apply<span class="token punctuation">;</span> otherwise<span class="token punctuation">,</span> System V semantics apply<span class="token punctuation">.</span>  For some filesystems<span class="token punctuation">,</span> the behavior also  depends  on  the  bsd<span class="token operator">-</span>groups and sysvgroups mount options described in <span class="token function">mount</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+    
+    The mode argument specifies the file mode bits be applied when a new file is  created<span class="token punctuation">.</span>   This  argument must  be  supplied when O_CREAT or O_TMPFILE is specified in flags<span class="token punctuation">;</span> <span class="token keyword">if</span> neither O_CREAT nor O_TMPFILE is specified<span class="token punctuation">,</span> then mode is ignored<span class="token punctuation">.</span>  The effective mode is modified by the process's umask  in  the  usual way<span class="token operator">:</span>  in the absence of a <span class="token keyword">default</span> ACL<span class="token punctuation">,</span> the mode of the created file <span class="token function">is</span> <span class="token punctuation">(</span>mode <span class="token operator">&amp;</span> <span class="token operator">~</span>umask<span class="token punctuation">)</span><span class="token punctuation">.</span>  Note that this mode applies only to future accesses of the newly created file<span class="token punctuation">;</span> the <span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span> call that  creates  a  read<span class="token operator">-</span>only file may well <span class="token keyword">return</span> a read<span class="token operator">/</span>write file descriptor<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -1085,6 +1088,7 @@ lstat()  is  identical  to stat(), except that if pathname is a 【 symbolic lin
 <p><img src="https://img-blog.csdnimg.cn/fc4732e0a51f4d54b69f6c868539080d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <p>判断一个文件对于三种用户是否可读可写可执行 —&gt; st_mode &amp; 对应的宏值</p>
 <p>判断是什么类型 —&gt; (st_mode &amp; S_IMFT) == 对应的宏   （其中， S_IMFT == 0170000）</p>
+<p>普通文件 <code>0664</code>，最高权限 <code>0777</code>(但是会被 <code>umask</code> 抹去一些权限)</p>
 <h5 id="stat-测试代码-获取文件大小"><a href="#stat-测试代码-获取文件大小" class="headerlink" title="stat 测试代码 (获取文件大小)"></a>stat 测试代码 (获取文件大小)</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/stat.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
@@ -1275,45 +1279,299 @@ RETURN VALUE
 <h5 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/*
 
 NAME
-       chmod - change file mode bits
+       chmod, fchmod, fchmodat - change permissions of a file
 
 SYNOPSIS
-       chmod [OPTION]... MODE[,MODE]... FILE...
-       chmod [OPTION]... OCTAL-MODE FILE...
-       chmod [OPTION]... --reference=RFILE FILE...
+       #include &lt;sys/stat.h&gt;
+
+       int chmod(const char *pathname, mode_t mode);
+       
+DESCRIPTION
+       The  chmod() and fchmod() system calls 【change a files mode bits】.  (The file mode consists of the file permission bits plus the set-user-ID, set-group-ID, and sticky bits.)  These system calls differ only in how the file is specified:
+
+       * chmod() changes the mode of the file specified whose pathname is given in pathname, which is dereferenced if it is a symbolic link.
+
+*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="测试代码-3"><a href="#测试代码-3" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/stat.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">chmod</span><span class="token punctuation">(</span><span class="token string">"a.txt"</span><span class="token punctuation">,</span> <span class="token number">0775</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"chmod"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"change mode successfully!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/cbf926df87d24d35987825480fb47ff6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/*
+NAME
+       chown, fchown, lchown, fchownat - change ownership of a file
+
+SYNOPSIS
+       #include &lt;unistd.h&gt;
+
+       int chown(const char *pathname, uid_t owner, gid_t group);
 
 DESCRIPTION
-       This manual page documents the GNU version of chmod.  chmod changes the file mode bits of each given file according to mode, which can be either a symbolic representation of changes to make, or an
-       octal number representing the bit pattern for the new mode bits.
+       These  system calls 【change the owner and group】 of a file.  The chown(), fchown(), and lchown() system calls differ only in how the file is specified:
 
-       The format of a symbolic mode is [ugoa...][[-+=][perms...]...], where perms is either zero or more letters from the set rwxXst, or a single letter from the set ugo.  Multiple symbolic modes can be
-       given, separated by commas.
+       * chown() changes the ownership of the file specified by pathname, which is dereferenced if it is a symbolic link.
 
-       A  combination of the letters ugoa controls which users' access to the file will be changed: the user who owns it (u), other users in the file's group (g), other users not in the file's group (o),
-       or all users (a).  If none of these are given, the effect is as if (a) were given, but bits that are set in the umask are not affected.
+       Only a privileged process (Linux: one with the CAP_CHOWN capability) may change the owner of a file.  The owner of a  file
+       may  change  the  group  of  the  file  to  any  group of which that owner is a member.  A privileged process (Linux: with
+       CAP_CHOWN) may change the group arbitrarily.
 
-       The operator + causes the selected file mode bits to be added to the existing file mode bits of each file; - causes them to be removed; and = causes them to be added and causes unmentioned bits to
-       be removed except that a directory's unmentioned set user and group ID bits are not affected.
+       If the owner or group is specified as -1, then that ID is not changed.
 
-       The letters rwxXst select file mode bits for the affected users: read (r), write (w), execute (or search for directories) (x), execute/search only if the file is a directory or already has execute
-       permission for some user (X), set user or group ID on execution (s), restricted deletion flag or sticky bit (t).  Instead of one or more of these letters, you can specify exactly one of  the  let‐
-       ters  ugo:  the permissions granted to the user who owns the file (u), the permissions granted to other users who are members of the file's group (g), and the permissions granted to users that are
-       in neither of the two preceding categories (o).
+       When the owner or group of an executable file is changed by an unprivileged user, the S_ISUID and S_ISGID  mode  bits  are cleared.  POSIX does not specify whether this also should happen when root does the chown(); the Linux behavior depends on the kernel version, and since Linux 2.2.13, root is treated like other users.  In  case  of  a  non-group-executable  file (i.e.,  one  for  which  the  S_IXGRP bit is not set) the S_ISGID bit indicates mandatory locking, and is not cleared by a chown().
 
-       A numeric mode is from one to four octal digits (0-7), derived by adding up the bits with values 4, 2, and 1.  Omitted digits are assumed to be leading zeros.  The first digit selects the set user
-       ID  (4) and set group ID (2) and restricted deletion or sticky (1) attributes.  The second digit selects permissions for the user who owns the file: read (4), write (2), and execute (1); the third
-       selects permissions for other users in the file's group, with the same values; and the fourth for other users not in the file's group, with the same values.
-
-       chmod never changes the permissions of symbolic links; the chmod system call cannot change their permissions.  This is not a problem since the permissions of symbolic links are never  used.   How‐
-       ever,  for  each  symbolic  link listed on the command line, chmod changes the permissions of the pointed-to file.  In contrast, chmod ignores symbolic links encountered during recursive directory
-       traversals.
-
-
-*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+       When the owner or group of an executable file is changed (by any user), all capability sets for the file are cleared.
+*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
-<p>累了，先吃饭去了……</p>
+<p>通过  <code>vim /etc/passwd</code> 可以查看该机器上的所有用户， <code>vim /etc/group</code> 可以查看所有的组。</p>
+<p>通过 <code>useradd userName</code> 可以创建一个名为 userName 的新用户，可以用 <code>id userName</code> 查看该用户的uid,gid和group。</p>
+<p><img src="https://img-blog.csdnimg.cn/2a258fe3cc904603b11160136e184799.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_19,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p><img src="https://img-blog.csdnimg.cn/2128a7806a3844e788ea4b4b314b6b31.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="测试代码-4"><a href="#测试代码-4" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">chown</span><span class="token punctuation">(</span><span class="token string">"a.txt"</span><span class="token punctuation">,</span> <span class="token number">1001</span><span class="token punctuation">,</span> <span class="token number">1002</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">// 更改文件 a.txt 的uid &amp; gid</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"chown"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"change uid and group successfully!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/56666fd41a984da78b6abc3db806e087.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="truncate"><a href="#truncate" class="headerlink" title="truncate"></a>truncate</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       truncate<span class="token punctuation">,</span> ftruncate <span class="token operator">-</span> truncate a file to a specified length
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">truncate</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>path<span class="token punctuation">,</span> <span class="token class-name">off_t</span> length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">int</span> <span class="token function">ftruncate</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token class-name">off_t</span> length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+   Feature Test Macro Requirements <span class="token keyword">for</span> <span class="token function">glibc</span> <span class="token punctuation">(</span>see <span class="token function">feature_test_macros</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">:</span>
+
+       <span class="token function">truncate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span>
+           _XOPEN_SOURCE <span class="token operator">&gt;=</span> <span class="token number">500</span>
+               <span class="token operator">||</span> <span class="token comment">/* Since glibc 2.12: */</span> _POSIX_C_SOURCE <span class="token operator">&gt;=</span> <span class="token number">200809L</span>
+               <span class="token operator">||</span> <span class="token comment">/* Glibc versions &lt;= 2.19: */</span> _BSD_SOURCE
+
+       <span class="token function">ftruncate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span>
+           _XOPEN_SOURCE <span class="token operator">&gt;=</span> <span class="token number">500</span>
+               <span class="token operator">||</span> <span class="token comment">/* Since glibc 2.3.5: */</span> _POSIX_C_SOURCE <span class="token operator">&gt;=</span> <span class="token number">200112L</span>
+               <span class="token operator">||</span> <span class="token comment">/* Glibc versions &lt;= 2.19: */</span> _BSD_SOURCE
+
+DESCRIPTION
+       The  <span class="token function">truncate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  and  <span class="token function">ftruncate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  functions cause the regular file named by path or referenced by fd to 【be truncated to a size of precisely length bytes】<span class="token punctuation">.</span>
+
+       If the file previously was larger than this size<span class="token punctuation">,</span> the extra data is lost<span class="token punctuation">.</span> 
+               <span class="token comment">// 大变小 ---&gt; 截断</span>
+               
+	   If the file previously was shorter<span class="token punctuation">,</span> it is  extended<span class="token punctuation">,</span> and the extended part reads as null <span class="token function">bytes</span> <span class="token punctuation">(</span><span class="token char">'\0'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+               <span class="token comment">// 小变大 ---&gt; '\0'填充</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="测试代码-5"><a href="#测试代码-5" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span>		<span class="token comment">// perror</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span>		<span class="token comment">// atoi()</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">truncate</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token function">atoi</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"truncate"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"truncate the file %s to %s bytes successfully!\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/00f304b3d35e4eb182a3f1a47efe8471.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h3 id="4-7-目录操作函数"><a href="#4-7-目录操作函数" class="headerlink" title="4.7 目录操作函数"></a>4.7 目录操作函数</h3><p><img src="https://img-blog.csdnimg.cn/7f04549c167645a78739282ec94bc75c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       mkdir<span class="token punctuation">,</span> mkdirat <span class="token operator">-</span> create a directory
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/stat.h&gt;</span></span>
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">mkdir</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>pathname<span class="token punctuation">,</span> <span class="token class-name">mode_t</span> mode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       
+DESCRIPTION
+       <span class="token function">mkdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> attempts to 【create a directory】 named pathname<span class="token punctuation">.</span>
+
+       The  argument  mode  specifies the mode <span class="token keyword">for</span> the new directory<span class="token punctuation">.</span>  It is modified by the process's umask in the usual way<span class="token operator">:</span> in the absence of a <span class="token keyword">default</span> ACL<span class="token punctuation">,</span> the mode of the created directory <span class="token function">is</span> <span class="token punctuation">(</span>【mode <span class="token operator">&amp;</span> <span class="token operator">~</span>umask <span class="token operator">&amp;</span> <span class="token number">0777</span><span class="token punctuation">)</span><span class="token punctuation">.</span>   
+       Whether  other  mode bits are honored <span class="token keyword">for</span> the created directory depends on the operating system<span class="token punctuation">.</span>
+
+       The newly created directory will be owned by the effective user ID of the process<span class="token punctuation">.</span>  If the directory  containing  the file has the set<span class="token operator">-</span>group<span class="token operator">-</span>ID bit set<span class="token punctuation">,</span> or <span class="token keyword">if</span> the filesystem is mounted with BSD group <span class="token function">semantics</span> <span class="token punctuation">(</span>mount <span class="token operator">-</span>o grpid<span class="token punctuation">)</span><span class="token punctuation">,</span> the new directory will inherit the group ownership from  its  parent<span class="token punctuation">;</span> otherwise it will be owned by the effective group ID of the process<span class="token punctuation">.</span>
+
+       If the parent directory has the set<span class="token operator">-</span>group<span class="token operator">-</span>ID bit set<span class="token punctuation">,</span> then so will the newly created directory<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<h5 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h5><h5 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h5><h5 id="chdir"><a href="#chdir" class="headerlink" title="chdir"></a>chdir</h5><p>修改进程的工作目录，在哪个目录启动进程，该进程就默认工作在该目录下。</p>
+<h5 id="getcwd"><a href="#getcwd" class="headerlink" title="getcwd"></a>getcwd</h5><p>获取当前工作目录。</p>
+<ul>
+<li><p>buf：传出参数，指向一个数组，存工作路径</p>
+</li>
+<li><p>size：数组大小</p>
+</li>
+<li><p>return value：指针，指向一块内存，存的是工作路径，内容和buf一样</p>
+</li>
+</ul>
+<h3 id="4-8-目录遍历函数"><a href="#4-8-目录遍历函数" class="headerlink" title="4.8 目录遍历函数"></a>4.8 目录遍历函数</h3><p><img src="https://img-blog.csdnimg.cn/49c68acc32d34de8a79a88b12615b490.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="opendir"><a href="#opendir" class="headerlink" title="opendir"></a>opendir</h5><ul>
+<li>name：需要打开的目录名称</li>
+<li>return value: <ul>
+<li>正确：<code>DIR*</code>  类型的结构体，可以理解为目录流</li>
+<li>错误：NULL</li>
+</ul>
+</li>
+</ul>
+<h5 id="readdir"><a href="#readdir" class="headerlink" title="readdir"></a>readdir</h5><p>读取目录中的数据，调用一次，就指向流中的下一个实体</p>
+<ul>
+<li>dirp:  <code>opendir函数</code> 返回的 <code>DIR*</code> 类型的结构体</li>
+<li>return value: <ul>
+<li>正确：<ul>
+<li>未到末尾：<code>struct dirent</code>类型的结构体，存储读到的文件信息</li>
+<li>末尾：NULL</li>
+</ul>
+</li>
+<li>错误：NULL</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/1e6528686aa04ffb8ad7d40e58475dbd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="closedir"><a href="#closedir" class="headerlink" title="closedir"></a>closedir</h5><h5 id="测试代码-计算某个目录下文件的个数"><a href="#测试代码-计算某个目录下文件的个数" class="headerlink" title="测试代码 (计算某个目录下文件的个数)"></a>测试代码 (计算某个目录下文件的个数)</h5><h3 id="4-9-dup-amp-dup2-system-call"><a href="#4-9-dup-amp-dup2-system-call" class="headerlink" title="4.9 dup &amp; dup2 system call"></a>4.9 dup &amp; dup2 system call</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       dup<span class="token punctuation">,</span> dup2<span class="token punctuation">,</span> dup3 <span class="token operator">-</span> duplicate a file descriptor
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token keyword">int</span> oldfd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">int</span> <span class="token function">dup2</span><span class="token punctuation">(</span><span class="token keyword">int</span> oldfd<span class="token punctuation">,</span> <span class="token keyword">int</span> newfd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_GNU_SOURCE</span>             <span class="token comment">/* See feature_test_macros(7) */</span></span>
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h&gt;</span>              <span class="token comment">/* Obtain O_* constant definitions */</span></span>
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">dup3</span><span class="token punctuation">(</span><span class="token keyword">int</span> oldfd<span class="token punctuation">,</span> <span class="token keyword">int</span> newfd<span class="token punctuation">,</span> <span class="token keyword">int</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       The  <span class="token function">dup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  system call creates a copy of the file descriptor oldfd<span class="token punctuation">,</span> using the lowest<span class="token operator">-</span>numbered unused file de‐
+       scriptor <span class="token keyword">for</span> the new descriptor<span class="token punctuation">.</span>
+
+       After a successful <span class="token keyword">return</span><span class="token punctuation">,</span> the old and new file descriptors may be used interchangeably<span class="token punctuation">.</span>  They  refer  to  the same open file <span class="token function">description</span> <span class="token punctuation">(</span>see <span class="token function">open</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> and thus share file offset and file status flags<span class="token punctuation">;</span> <span class="token keyword">for</span> example<span class="token punctuation">,</span> <span class="token keyword">if</span> the  file offset is modified by using <span class="token function">lseek</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> on one of the file descriptors<span class="token punctuation">,</span> the offset is also changed  <span class="token keyword">for</span>  the other<span class="token punctuation">.</span>
+
+       The  two file descriptors <span class="token keyword">do</span> not share file descriptor <span class="token function">flags</span> <span class="token punctuation">(</span>the close<span class="token operator">-</span>on<span class="token operator">-</span>exec flag<span class="token punctuation">)</span><span class="token punctuation">.</span>  The close<span class="token operator">-</span>on<span class="token operator">-</span>exec <span class="token function">flag</span> <span class="token punctuation">(</span>FD_CLOEXEC<span class="token punctuation">;</span> see <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">for</span> the duplicate descriptor is off<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="dup"><a href="#dup" class="headerlink" title="dup"></a>dup</h5><p>复制文件描述符</p>
+<p>从空闲的文件描述符中找一个新的作为新的文件描述符</p>
+<p>和旧的一起指向同一个文件</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token keyword">int</span> oldfd<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h5 id="dup2"><a href="#dup2" class="headerlink" title="dup2"></a>dup2</h5><p>重定向文件描述符</p>
+<p>oldfd 指向 a.txt, newfd 指向 b.txt</p>
+<p>调用dup2之后，相当于(close, newfd, b.txt), newfd指向a.txt</p>
+<p>oldfd == newfd，相当于什么都没做</p>
+<p>对于返回值没必要close, newfd 和 return value相同，如果成功。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">dup2</span><span class="token punctuation">(</span><span class="token keyword">int</span> oldfd<span class="token punctuation">,</span> <span class="token keyword">int</span> newfd<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+
+
+
+
+<h3 id="4-10-fcntl"><a href="#4-10-fcntl" class="headerlink" title="4.10 fcntl"></a>4.10 fcntl</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       fcntl <span class="token operator">-</span> manipulate file descriptor
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">int</span> cmd<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">/* arg */</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  performs  one of the operations described below on the open file descriptor fd<span class="token punctuation">.</span>  The operation is determined by cmd<span class="token punctuation">.</span>
+
+       <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token punctuation">)</span> can take an optional third argument<span class="token punctuation">.</span>  Whether or not this argument is required is determined  by  cmd<span class="token punctuation">.</span> The  required  argument type is indicated in parentheses after each cmd <span class="token function">name</span> <span class="token punctuation">(</span>in most cases<span class="token punctuation">,</span> the required type is <span class="token keyword">int</span><span class="token punctuation">,</span> and we identify the argument using the name arg<span class="token punctuation">)</span><span class="token punctuation">,</span> or <span class="token keyword">void</span> is specified <span class="token keyword">if</span>  the  argument  is  not  required<span class="token punctuation">.</span>
+
+       Certain  of  the  operations  below are supported only since a particular Linux kernel version<span class="token punctuation">.</span>  The preferred method of checking whether the host kernel supports a particular operation is to invoke <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token punctuation">)</span> with  the  desired  cmd value and then test whether the call failed with EINVAL<span class="token punctuation">,</span> indicating that the kernel does not recognize this value<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">int</span> cmd<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">/* arg */</span> <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>fd：文件描述符</li>
+<li>cmd：命令（宏）<ul>
+<li>F_DUPFD (int)<ul>
+<li>复制文件描述符，复制第一个参数fd并通过return value返回新的文件描述符</li>
+<li>用法：newfd = fcntl (fd, F_DUPFD);</li>
+</ul>
+</li>
+<li>F_GETFL (void)<ul>
+<li>获取文件状态 flag （和open函数传递的flag是同一个东西）</li>
+<li>用法：</li>
+</ul>
+</li>
+<li>F_SETFL (int)<ul>
+<li>设置文件状态 flag</li>
+<li>access mode 不可修改 O_RDONLY,  O_WRONLY, O_RDWR ， creation flags 也不可修改</li>
+<li>可选项：O_APPEND（追加数据）, O_NONBLOCK（设置成非阻塞）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可变参数</li>
+</ul>
+<h5 id="阻塞-amp-非阻塞"><a href="#阻塞-amp-非阻塞" class="headerlink" title="阻塞 &amp; 非阻塞"></a>阻塞 &amp; 非阻塞</h5><p>描述的是函数的行为。</p>
+<p><code>阻塞</code>，在调用结果返回前，当前线程会被挂起，并在得到结果之后返回。 </p>
+<p>​            终端等待我们输入的时候就是阻塞的。</p>
+<p><code>非阻塞</code>，如果不能立刻得到结果，则该调用者不会阻塞当前线程。</p>
+<p>​            在终端，我们输入好命令后进程执行期间是不阻塞的。</p>
 
                 
             </div>
@@ -1699,7 +1957,7 @@ DESCRIPTION
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">32.7k</span>&nbsp;字
+                class="white-color">34.1k</span>&nbsp;字
             
             
             
