@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 6.0.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
 </head>
 
 
@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    8.6k
+                    10.6k
                 </div>
                 
 
@@ -1444,9 +1444,104 @@ DESCRIPTION
 
 
 
+<h5 id="测试代码-6"><a href="#测试代码-6" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/stat.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">mkdir</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">// argv[1]是文件名，0664是文件的权限</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"mkdir"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"make a directory '%s' successfully!\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h5 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h5><h5 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h5><h5 id="chdir"><a href="#chdir" class="headerlink" title="chdir"></a>chdir</h5><p>修改进程的工作目录，在哪个目录启动进程，该进程就默认工作在该目录下。</p>
+
+<p><img src="https://img-blog.csdnimg.cn/0ab1c3a42d9246d5bd2e77eac4c93dcb.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="rename"><a href="#rename" class="headerlink" title="rename"></a>rename</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       rename<span class="token punctuation">,</span> renameat<span class="token punctuation">,</span> renameat2 <span class="token operator">-</span> change the name or location of a file
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">rename</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>oldpath<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>newpath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       <span class="token function">rename</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  renames  a  file<span class="token punctuation">,</span> moving it between directories <span class="token keyword">if</span> required<span class="token punctuation">.</span>  Any other  【hard links】 to the file  are 【unaffected】<span class="token punctuation">.</span>  【Open file descriptors <span class="token keyword">for</span> oldpath】 are also 【unaffected】<span class="token punctuation">.</span>
+
+       Various restrictions determine whether or not the rename operation succeeds<span class="token operator">:</span> see ERRORS below<span class="token punctuation">.</span>
+
+       If newpath already exists<span class="token punctuation">,</span> it will be atomically replaced<span class="token punctuation">,</span> so that there is no point at which another  process  attempting to  access newpath will find it missing<span class="token punctuation">.</span>  However<span class="token punctuation">,</span> there will probably be a window in which both oldpath and newpath refer to the file being renamed<span class="token punctuation">.</span>
+
+       If oldpath and newpath are existing hard links referring to the same file<span class="token punctuation">,</span> then <span class="token function">rename</span><span class="token punctuation">(</span><span class="token punctuation">)</span> does nothing<span class="token punctuation">,</span> and returns a  success status<span class="token punctuation">.</span>
+
+       If newpath exists but the operation fails <span class="token keyword">for</span> some reason<span class="token punctuation">,</span> <span class="token function">rename</span><span class="token punctuation">(</span><span class="token punctuation">)</span> guarantees to leave an instance of newpath in place<span class="token punctuation">.</span>
+
+       oldpath can specify a directory<span class="token punctuation">.</span>  In this <span class="token keyword">case</span><span class="token punctuation">,</span> newpath must either not exist<span class="token punctuation">,</span> or it must specify an empty directory<span class="token punctuation">.</span>
+
+       If  oldpath  refers  to a symbolic link<span class="token punctuation">,</span> the link is renamed<span class="token punctuation">;</span> <span class="token keyword">if</span> newpath refers to a symbolic link<span class="token punctuation">,</span> the link will be overwritten<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="测试代码-7"><a href="#测试代码-7" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">rename</span><span class="token punctuation">(</span><span class="token string">"987"</span><span class="token punctuation">,</span> <span class="token string">"123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"rename"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://img-blog.csdnimg.cn/9224a038315a424086f9188ed2608221.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="rmdir"><a href="#rmdir" class="headerlink" title="rmdir"></a>rmdir</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       rmdir <span class="token operator">-</span> delete a directory
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">rmdir</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>pathname<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       <span class="token function">rmdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> deletes a directory<span class="token punctuation">,</span> which 【must be empty】<span class="token punctuation">.</span>
+
+RETURN VALUE
+       On success<span class="token punctuation">,</span> zero is returned<span class="token punctuation">.</span>  On error<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span> is returned<span class="token punctuation">,</span> and errno is set appropriately<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="测试代码-8"><a href="#测试代码-8" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.hz&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">rmdir</span><span class="token punctuation">(</span><span class="token string">"123"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"rmdir"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/37687eff84034a51aa78cd6a00b9f5e5.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <h5 id="getcwd"><a href="#getcwd" class="headerlink" title="getcwd"></a>getcwd</h5><p>获取当前工作目录。</p>
 <ul>
 <li><p>buf：传出参数，指向一个数组，存工作路径</p>
@@ -1456,6 +1551,119 @@ DESCRIPTION
 <li><p>return value：指针，指向一块内存，存的是工作路径，内容和buf一样</p>
 </li>
 </ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       getcwd<span class="token punctuation">,</span> getwd<span class="token punctuation">,</span> get_current_dir_name <span class="token operator">-</span> get current working directory
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+       <span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">getcwd</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>buf<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+       <span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">getwd</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+       <span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">get_current_dir_name</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+DESCRIPTION
+       These  functions  <span class="token keyword">return</span> a null<span class="token operator">-</span>terminated string containing 【an absolute pathname】 that is the current working directory of the calling process<span class="token punctuation">.</span>  The pathname is returned as the function 【result】 and via the argument 【buf】<span class="token punctuation">,</span> <span class="token keyword">if</span> present<span class="token punctuation">.</span>
+
+       The <span class="token function">getcwd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> function copies an absolute pathname of the current working directory to the array pointed to by  buf<span class="token punctuation">,</span>  which is of length size<span class="token punctuation">.</span>
+
+       If the length of the absolute pathname of the current working directory<span class="token punctuation">,</span> including the terminating null byte<span class="token punctuation">,</span> exceeds size bytes<span class="token punctuation">,</span> <span class="token constant">NULL</span> is returned<span class="token punctuation">,</span> and errno is set to ERANGE<span class="token punctuation">;</span> an application should check <span class="token keyword">for</span> this error<span class="token punctuation">,</span>  and  allocate  a  larger buffer <span class="token keyword">if</span> necessary<span class="token punctuation">.</span>
+
+       As  an extension to the POSIX<span class="token punctuation">.</span><span class="token number">1</span><span class="token operator">-</span><span class="token number">2001</span> standard<span class="token punctuation">,</span> glibc's <span class="token function">getcwd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> allocates the buffer dynamically using <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> <span class="token keyword">if</span> buf is <span class="token constant">NULL</span><span class="token punctuation">.</span>  In this <span class="token keyword">case</span><span class="token punctuation">,</span> the allocated buffer has the length size unless size is zero<span class="token punctuation">,</span> when buf is allocated as big as  necessary<span class="token punctuation">.</span>  The caller should <span class="token function">free</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> the returned buffer<span class="token punctuation">.</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="测试代码-9"><a href="#测试代码-9" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">512</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>ret <span class="token operator">=</span> <span class="token function">getcwd</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"getcwd"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"current working directory is : \n%s\n or \n%s\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> ret<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/2c2e5de7e03a4a4d884b51d687373521.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="chdir"><a href="#chdir" class="headerlink" title="chdir"></a>chdir</h5><p>修改进程的工作目录，在哪个目录启动进程，该进程就默认工作在该目录下。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       chdir<span class="token punctuation">,</span> fchdir <span class="token operator">-</span> change working directory
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">chdir</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">int</span> <span class="token function">fchdir</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       <span class="token function">chdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 【changes the current working directory】 of 【the calling process】 to the directory specified in path<span class="token punctuation">.</span>
+
+       <span class="token function">fchdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> is identical to <span class="token function">chdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> the only difference is that the directory is given as an open file descriptor<span class="token punctuation">.</span>
+
+RETURN VALUE
+       On success<span class="token punctuation">,</span> zero is returned<span class="token punctuation">.</span>  On error<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span> is returned<span class="token punctuation">,</span> and errno is set appropriately<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="测试代码-10"><a href="#测试代码-10" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/stat.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 获取该进程默认工作路径</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>path <span class="token operator">=</span> <span class="token function">getcwd</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>path <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"getcwd"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"current working directory is : \n%s\n or \n%s\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 更改工作目录</span>
+    <span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token function">chdir</span><span class="token punctuation">(</span><span class="token string">"/home/Sakana/Mydoc/serverlearn/IO/文件操作函数/ajacentDir/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>res <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"chdir"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    <span class="token comment">// 获取新工作目录</span>
+    <span class="token keyword">char</span> newbuf<span class="token punctuation">[</span><span class="token number">512</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>newPath <span class="token operator">=</span> <span class="token function">getcwd</span><span class="token punctuation">(</span>newbuf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>newbuf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n*** change woring dir successfully! ***\n\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"current working directory is : \n%s\n or \n%s\n"</span><span class="token punctuation">,</span> newbuf<span class="token punctuation">,</span> newPath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// 在新工作目录里写点东西</span>
+    <span class="token keyword">int</span> fd <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"testFile.txt"</span><span class="token punctuation">,</span> O_CREAT <span class="token operator">|</span> O_RDWR<span class="token punctuation">,</span> <span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span> pbuf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">;</span>                                                                         <span class="token function">sprintf</span><span class="token punctuation">(</span>pbuf<span class="token punctuation">,</span> <span class="token string">"Hello, world! I'm form %s \n Here is %s\n"</span><span class="token punctuation">,</span> path<span class="token punctuation">,</span> newPath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">write</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> pbuf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>pbuf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">close</span><span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/4ab1c16fa3b8469a947de470ddb74d12.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p><img src="https://img-blog.csdnimg.cn/3e736f67598743509ee62f230f0a9499.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p><img src="https://img-blog.csdnimg.cn/ca2f9844797f488dabc82e4dea0c0835.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
 <h3 id="4-8-目录遍历函数"><a href="#4-8-目录遍历函数" class="headerlink" title="4.8 目录遍历函数"></a>4.8 目录遍历函数</h3><p><img src="https://img-blog.csdnimg.cn/49c68acc32d34de8a79a88b12615b490.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
 <h5 id="opendir"><a href="#opendir" class="headerlink" title="opendir"></a>opendir</h5><ul>
 <li>name：需要打开的目录名称</li>
@@ -1465,6 +1673,42 @@ DESCRIPTION
 </ul>
 </li>
 </ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       opendir<span class="token punctuation">,</span> fdopendir <span class="token operator">-</span> open a directory
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;dirent.h&gt;</span></span>
+
+       DIR <span class="token operator">*</span><span class="token function">opendir</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+       DIR <span class="token operator">*</span><span class="token function">fdopendir</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       The  <span class="token function">opendir</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  function 【opens a directory stream】 corresponding to the directory name<span class="token punctuation">,</span> and 【returns a pointer】 to the directory stream<span class="token punctuation">.</span>  The stream is positioned at the first entry in the directory<span class="token punctuation">.</span>
+
+       The <span class="token function">fdopendir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> function is like <span class="token function">opendir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> but returns a directory stream <span class="token keyword">for</span> the directory referred to by the 【open file descriptor fd】<span class="token punctuation">.</span>  After a successful call to <span class="token function">fdopendir</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> fd is used internally by the implementation<span class="token punctuation">,</span> and should not otherwise be used by the application<span class="token punctuation">.</span>
+
+RETURN VALUE
+       The <span class="token function">opendir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> and <span class="token function">fdopendir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> functions <span class="token keyword">return</span> a pointer to the directory stream<span class="token punctuation">.</span>  On error<span class="token punctuation">,</span> <span class="token constant">NULL</span> is returned<span class="token punctuation">,</span>  and  errno is set appropriately<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="DIR-结构体"><a href="#DIR-结构体" class="headerlink" title="DIR 结构体"></a>DIR 结构体</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">__dirstream</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>__fd<span class="token punctuation">;</span> <span class="token comment">/* `struct hurd_fd' pointer for descriptor.   */</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>__data<span class="token punctuation">;</span> <span class="token comment">/* Directory block.   */</span>
+    <span class="token keyword">int</span> __entry_data<span class="token punctuation">;</span> <span class="token comment">/* Entry number `__data' corresponds to.   */</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>__ptr<span class="token punctuation">;</span> <span class="token comment">/* Current pointer into the block.   */</span>
+    <span class="token keyword">int</span> __entry_ptr<span class="token punctuation">;</span> <span class="token comment">/* Entry number `__ptr' corresponds to.   */</span>
+    <span class="token class-name">size_t</span> __allocation<span class="token punctuation">;</span> <span class="token comment">/* Space allocated for the block.   */</span>
+    <span class="token class-name">size_t</span> __size<span class="token punctuation">;</span> <span class="token comment">/* Total valid data in the block.   */</span>
+    <span class="token function">__libc_lock_define</span> <span class="token punctuation">(</span><span class="token punctuation">,</span> __lock<span class="token punctuation">)</span> <span class="token comment">/* Mutex lock for this structure.   */</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">__dirstream</span> DIR<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h5 id="readdir"><a href="#readdir" class="headerlink" title="readdir"></a>readdir</h5><p>读取目录中的数据，调用一次，就指向流中的下一个实体</p>
 <ul>
 <li>dirp:  <code>opendir函数</code> 返回的 <code>DIR*</code> 类型的结构体</li>
@@ -1478,8 +1722,112 @@ DESCRIPTION
 </ul>
 </li>
 </ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       readdir <span class="token operator">-</span> read a directory
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;dirent.h&gt;</span></span>
+
+       <span class="token keyword">struct</span> <span class="token class-name">dirent</span> <span class="token operator">*</span><span class="token function">readdir</span><span class="token punctuation">(</span>DIR <span class="token operator">*</span>dirp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       The  <span class="token function">readdir</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  function  returns a pointer to a dirent structure representing the next directory entry in the directory stream pointed to by dirp<span class="token punctuation">.</span>  It returns <span class="token constant">NULL</span> on reaching the end of the directory stream or <span class="token keyword">if</span> an error occurred<span class="token punctuation">.</span>
+
+       In the glibc implementation<span class="token punctuation">,</span> the dirent structure is defined as follows<span class="token operator">:</span>
+
+           <span class="token keyword">struct</span> <span class="token class-name">dirent</span> <span class="token punctuation">{</span>
+               <span class="token class-name">ino_t</span>          d_ino<span class="token punctuation">;</span>       <span class="token comment">/* Inode number */</span>
+               <span class="token class-name">off_t</span>          d_off<span class="token punctuation">;</span>       <span class="token comment">/* Not an offset; see below */</span>
+               <span class="token keyword">unsigned</span> <span class="token keyword">short</span> d_reclen<span class="token punctuation">;</span>    <span class="token comment">/* Length of this record */</span>
+               <span class="token keyword">unsigned</span> <span class="token keyword">char</span>  d_type<span class="token punctuation">;</span>      <span class="token comment">/* Type of file; not supported
+                                              by all filesystem types */</span>
+               <span class="token keyword">char</span>           d_name<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">/* Null-terminated filename */</span>
+           <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <p><img src="https://img-blog.csdnimg.cn/1e6528686aa04ffb8ad7d40e58475dbd.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
-<h5 id="closedir"><a href="#closedir" class="headerlink" title="closedir"></a>closedir</h5><h5 id="测试代码-计算某个目录下文件的个数"><a href="#测试代码-计算某个目录下文件的个数" class="headerlink" title="测试代码 (计算某个目录下文件的个数)"></a>测试代码 (计算某个目录下文件的个数)</h5><h3 id="4-9-dup-amp-dup2-system-call"><a href="#4-9-dup-amp-dup2-system-call" class="headerlink" title="4.9 dup &amp; dup2 system call"></a>4.9 dup &amp; dup2 system call</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+<h5 id="closedir"><a href="#closedir" class="headerlink" title="closedir"></a>closedir</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       closedir <span class="token operator">-</span> close a directory
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;dirent.h&gt;</span></span>
+
+       <span class="token keyword">int</span> <span class="token function">closedir</span><span class="token punctuation">(</span>DIR <span class="token operator">*</span>dirp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       The <span class="token function">closedir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> function closes the directory stream associated with dirp<span class="token punctuation">.</span>  A successful call to <span class="token function">closedir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> also closes the underlying file descriptor associated with dirp<span class="token punctuation">.</span>  The directory stream descriptor dirp is not available after this call<span class="token punctuation">.</span>
+
+RETURN VALUE
+       The <span class="token function">closedir</span><span class="token punctuation">(</span><span class="token punctuation">)</span> function returns <span class="token number">0</span> on success<span class="token punctuation">.</span>  On error<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span> is returned<span class="token punctuation">,</span> and errno is set appropriately<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="测试代码-计算某个目录下文件的个数"><a href="#测试代码-计算某个目录下文件的个数" class="headerlink" title="测试代码 (计算某个目录下文件的个数)"></a>测试代码 (计算某个目录下文件的个数)</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;dirent.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+
+
+<span class="token keyword">int</span> <span class="token function">getFileNum</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>argc <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s pathname\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">int</span> num <span class="token operator">=</span> <span class="token function">getFileNum</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"The total num of files is: %d\n"</span><span class="token punctuation">,</span> num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">getFileNum</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>path<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 1. 打开目录</span>
+    DIR <span class="token operator">*</span>dir <span class="token operator">=</span> <span class="token function">opendir</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>dir <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"opendir"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 2.记录普通文件个数</span>
+    <span class="token keyword">int</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">dirent</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token punctuation">(</span>ptr <span class="token operator">=</span> <span class="token function">readdir</span><span class="token punctuation">(</span>dir<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 判断是否为. 或 ..</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">strcmp</span><span class="token punctuation">(</span>ptr<span class="token operator">-&gt;</span>d_name<span class="token punctuation">,</span> <span class="token string">"."</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token function">strcmp</span><span class="token punctuation">(</span>ptr<span class="token operator">-&gt;</span>d_name<span class="token punctuation">,</span> <span class="token string">".."</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 如果是目录，需要递归计算</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ptr<span class="token operator">-&gt;</span>d_type <span class="token operator">==</span> DT_DIR<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">char</span> newpath<span class="token punctuation">[</span><span class="token number">512</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token function">sprintf</span><span class="token punctuation">(</span>newpath<span class="token punctuation">,</span> <span class="token string">"%s/%s"</span><span class="token punctuation">,</span> path<span class="token punctuation">,</span> ptr<span class="token operator">-&gt;</span>d_name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cnt <span class="token operator">+=</span> <span class="token function">getFileNum</span><span class="token punctuation">(</span>newpath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// 如果是普通文件，计算</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ptr<span class="token operator">-&gt;</span>d_type <span class="token operator">==</span> DT_REG<span class="token punctuation">)</span> <span class="token operator">++</span> cnt<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 3.关闭文件</span>
+    <span class="token function">closedir</span><span class="token punctuation">(</span>dir<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> cnt<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="4-9-dup-amp-dup2-system-call"><a href="#4-9-dup-amp-dup2-system-call" class="headerlink" title="4.9 dup &amp; dup2 system call"></a>4.9 dup &amp; dup2 system call</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
        dup<span class="token punctuation">,</span> dup2<span class="token punctuation">,</span> dup3 <span class="token operator">-</span> duplicate a file descriptor
 
 SYNOPSIS
@@ -1495,10 +1843,10 @@ SYNOPSIS
        <span class="token keyword">int</span> <span class="token function">dup3</span><span class="token punctuation">(</span><span class="token keyword">int</span> oldfd<span class="token punctuation">,</span> <span class="token keyword">int</span> newfd<span class="token punctuation">,</span> <span class="token keyword">int</span> flags<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 DESCRIPTION
-       The  <span class="token function">dup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  system call creates a copy of the file descriptor oldfd<span class="token punctuation">,</span> using the lowest<span class="token operator">-</span>numbered unused file de‐
+       The  <span class="token function">dup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  system call 【creates a copy of the file descriptor oldfd】<span class="token punctuation">,</span> using the 【lowest<span class="token operator">-</span>numbered】 unused file de‐
        scriptor <span class="token keyword">for</span> the new descriptor<span class="token punctuation">.</span>
 
-       After a successful <span class="token keyword">return</span><span class="token punctuation">,</span> the old and new file descriptors may be used interchangeably<span class="token punctuation">.</span>  They  refer  to  the same open file <span class="token function">description</span> <span class="token punctuation">(</span>see <span class="token function">open</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> and thus share file offset and file status flags<span class="token punctuation">;</span> <span class="token keyword">for</span> example<span class="token punctuation">,</span> <span class="token keyword">if</span> the  file offset is modified by using <span class="token function">lseek</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> on one of the file descriptors<span class="token punctuation">,</span> the offset is also changed  <span class="token keyword">for</span>  the other<span class="token punctuation">.</span>
+       After a successful <span class="token keyword">return</span><span class="token punctuation">,</span> the old and new file descriptors may be used interchangeably<span class="token punctuation">.</span>  They  refer  to  the same open file description and thus share file offset and file status flags<span class="token punctuation">;</span> <span class="token keyword">for</span> example<span class="token punctuation">,</span> <span class="token keyword">if</span> the  file offset is modified by using <span class="token function">lseek</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> on one of the file descriptors<span class="token punctuation">,</span> the offset is also changed  <span class="token keyword">for</span>  the other<span class="token punctuation">.</span>
 
        The  two file descriptors <span class="token keyword">do</span> not share file descriptor <span class="token function">flags</span> <span class="token punctuation">(</span>the close<span class="token operator">-</span>on<span class="token operator">-</span>exec flag<span class="token punctuation">)</span><span class="token punctuation">.</span>  The close<span class="token operator">-</span>on<span class="token operator">-</span>exec <span class="token function">flag</span> <span class="token punctuation">(</span>FD_CLOEXEC<span class="token punctuation">;</span> see <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">for</span> the duplicate descriptor is off<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
@@ -1509,8 +1857,46 @@ DESCRIPTION
 <p>和旧的一起指向同一个文件</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">dup</span><span class="token punctuation">(</span><span class="token keyword">int</span> oldfd<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<h5 id="测试代码-11"><a href="#测试代码-11" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/stat.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 创建一个文件描述符</span>
+    <span class="token keyword">int</span> oldFd <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"a.txt"</span><span class="token punctuation">,</span> O_CREAT <span class="token operator">|</span> O_RDWR<span class="token punctuation">,</span> <span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>oldFd <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"open"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
+    <span class="token comment">// 拷贝文件描述符 oldFd -&gt; newFd</span>
+    <span class="token keyword">int</span> newFd <span class="token operator">=</span> <span class="token function">dup</span><span class="token punctuation">(</span>oldFd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"oldFd: %d, newFd: %d\n"</span><span class="token punctuation">,</span> oldFd<span class="token punctuation">,</span> newFd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 关闭旧的文件描述符</span>
+    <span class="token function">close</span><span class="token punctuation">(</span>oldFd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 新的仍然可以操作这个文件</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"Hello, World!\n"</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">write</span><span class="token punctuation">(</span>newFd<span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"write"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">close</span><span class="token punctuation">(</span>newFd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="https://img-blog.csdnimg.cn/e9f6ca0932a64e6eb25fb1aaf35b5d73.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==">可以发现两个不同的文件描述符 3，4 指向的是同一个文件。</p>
 <h5 id="dup2"><a href="#dup2" class="headerlink" title="dup2"></a>dup2</h5><p>重定向文件描述符</p>
 <p>oldfd 指向 a.txt, newfd 指向 b.txt</p>
 <p>调用dup2之后，相当于(close, newfd, b.txt), newfd指向a.txt</p>
@@ -1518,9 +1904,32 @@ DESCRIPTION
 <p>对于返回值没必要close, newfd 和 return value相同，如果成功。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">dup2</span><span class="token punctuation">(</span><span class="token keyword">int</span> oldfd<span class="token punctuation">,</span> <span class="token keyword">int</span> newfd<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
+<h5 id="测试代码-12"><a href="#测试代码-12" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>                                                                                                                           <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> oldFd <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"a.txt"</span><span class="token punctuation">,</span> O_CREAT <span class="token operator">|</span> O_RDWR<span class="token punctuation">,</span> <span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>oldFd <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"open"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
+    <span class="token keyword">int</span> newFd <span class="token operator">=</span> <span class="token function">dup2</span><span class="token punctuation">(</span>oldFd<span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"oldFd: %d, newFd: %d\n"</span><span class="token punctuation">,</span> oldFd<span class="token punctuation">,</span> newFd<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
+    <span class="token function">close</span><span class="token punctuation">(</span>oldFd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"Hello, World!\n"</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"write"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">close</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -1545,33 +1954,112 @@ DESCRIPTION
 <h5 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">int</span> cmd<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">/* arg */</span> <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
-<li>fd：文件描述符</li>
-<li>cmd：命令（宏）<ul>
+<li><p>fd：文件描述符</p>
+</li>
+<li><p>cmd：命令（宏）</p>
+<ul>
 <li>F_DUPFD (int)<ul>
-<li>复制文件描述符，复制第一个参数fd并通过return value返回新的文件描述符</li>
-<li>用法：newfd = fcntl (fd, F_DUPFD);</li>
+<li><p>复制文件描述符，复制第一个参数fd并通过return value返回新的文件描述符</p>
+</li>
+<li><p>用法：newfd = fcntl (fd, F_DUPFD);</p>
+</li>
+<li><p>```c<br>Duplicating a file descriptor</p>
+<pre><code>   F_DUPFD (int)
+
+   Duplicate the file descriptor fd using the lowest-numbered available file descriptor greater than or equal to  arg.
+   This is different from dup2(2), which uses exactly the file descriptor specified.
+
+   On success, the new file descriptor is returned.
+
+   As  for  F_DUPFD,  but  additionally set the close-on-exec flag for the duplicate file descriptor.  Specifying this flag permits a program to avoid an additional fcntl() F_SETFD operation to set the FD_CLOEXEC flag.  For an  explanation of why this flag is useful, see the description of O_CLOEXEC in open(2).
+</code></pre>
+<pre class="line-numbers language-none"><code class="language-none">* F_GETFL (void)
+  * 获取文件状态 flag （和open函数传递的flag是同一个东西）
+  * 用法：
+* F_SETFL (int)
+  * 设置文件状态 flag
+  
+  * access mode 不可修改 O_RDONLY,  O_WRONLY, O_RDWR ， creation flags 也不可修改
+  
+  * 可选项：O_APPEND（追加数据）, O_NONBLOCK（设置成非阻塞）
+  
+  * ```c
+    File status flags
+        
+           Each  open  file description has certain associated status flags, initialized by open(2) and possibly modified by fcntl().
+           Duplicated file descriptors (made with dup(2), fcntl(F_DUPFD), fork(2), etc.) refer to the same open file description, and thus share the same file status flags.
+    
+           The file status flags and their semantics are described in open(2).
+    
+           F_GETFL (void)
+        
+           Return (as the function result) the file access mode and the file status flags; arg is ignored.
+    
+           F_SETFL (int)
+        
+           Set  the  file  status flags to the value specified by arg.  File access mode (O_RDONLY, O_WRONLY, O_RDWR) and file creation flags (i.e., O_CREAT, O_EXCL, O_NOCTTY, O_TRUNC) in arg are ignored.  
+           On Linux, this  command  can  change only  the  【O_APPEND,  O_ASYNC, O_DIRECT, O_NOATIME, and O_NONBLOCK flags】.  
+           It is not possible to change the O_DSYNC and O_SYNC flags; see BUGS, below.
+               
+           On error, -1 is returned, and errno is set appropriately.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
 </li>
-<li>F_GETFL (void)<ul>
-<li>获取文件状态 flag （和open函数传递的flag是同一个东西）</li>
-<li>用法：</li>
 </ul>
 </li>
-<li>F_SETFL (int)<ul>
-<li>设置文件状态 flag</li>
-<li>access mode 不可修改 O_RDONLY,  O_WRONLY, O_RDWR ， creation flags 也不可修改</li>
-<li>可选项：O_APPEND（追加数据）, O_NONBLOCK（设置成非阻塞）</li>
-</ul>
+<li><p>可变参数、</p>
 </li>
-</ul>
-</li>
-<li>可变参数</li>
 </ul>
 <h5 id="阻塞-amp-非阻塞"><a href="#阻塞-amp-非阻塞" class="headerlink" title="阻塞 &amp; 非阻塞"></a>阻塞 &amp; 非阻塞</h5><p>描述的是函数的行为。</p>
 <p><code>阻塞</code>，在调用结果返回前，当前线程会被挂起，并在得到结果之后返回。 </p>
 <p>​            终端等待我们输入的时候就是阻塞的。</p>
 <p><code>非阻塞</code>，如果不能立刻得到结果，则该调用者不会阻塞当前线程。</p>
 <p>​            在终端，我们输入好命令后进程执行期间是不阻塞的。</p>
+<h5 id="测试代码-13"><a href="#测试代码-13" class="headerlink" title="测试代码"></a>测试代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fcntl.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 打开文件</span>
+    <span class="token keyword">int</span> fd <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"a.txt"</span><span class="token punctuation">,</span> O_RDWR <span class="token operator">|</span> O_CREAT<span class="token punctuation">,</span> <span class="token number">0664</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>fd <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"open"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 获取文件状态 flag</span>
+    <span class="token keyword">int</span> flag <span class="token operator">=</span> <span class="token function">fcntl</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> F_GETFL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>flag <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"fcntl"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+     <span class="token comment">// 设置文件状态 flag</span>
+    flag <span class="token operator">|=</span> O_APPEND<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">fcntl</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> F_SETFL<span class="token punctuation">,</span> flag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"fcntl"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 写数据</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"Hello, fcntl\n"</span><span class="token punctuation">;</span>
+    <span class="token function">write</span><span class="token punctuation">(</span>fd<span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">close</span><span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/70a468d4bdde45c48ac474745884e6ca.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="flag |= O_APPEND, 会在文件末尾追加"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/9cd9c3d4d9fc4acd9306b8356e9f652b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="flag 不和 O_APPEND做按位与，直接覆盖重写"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
 
                 
             </div>
@@ -1957,7 +2445,7 @@ DESCRIPTION
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">34.1k</span>&nbsp;字
+                class="white-color">36.1k</span>&nbsp;字
             
             
             
