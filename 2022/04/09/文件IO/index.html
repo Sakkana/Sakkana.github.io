@@ -1954,61 +1954,67 @@ DESCRIPTION
 <h5 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">int</span> cmd<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">/* arg */</span> <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
-<li><p>fd：文件描述符</p>
-</li>
-<li><p>cmd：命令（宏）</p>
-<ul>
+<li>fd：文件描述符</li>
+<li>cmd：命令（宏）<ul>
 <li>F_DUPFD (int)<ul>
 <li><p>复制文件描述符，复制第一个参数fd并通过return value返回新的文件描述符</p>
 </li>
 <li><p>用法：newfd = fcntl (fd, F_DUPFD);</p>
 </li>
-<li><p>```c<br>Duplicating a file descriptor</p>
-<pre><code>   F_DUPFD (int)
-
-   Duplicate the file descriptor fd using the lowest-numbered available file descriptor greater than or equal to  arg.
-   This is different from dup2(2), which uses exactly the file descriptor specified.
-
-   On success, the new file descriptor is returned.
-
-   As  for  F_DUPFD,  but  additionally set the close-on-exec flag for the duplicate file descriptor.  Specifying this flag permits a program to avoid an additional fcntl() F_SETFD operation to set the FD_CLOEXEC flag.  For an  explanation of why this flag is useful, see the description of O_CLOEXEC in open(2).
-</code></pre>
-<pre class="line-numbers language-none"><code class="language-none">* F_GETFL (void)
-  * 获取文件状态 flag （和open函数传递的flag是同一个东西）
-  * 用法：
-* F_SETFL (int)
-  * 设置文件状态 flag
-  
-  * access mode 不可修改 O_RDONLY,  O_WRONLY, O_RDWR ， creation flags 也不可修改
-  
-  * 可选项：O_APPEND（追加数据）, O_NONBLOCK（设置成非阻塞）
-  
-  * ```c
-    File status flags
-        
-           Each  open  file description has certain associated status flags, initialized by open(2) and possibly modified by fcntl().
-           Duplicated file descriptors (made with dup(2), fcntl(F_DUPFD), fork(2), etc.) refer to the same open file description, and thus share the same file status flags.
-    
-           The file status flags and their semantics are described in open(2).
-    
-           F_GETFL (void)
-        
-           Return (as the function result) the file access mode and the file status flags; arg is ignored.
-    
-           F_SETFL (int)
-        
-           Set  the  file  status flags to the value specified by arg.  File access mode (O_RDONLY, O_WRONLY, O_RDWR) and file creation flags (i.e., O_CREAT, O_EXCL, O_NOCTTY, O_TRUNC) in arg are ignored.  
-           On Linux, this  command  can  change only  the  【O_APPEND,  O_ASYNC, O_DIRECT, O_NOATIME, and O_NONBLOCK flags】.  
-           It is not possible to change the O_DSYNC and O_SYNC flags; see BUGS, below.
-               
-           On error, -1 is returned, and errno is set appropriately.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+<li>F_GETFL (void)<ul>
+<li>获取文件状态 flag （和open函数传递的flag是同一个东西）</li>
+<li>用法：</li>
+</ul>
+</li>
+<li>F_SETFL (int)<ul>
+<li><p>设置文件状态 flag</p>
+</li>
+<li><p>access mode 不可修改 O_RDONLY,  O_WRONLY, O_RDWR ， creation flags 也不可修改</p>
+</li>
+<li><p>可选项：O_APPEND（追加数据）, O_NONBLOCK（设置成非阻塞）</p>
+</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>可变参数、</p>
-</li>
+<li>可变参数</li>
 </ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">Duplicating a file descriptor
+    
+       <span class="token function">F_DUPFD</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>
+    
+       Duplicate the file descriptor fd using the lowest<span class="token operator">-</span>numbered available file descriptor greater than or equal to  arg<span class="token punctuation">.</span>
+       This is different from <span class="token function">dup2</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> which uses exactly the file descriptor specified<span class="token punctuation">.</span>
+
+       On success<span class="token punctuation">,</span> the new file descriptor is returned<span class="token punctuation">.</span>
+
+       As  <span class="token keyword">for</span>  F_DUPFD<span class="token punctuation">,</span>  but  additionally set the close<span class="token operator">-</span>on<span class="token operator">-</span>exec flag <span class="token keyword">for</span> the duplicate file descriptor<span class="token punctuation">.</span>  Specifying this flag permits a program to avoid an additional <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token punctuation">)</span> F_SETFD operation to set the FD_CLOEXEC flag<span class="token punctuation">.</span>  For an  explanation of why this flag is useful<span class="token punctuation">,</span> see the description of O_CLOEXEC in <span class="token function">open</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+           
+File status flags
+    
+       Each  open  file description has certain associated status flags<span class="token punctuation">,</span> initialized by <span class="token function">open</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> and possibly modified by <span class="token function">fcntl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span> Duplicated file <span class="token function">descriptors</span> <span class="token punctuation">(</span>made with <span class="token function">dup</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">fcntl</span><span class="token punctuation">(</span>F_DUPFD<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> etc<span class="token punctuation">.</span><span class="token punctuation">)</span> refer to the same open file description<span class="token punctuation">,</span> and thus share the same file status flags<span class="token punctuation">.</span>
+
+       The file status flags and their semantics are described in <span class="token function">open</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span>
+
+       <span class="token function">F_GETFL</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+    
+       <span class="token function">Return</span> <span class="token punctuation">(</span>as the function result<span class="token punctuation">)</span> the file access mode and the file status flags<span class="token punctuation">;</span> arg is ignored<span class="token punctuation">.</span>
+
+       <span class="token function">F_SETFL</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>
+    
+       Set  the  file  status flags to the value specified by arg<span class="token punctuation">.</span>  File access <span class="token function">mode</span> <span class="token punctuation">(</span>O_RDONLY<span class="token punctuation">,</span> O_WRONLY<span class="token punctuation">,</span> O_RDWR<span class="token punctuation">)</span> and file creation <span class="token function">flags</span> <span class="token punctuation">(</span>i<span class="token punctuation">.</span>e<span class="token punctuation">.</span><span class="token punctuation">,</span> O_CREAT<span class="token punctuation">,</span> O_EXCL<span class="token punctuation">,</span> O_NOCTTY<span class="token punctuation">,</span> O_TRUNC<span class="token punctuation">)</span> in arg are ignored<span class="token punctuation">.</span>  
+       On Linux<span class="token punctuation">,</span> this  command  can  change only  the  【O_APPEND<span class="token punctuation">,</span>  O_ASYNC<span class="token punctuation">,</span> O_DIRECT<span class="token punctuation">,</span> O_NOATIME<span class="token punctuation">,</span> and O_NONBLOCK flags】<span class="token punctuation">.</span>  
+       It is not possible to change the O_DSYNC and O_SYNC flags<span class="token punctuation">;</span> see BUGS<span class="token punctuation">,</span> below<span class="token punctuation">.</span>
+           
+       On error<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span> is returned<span class="token punctuation">,</span> and errno is set appropriately<span class="token punctuation">.</span>
+           <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
 <h5 id="阻塞-amp-非阻塞"><a href="#阻塞-amp-非阻塞" class="headerlink" title="阻塞 &amp; 非阻塞"></a>阻塞 &amp; 非阻塞</h5><p>描述的是函数的行为。</p>
 <p><code>阻塞</code>，在调用结果返回前，当前线程会被挂起，并在得到结果之后返回。 </p>
 <p>​            终端等待我们输入的时候就是阻塞的。</p>
