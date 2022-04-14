@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.3k
+                    7.9k
                 </div>
                 
 
@@ -1327,19 +1327,6 @@ DESCRIPTION
 <p>GDB希望完全控制另一个进程，并且可以共享其数据（如被调试进程有输出）。</p>
 <h5 id="通信方式"><a href="#通信方式" class="headerlink" title="通信方式"></a>通信方式</h5><p><img src="https://img-blog.csdnimg.cn/e59b6ea57e96487da92ba5df74efdd4a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <p>加一个：消息队列，共享内存，信号量，<code>内存映射</code></p>
-<h5 id="管道的特点-（包括匿名和有名）"><a href="#管道的特点-（包括匿名和有名）" class="headerlink" title="管道的特点 （包括匿名和有名）"></a>管道的特点 （包括匿名和有名）</h5><p><img src="https://img-blog.csdnimg.cn/b91924fda7ca4dfb97531381e4f73f2f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<p>匿名管道用在有关系的进程间：父子进程</p>
-<p>有名管道用在没有关系的进程间</p>
-<p>消息：在网络通信中有许多协议，规定好了，发送一次数据会有个协议头，协议头大小固定，后面放传输的数据。另一个进程拿到消息后，可以按照格式解析内容。</p>
-<p>但是管道没有消息的概念，里面都是字节流。可以从管道里想读多少读多少。</p>
-<p><img src="https://img-blog.csdnimg.cn/ceaf516a11e44f9f9bf375f159b902ec.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<p>单工：遥控器发送数据给电视机，但是电视机不能发送消息给遥控器。</p>
-<p>双工：打电话双方都可以互相发送消息。</p>
-<p>半双工：同一时间数据只能向一方流动（对讲机，一个人说的时候另一个人只能听）。同一时间，只能一个进程给另一个进程发送数据。因此，管道中数据的流动是单向的，但是可以双向传输。</p>
-<h5 id="为什么管道只能用于有关系的进程呢？"><a href="#为什么管道只能用于有关系的进程呢？" class="headerlink" title="为什么管道只能用于有关系的进程呢？"></a>为什么管道只能用于<code>有关系的进程</code>呢？</h5><p>本质上是因为父子进程<code>共享文件描述符</code>。</p>
-<p><img src="https://img-blog.csdnimg.cn/7741df407f6d4af9ac43dc41cb09639f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<h5 id="管道的数据结构"><a href="#管道的数据结构" class="headerlink" title="管道的数据结构"></a>管道的数据结构</h5><p><img src="https://img-blog.csdnimg.cn/706dc2a0eb7f4506b5dbfbcb86110ce9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
-<p>逻辑手段将线性队列设计成了环形队列</p>
 <h3 id="7-1-匿名管道-Unix最古老的形式"><a href="#7-1-匿名管道-Unix最古老的形式" class="headerlink" title="7.1 匿名管道 (Unix最古老的形式)"></a>7.1 匿名管道 (Unix最古老的形式)</h3><p>管道默认为匿名管道。</p>
 <p><img src="https://img-blog.csdnimg.cn/ae7b14ada5f14fe1a1a4f8a217433bf8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
 <p><code>|</code> 是管道符，其左右两边是两个进程，数据通过管道共享。</p>
@@ -1347,6 +1334,348 @@ DESCRIPTION
 <p>然而用了管道之后，ls将数据写到<code>管道写入端</code>（重定向stdout）。</p>
 <p>wc原本会从<code>stdin（默认是终端）</code>读取数据，</p>
 <p>然而用了管道之后，wc从<code>管道读取端</code>读取数据（重定向stdin）。</p>
+<h5 id="管道的特点-（包括匿名和有名）"><a href="#管道的特点-（包括匿名和有名）" class="headerlink" title="管道的特点 （包括匿名和有名）"></a>管道的特点 （包括匿名和有名）</h5><p><img src="https://img-blog.csdnimg.cn/b91924fda7ca4dfb97531381e4f73f2f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>匿名管道用在有关系的进程间：父子进程</p>
+<p>有名管道用在没有关系的进程间</p>
+<p>消息：在网络通信中有许多协议，规定好了，发送一次数据会有个协议头，协议头大小固定，后面放传输的数据。另一个进程拿到消息后，可以按照格式解析内容。</p>
+<p>但是管道没有消息的概念，里面都是字节流。可以从管道里想读多少读多少。</p>
+<p><img src="https://img-blog.csdnimg.cn/ceaf516a11e44f9f9bf375f159b902ec.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="`抽象`"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>单工：遥控器发送数据给电视机，但是电视机不能发送消息给遥控器。</p>
+<p>双工：打电话双方都可以互相发送消息。</p>
+<p>半双工：同一时间数据只能向一方流动（对讲机，一个人说的时候另一个人只能听）。同一时间，只能一个进程给另一个进程发送数据。因此，管道中数据的流动是单向的，但是可以双向传输。</p>
+<h5 id="为什么管道只能用于有关系的进程呢？"><a href="#为什么管道只能用于有关系的进程呢？" class="headerlink" title="为什么管道只能用于有关系的进程呢？"></a>为什么管道只能用于<code>有关系的进程</code>呢？</h5><p>本质上是因为父子进程<code>共享文件描述符</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/7741df407f6d4af9ac43dc41cb09639f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="管道的数据结构"><a href="#管道的数据结构" class="headerlink" title="管道的数据结构"></a>管道的数据结构</h5><p><img src="https://img-blog.csdnimg.cn/706dc2a0eb7f4506b5dbfbcb86110ce9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>逻辑手段将线性队列设计成了环形队列，充分利用资源，避免浪费。</p>
+<p>数据只能读取一次，并且之后会被覆盖。</p>
+<h5 id="匿名管道的使用"><a href="#匿名管道的使用" class="headerlink" title="匿名管道的使用"></a>匿名管道的使用</h5><p><img src="https://img-blog.csdnimg.cn/c28b7716206d42aa81729dbf4d7c4adf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       pipe <span class="token operator">-</span> create pipe
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+       <span class="token comment">/* On Alpha, IA-64, MIPS, SuperH, and SPARC/SPARC64; see NOTES */</span>
+       <span class="token keyword">struct</span> <span class="token class-name">fd_pair</span> <span class="token punctuation">{</span>
+           <span class="token keyword">long</span> fd<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+       <span class="token punctuation">}</span><span class="token punctuation">;</span>
+       <span class="token keyword">struct</span> <span class="token class-name">fd_pair</span> <span class="token function">pipe</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+       <span class="token comment">/* On all other architectures */</span>
+       <span class="token keyword">int</span> <span class="token function">pipe</span><span class="token punctuation">(</span><span class="token keyword">int</span> pipefd<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       <span class="token function">pipe</span><span class="token punctuation">(</span><span class="token punctuation">)</span> creates a pipe<span class="token punctuation">,</span> a unidirectional data channel that can be used <span class="token keyword">for</span> 【interprocess communication】<span class="token punctuation">.</span>  
+       The array pipefd is used to 【<span class="token keyword">return</span> two file descriptors】 referring to the ends of the pipe<span class="token punctuation">.</span>  
+       pipefd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> refers to the 【read end】 of the pipe<span class="token punctuation">.</span>  
+       pipefd<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> refers to the 【write end】 of the pipe<span class="token punctuation">.</span>   
+       <span class="token function">Data</span> <span class="token punctuation">(</span>written to the write end of the pipe<span class="token punctuation">)</span> is buffered by the <span class="token function">kernel</span> <span class="token punctuation">(</span>until it is read from the read end of the pipe<span class="token punctuation">)</span><span class="token punctuation">.</span>
+       <span class="token comment">// 这里是在说，写到管道的【写入端】的数据会被加载到缓冲区（管道实质上就是一个缓冲），直到它被一个进程从【读取端】读取。</span>
+    
+ETURN VALUE
+       On success<span class="token punctuation">,</span> 【zero】 is returned<span class="token punctuation">.</span>  
+       On error<span class="token punctuation">,</span> 【<span class="token operator">-</span><span class="token number">1</span>】 is returned<span class="token punctuation">,</span> errno is set appropriately<span class="token punctuation">,</span> and pipefd is left unchanged<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="pipe"><a href="#pipe" class="headerlink" title="pipe"></a>pipe</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">pipe</span><span class="token punctuation">(</span><span class="token keyword">int</span> pipefd<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>参数：</p>
+<ul>
+<li>pipefd 是一个传出参数，我们把这个数组传进去，他会把管道两端的文件描述符传出来<ul>
+<li>pipefd[0] -&gt; 读端</li>
+<li>pipefd[1] -&gt; 写端</li>
+</ul>
+</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>成功：返回0</li>
+<li>失败： 返回 -1， 并设置 errorno</li>
+</ul>
+<p>这里又一次体现了Linux的设计哲学 — 万物皆文件。</p>
+<h5 id="示例代码-3"><a href="#示例代码-3" class="headerlink" title="示例代码"></a>示例代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+
+<span class="token comment">// 子进程给父进程发送数据</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 需要在 fork 之前创建管道，这样两个进程才会共享文件描述符</span>
+    <span class="token keyword">int</span> pipefd<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// 传出参数</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">pipe</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"pipe"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 创建子进程</span>
+    <span class="token class-name">pid_t</span> pid <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>pid <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 父进程从管道的【读取端】读取数据</span>
+        <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 爸爸从 pipefd[0] 读取数据</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"parent receive: \n%s, pid=%d\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 父亲回收子进程</span>
+        <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">wait</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"wait"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>pid <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+         <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm child pid=%d. I'm going to send sth to my papa through a pipe.\n"</span><span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 子进程从管道的【写入端】写数据</span>
+        <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"Hello, papa.\n"</span><span class="token punctuation">;</span>
+        <span class="token function">write</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 儿子把数据写道pipefd[1]</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/a862a2cac79847549b7e57aa3490a968.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="示例代码（read阻塞）"><a href="#示例代码（read阻塞）" class="headerlink" title="示例代码（read阻塞）"></a>示例代码（read阻塞）</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+
+<span class="token comment">// 子进程给父进程发送数据</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 需要在 fork 之前创建管道，这样两个进程才会共享文件描述符</span>
+    <span class="token keyword">int</span> pipefd<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// 传出参数</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">pipe</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"pipe"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 创建子进程</span>
+    <span class="token class-name">pid_t</span> pid <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>pid <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 父进程从管道的【读取端】读取数据</span>
+        <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 爸爸从 pipefd[0] 读取数据</span>
+        <span class="token comment">// read是阻塞的，只有等到有数据可读，read才会去读，不然一直呆在那儿</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"parent receive: \n%s, pid=%d\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 父亲回收子进程</span>
+        <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">wait</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"wait"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>pid <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 子进程先睡10秒钟</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm child pid=%d. I'm going to send sth to my papa through a pipe.\n"</span><span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 子进程从管道的【写入端】写数据</span>
+        <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"Hello, papa.\n"</span><span class="token punctuation">;</span>
+        <span class="token function">write</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 儿子把数据写道pipefd[1]</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/a8edc8ca3c224c4db13da3d899c326fc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_19,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>管道默认是阻塞的：</p>
+<ul>
+<li>如果管道中没有数据，read阻塞</li>
+<li>如果管道中数据慢了，write阻塞</li>
+</ul>
+<h5 id="示例代码（不断收发数据）"><a href="#示例代码（不断收发数据）" class="headerlink" title="示例代码（不断收发数据）"></a>示例代码（不断收发数据）</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+
+<span class="token comment">// 子进程给父进程发送数据</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 需要在 fork 之前创建管道，这样两个进程才会共享文件描述符</span>
+    <span class="token keyword">int</span> pipefd<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// 传出参数</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">pipe</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"pipe"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 创建子进程</span>
+    <span class="token class-name">pid_t</span> pid <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>pid <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm parent pid=%d. I'm going to read sth to my papa through a pipe.\n"</span><span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 父进程不断读取数据</span>
+        <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 爸爸从 pipefd[0] 读取数据</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"parent receive: %s, pid=%d\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>pid <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm child pid=%d. I'm going to send sth to my papa through a pipe.\n"</span><span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 子进程不断发送数据</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"Hello, papa."</span><span class="token punctuation">;</span>
+            <span class="token function">write</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 儿子把数据写道pipefd[1]</span>
+            <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/bdc56ce6d8874a03960b3023495af475.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="示例代码（父子互相收发消息）"><a href="#示例代码（父子互相收发消息）" class="headerlink" title="示例代码（父子互相收发消息）"></a>示例代码（父子互相收发消息）</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 需要在 fork 之前创建管道，这样两个进程才会共享文件描述符</span>
+    <span class="token keyword">int</span> pipefd<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// 传出参数</span>
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">pipe</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"pipe"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 创建子进程</span>
+    <span class="token class-name">pid_t</span> pid <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>pid <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm parent pid=%d. I'm going to read sth to my papa through a pipe.\n"</span><span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment">// 父进程不断读取数据</span>
+            <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"parent receive: %s, pid=%d\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+            <span class="token comment">// 父进程不断发送数据</span>
+            <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"Hello, child."</span><span class="token punctuation">;</span>
+            <span class="token function">write</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 儿子把数据写道pipefd[1]</span>
+            <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>pid <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"I'm child pid=%d. I'm going to send sth to my papa through a pipe.\n"</span><span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment">// 子进程不断发送数据</span>
+            <span class="token keyword">char</span> <span class="token operator">*</span>str <span class="token operator">=</span> <span class="token string">"Hello, papa."</span><span class="token punctuation">;</span>
+            <span class="token function">write</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> str<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 儿子把数据写道pipefd[1]</span>
+            <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment">// 子进程不断读取数据</span>
+            <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"child receive: %s, pid=%d\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/09f6fd6b7a02442cb7a504eae8fa3574.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>可以看到父子进程在互相发送，接收消息，你一条我一条，由于多线程的程序，管道没有关闭，某个线程可能会读到自己写入的数据。</p>
+<h5 id="查看管道的缓冲大小"><a href="#查看管道的缓冲大小" class="headerlink" title="查看管道的缓冲大小"></a>查看管道的缓冲大小</h5><p>使用 <code>ulimit -a</code> 可以查看一些系统参数</p>
+<p>其中 <code>pipe size</code> = 8 * 512byte = 4K</p>
+<p>有八个块，每个块512字节</p>
+<p>使用<code>-p</code>可以修改管道的大小</p>
+<p><img src="https://img-blog.csdnimg.cn/9911da304b0e4731900921af96b741cf.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_13,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="查看管道大小的函数"><a href="#查看管道大小的函数" class="headerlink" title="查看管道大小的函数"></a>查看管道大小的函数</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c">NAME
+       fpathconf <span class="token operator">-</span> get configuration values <span class="token keyword">for</span> files
+
+SYNOPSIS
+       <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+       <span class="token keyword">long</span> <span class="token function">fpathconf</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">int</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       <span class="token function">fpathconf</span><span class="token punctuation">(</span><span class="token punctuation">)</span> gets a value <span class="token keyword">for</span> the configuration option name <span class="token keyword">for</span> the open file descriptor fd<span class="token punctuation">.</span>
+    
+_PC_PIPE_BUF
+       The  maximum  number of bytes that can be written atomically to a pipe of FIFO<span class="token punctuation">.</span>  For <span class="token function">fpathconf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> fd should refer to a pipe or FIFO<span class="token punctuation">.</span>  For <span class="token function">fpathconf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> path should refer to a FIFO or a directory<span class="token punctuation">;</span> in the latter <span class="token keyword">case</span><span class="token punctuation">,</span> the returned value corresponds to FIFOs created in that directory<span class="token punctuation">.</span>  The corresponding macro is _POSIX_PIPE_BUF<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> pipefd<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">pipe</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 获取管道大小</span>
+    <span class="token keyword">long</span> size <span class="token operator">=</span> <span class="token function">fpathconf</span><span class="token punctuation">(</span>pipefd<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> _PC_PIPE_BUF<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"the size of pipe buffer: %ld\n"</span><span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>可以看到，我们的管道缓冲区大小为 4096byte，即4K。</p>
+<p><img src="https://img-blog.csdnimg.cn/9942724823064924ace25dcd1717321e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <h3 id="7-2-管道读写特点-と-管道设置为非阻塞"><a href="#7-2-管道读写特点-と-管道设置为非阻塞" class="headerlink" title="7.2 管道读写特点 と 管道设置为非阻塞"></a>7.2 管道读写特点 と 管道设置为非阻塞</h3><h3 id="7-3-有名管道"><a href="#7-3-有名管道" class="headerlink" title="7.3 有名管道"></a>7.3 有名管道</h3><h2 id="8-内存映射"><a href="#8-内存映射" class="headerlink" title="8. 内存映射"></a>8. 内存映射</h2><h2 id="9-信号概述"><a href="#9-信号概述" class="headerlink" title="9. 信号概述"></a>9. 信号概述</h2><h2 id="10-kill-とraise-と-abort函数"><a href="#10-kill-とraise-と-abort函数" class="headerlink" title="10. kill とraise と abort函数"></a>10. kill とraise と abort函数</h2><h2 id="11-setimier-定时器函数"><a href="#11-setimier-定时器函数" class="headerlink" title="11. setimier 定时器函数"></a>11. setimier 定时器函数</h2><h2 id="12-signal-信号捕捉函数"><a href="#12-signal-信号捕捉函数" class="headerlink" title="12. signal 信号捕捉函数"></a>12. signal 信号捕捉函数</h2><h2 id="13-信号集-と-相关函数"><a href="#13-信号集-と-相关函数" class="headerlink" title="13. 信号集 と 相关函数"></a>13. 信号集 と 相关函数</h2><h2 id="14-sigprocmask-函数"><a href="#14-sigprocmask-函数" class="headerlink" title="14. sigprocmask 函数"></a>14. sigprocmask 函数</h2><h2 id="15-sigaction-信号捕捉函数"><a href="#15-sigaction-信号捕捉函数" class="headerlink" title="15. sigaction 信号捕捉函数"></a>15. sigaction 信号捕捉函数</h2><h2 id="16-SIGCHILD-信号"><a href="#16-SIGCHILD-信号" class="headerlink" title="16. SIGCHILD 信号"></a>16. SIGCHILD 信号</h2><h2 id="17-共享内存"><a href="#17-共享内存" class="headerlink" title="17. 共享内存"></a>17. 共享内存</h2><h2 id="18-守护进程"><a href="#18-守护进程" class="headerlink" title="18. 守护进程"></a>18. 守护进程</h2>
                 
             </div>
@@ -1730,7 +2059,7 @@ DESCRIPTION
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">42.9k</span>&nbsp;字
+                class="white-color">44.5k</span>&nbsp;字
             
             
             
