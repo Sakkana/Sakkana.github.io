@@ -632,9 +632,10 @@ DESCRIPTION
 <li><p>某些状态下，子进程刚被创建出来，还没有执行任何写数据的操作时，</p>
 <p>​    用户区数据相同</p>
 <p>​    文件描述符表相同</p>
-<pre><code>  2. 父子进程`读时共享`变量，写时候`拷贝`变量（因此不能用变量进行进程间通信）
-</code></pre>
 </li>
+</ol>
+<ol start="2">
+<li><strong>父子进程<code>读时共享</code>变量，写时候<code>拷贝</code>变量（因此不能用变量进行进程间通信)</strong></li>
 </ol>
 <h5 id="gdb调试"><a href="#gdb调试" class="headerlink" title="gdb调试"></a>gdb调试</h5><p><img src="https://img-blog.csdnimg.cn/a0b18e6e02034cad949fb02bf9aa591e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
 <p><code>set follow-fork-mode [parent | child]</code>：切换默认调试的进程</p>
