@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.6k
+                    6.3k
                 </div>
                 
 
@@ -1308,7 +1308,46 @@ DESCRIPTION
 <p>我们也可以利用信号去杀掉子进程。</p>
 <p><img src="https://img-blog.csdnimg.cn/c7a5b59cb3df4bf5a12fd11845d50a3b.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <p><img src="https://img-blog.csdnimg.cn/c05a042367fd4eb98bd59eca870ea5e0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<h2 id="7-进程间通信"><a href="#7-进程间通信" class="headerlink" title="7. 进程间通信"></a>7. 进程间通信</h2><h3 id="7-1-匿名管道"><a href="#7-1-匿名管道" class="headerlink" title="7.1 匿名管道"></a>7.1 匿名管道</h3><h3 id="7-2-管道读写特点-と-管道设置为非阻塞"><a href="#7-2-管道读写特点-と-管道设置为非阻塞" class="headerlink" title="7.2 管道读写特点 と 管道设置为非阻塞"></a>7.2 管道读写特点 と 管道设置为非阻塞</h3><h3 id="7-3-有名管道"><a href="#7-3-有名管道" class="headerlink" title="7.3 有名管道"></a>7.3 有名管道</h3><h2 id="8-内存映射"><a href="#8-内存映射" class="headerlink" title="8. 内存映射"></a>8. 内存映射</h2><h2 id="9-信号概述"><a href="#9-信号概述" class="headerlink" title="9. 信号概述"></a>9. 信号概述</h2><h2 id="10-kill-とraise-と-abort函数"><a href="#10-kill-とraise-と-abort函数" class="headerlink" title="10. kill とraise と abort函数"></a>10. kill とraise と abort函数</h2><h2 id="11-setimier-定时器函数"><a href="#11-setimier-定时器函数" class="headerlink" title="11. setimier 定时器函数"></a>11. setimier 定时器函数</h2><h2 id="12-signal-信号捕捉函数"><a href="#12-signal-信号捕捉函数" class="headerlink" title="12. signal 信号捕捉函数"></a>12. signal 信号捕捉函数</h2><h2 id="13-信号集-と-相关函数"><a href="#13-信号集-と-相关函数" class="headerlink" title="13. 信号集 と 相关函数"></a>13. 信号集 と 相关函数</h2><h2 id="14-sigprocmask-函数"><a href="#14-sigprocmask-函数" class="headerlink" title="14. sigprocmask 函数"></a>14. sigprocmask 函数</h2><h2 id="15-sigaction-信号捕捉函数"><a href="#15-sigaction-信号捕捉函数" class="headerlink" title="15. sigaction 信号捕捉函数"></a>15. sigaction 信号捕捉函数</h2><h2 id="16-SIGCHILD-信号"><a href="#16-SIGCHILD-信号" class="headerlink" title="16. SIGCHILD 信号"></a>16. SIGCHILD 信号</h2><h2 id="17-共享内存"><a href="#17-共享内存" class="headerlink" title="17. 共享内存"></a>17. 共享内存</h2><h2 id="18-守护进程"><a href="#18-守护进程" class="headerlink" title="18. 守护进程"></a>18. 守护进程</h2>
+<h2 id="7-进程间通信"><a href="#7-进程间通信" class="headerlink" title="7. 进程间通信"></a>7. 进程间通信</h2><h3 id="7-0-介绍"><a href="#7-0-介绍" class="headerlink" title="7.0 介绍"></a>7.0 介绍</h3><p><code>IPC (Inter-Process Communication)</code></p>
+<p><img src="https://img-blog.csdnimg.cn/d9c4ccf811784e2faf5ae9b06b949f2b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><code>进程间关系</code>：</p>
+<ul>
+<li>父与子</li>
+<li>两个互不相干</li>
+</ul>
+<p>通信：互相<code>发送</code>数据，<code>接受</code>数据</p>
+<p>按道理来说，两个互不相干的进程不能互相访问对方的资源。</p>
+<p><strong>进程间<code>独立</code>，但<code>不孤立</code>。</strong></p>
+<p>对于父子进程，读时共享，写时复制，实际上两个进程间的数据是没有关系的，只是某些部分一样罢了。</p>
+<p>像我们使用通讯软件（如QQ，微信），两个人的进程运行在不同的主机上，两个人发送消息，实质上就是进程间通信。</p>
+<p>再比如迅雷下载视频，可以边下载边播放，至少有两个进程（后面会讲到线程）。</p>
+<p>我们下载了多少才能看多少，因此<code>下载进程</code>需要告诉<code>播放进程</code>现在可以看多少，互相告知现在的状态。</p>
+<p>同步：协同合作，很安全，挨个有序进行。</p>
+<p>异步：不安全，不等待，大家一起来，很散漫。</p>
+<p>GDB希望完全控制另一个进程，并且可以共享其数据（如被调试进程有输出）。</p>
+<h5 id="通信方式"><a href="#通信方式" class="headerlink" title="通信方式"></a>通信方式</h5><p><img src="https://img-blog.csdnimg.cn/e59b6ea57e96487da92ba5df74efdd4a.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>加一个：消息队列，共享内存，信号量，<code>内存映射</code></p>
+<h5 id="管道的特点-（包括匿名和有名）"><a href="#管道的特点-（包括匿名和有名）" class="headerlink" title="管道的特点 （包括匿名和有名）"></a>管道的特点 （包括匿名和有名）</h5><p><img src="https://img-blog.csdnimg.cn/b91924fda7ca4dfb97531381e4f73f2f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>匿名管道用在有关系的进程间：父子进程</p>
+<p>有名管道用在没有关系的进程间</p>
+<p>消息：在网络通信中有许多协议，规定好了，发送一次数据会有个协议头，协议头大小固定，后面放传输的数据。另一个进程拿到消息后，可以按照格式解析内容。</p>
+<p>但是管道没有消息的概念，里面都是字节流。可以从管道里想读多少读多少。</p>
+<p><img src="https://img-blog.csdnimg.cn/ceaf516a11e44f9f9bf375f159b902ec.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>单工：遥控器发送数据给电视机，但是电视机不能发送消息给遥控器。</p>
+<p>双工：打电话双方都可以互相发送消息。</p>
+<p>半双工：同一时间数据只能向一方流动（对讲机，一个人说的时候另一个人只能听）。同一时间，只能一个进程给另一个进程发送数据。因此，管道中数据的流动是单向的，但是可以双向传输。</p>
+<h5 id="为什么管道只能用于有关系的进程呢？"><a href="#为什么管道只能用于有关系的进程呢？" class="headerlink" title="为什么管道只能用于有关系的进程呢？"></a>为什么管道只能用于<code>有关系的进程</code>呢？</h5><p>本质上是因为父子进程<code>共享文件描述符</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/7741df407f6d4af9ac43dc41cb09639f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="管道的数据结构"><a href="#管道的数据结构" class="headerlink" title="管道的数据结构"></a>管道的数据结构</h5><p><img src="https://img-blog.csdnimg.cn/706dc2a0eb7f4506b5dbfbcb86110ce9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>逻辑手段将线性队列设计成了环形队列</p>
+<h3 id="7-1-匿名管道-Unix最古老的形式"><a href="#7-1-匿名管道-Unix最古老的形式" class="headerlink" title="7.1 匿名管道 (Unix最古老的形式)"></a>7.1 匿名管道 (Unix最古老的形式)</h3><p>管道默认为匿名管道。</p>
+<p><img src="https://img-blog.csdnimg.cn/ae7b14ada5f14fe1a1a4f8a217433bf8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p><code>|</code> 是管道符，其左右两边是两个进程，数据通过管道共享。</p>
+<p>ls 原本会输出到 <code>stdout（默认是终端）</code>，</p>
+<p>然而用了管道之后，ls将数据写到<code>管道写入端</code>（重定向stdout）。</p>
+<p>wc原本会从<code>stdin（默认是终端）</code>读取数据，</p>
+<p>然而用了管道之后，wc从<code>管道读取端</code>读取数据（重定向stdin）。</p>
+<h3 id="7-2-管道读写特点-と-管道设置为非阻塞"><a href="#7-2-管道读写特点-と-管道设置为非阻塞" class="headerlink" title="7.2 管道读写特点 と 管道设置为非阻塞"></a>7.2 管道读写特点 と 管道设置为非阻塞</h3><h3 id="7-3-有名管道"><a href="#7-3-有名管道" class="headerlink" title="7.3 有名管道"></a>7.3 有名管道</h3><h2 id="8-内存映射"><a href="#8-内存映射" class="headerlink" title="8. 内存映射"></a>8. 内存映射</h2><h2 id="9-信号概述"><a href="#9-信号概述" class="headerlink" title="9. 信号概述"></a>9. 信号概述</h2><h2 id="10-kill-とraise-と-abort函数"><a href="#10-kill-とraise-と-abort函数" class="headerlink" title="10. kill とraise と abort函数"></a>10. kill とraise と abort函数</h2><h2 id="11-setimier-定时器函数"><a href="#11-setimier-定时器函数" class="headerlink" title="11. setimier 定时器函数"></a>11. setimier 定时器函数</h2><h2 id="12-signal-信号捕捉函数"><a href="#12-signal-信号捕捉函数" class="headerlink" title="12. signal 信号捕捉函数"></a>12. signal 信号捕捉函数</h2><h2 id="13-信号集-と-相关函数"><a href="#13-信号集-と-相关函数" class="headerlink" title="13. 信号集 と 相关函数"></a>13. 信号集 と 相关函数</h2><h2 id="14-sigprocmask-函数"><a href="#14-sigprocmask-函数" class="headerlink" title="14. sigprocmask 函数"></a>14. sigprocmask 函数</h2><h2 id="15-sigaction-信号捕捉函数"><a href="#15-sigaction-信号捕捉函数" class="headerlink" title="15. sigaction 信号捕捉函数"></a>15. sigaction 信号捕捉函数</h2><h2 id="16-SIGCHILD-信号"><a href="#16-SIGCHILD-信号" class="headerlink" title="16. SIGCHILD 信号"></a>16. SIGCHILD 信号</h2><h2 id="17-共享内存"><a href="#17-共享内存" class="headerlink" title="17. 共享内存"></a>17. 共享内存</h2><h2 id="18-守护进程"><a href="#18-守护进程" class="headerlink" title="18. 守护进程"></a>18. 守护进程</h2>
                 
             </div>
             <hr/>
@@ -1691,7 +1730,7 @@ DESCRIPTION
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">42.2k</span>&nbsp;字
+                class="white-color">42.9k</span>&nbsp;字
             
             
             
