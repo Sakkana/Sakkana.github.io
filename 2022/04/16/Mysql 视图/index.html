@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL - 语法0, 魚のブログ">
+    <meta name="keywords" content="MySql - 视图, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySQL - 语法0 | 魚のブログ</title>
+    <title>MySql - 视图 | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySQL - 语法0</h1>
+                    <h1 class="description center-align post-title">MySql - 视图</h1>
                 </div>
             </div>
         </div>
@@ -380,6 +380,15 @@
                 </div>
                 <div class="col s5 right-align">
                     
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
+                            </a>
+                        
+                    </div>
+                    
                 </div>
             </div>
 
@@ -387,7 +396,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-01-30
+                    2022-04-16
                 </div>
                 
 
@@ -396,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    112
+                    1.2k
                 </div>
                 
 
@@ -416,48 +425,92 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="‘-xxx-’-指定查找-12345xxx54321"><a href="#‘-xxx-’-指定查找-12345xxx54321" class="headerlink" title="‘%xxx%’ 指定查找 12345xxx54321"></a>‘%xxx%’ 指定查找 12345xxx54321</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
-FROM customers
-WHERE last_name LIKE '%field%'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+                <h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1><h3 id="1-什么是视图"><a href="#1-什么是视图" class="headerlink" title="1. 什么是视图"></a>1. 什么是视图</h3><p>《数据库系统概念》中是这么描述视图的。</p>
+<p>让用户看到数据库中关系的<code>完整集合</code>并非总是合适的。</p>
+<p>处于安全性的考虑，我们可能需要向用户仅隐藏一个关系中的特定数据，</p>
+<p>因此，我们可能希望创建一个<code>虚拟</code>的个性化集合。</p>
+<p>该虚拟关系并<code>不预先</code>计算和存储，而是在<code>使用</code>虚拟关系的时候才能通过<code>执行查询</code>计算出来。</p>
+<h3 id="2-语法"><a href="#2-语法" class="headerlink" title="2. 语法"></a>2. 语法</h3><h5 id="2-1-创建视图"><a href="#2-1-创建视图" class="headerlink" title="2.1 创建视图"></a>2.1 创建视图</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token punctuation">[</span><span class="token operator">OR</span> <span class="token keyword">REPLACE</span><span class="token punctuation">]</span> <span class="token keyword">VIEW</span> 视图名称 <span class="token keyword">AS</span> <span class="token keyword">SELECT</span>语句 <span class="token punctuation">[</span><span class="token keyword">WITH</span> <span class="token punctuation">[</span><span class="token keyword">CASCADED</span> <span class="token operator">|</span> <span class="token keyword">LOCAL</span><span class="token punctuation">]</span> <span class="token keyword">CHECK</span> <span class="token keyword">OPTION</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<blockquote>
-<p>结果</p>
-<p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150010713.png" alt="image-20220302150010713"></p>
-</blockquote>
-<p>这句话用正则表达式可以这么写</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
-FROM customers
-WHERE last_name REGEXP 'field'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://img-blog.csdnimg.cn/70f029de3a9f475dbff19639c9f6332d.png"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>执行语句，可以看到多了这么一个东西</p>
+<p><img src="https://img-blog.csdnimg.cn/f815cb289ff04f7090f7f2f62ffc9ce1.png"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="2-2-查询视图"><a href="#2-2-查询视图" class="headerlink" title="2.2 查询视图"></a>2.2 查询视图</h5><ul>
+<li>查看视图创建</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">CREATE</span> <span class="token keyword">VIEW</span> 视图名称<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>输出结果是一模一样的</p>
-<h3 id="‘-xxx’-表示开头必须为xxx"><a href="#‘-xxx’-表示开头必须为xxx" class="headerlink" title="‘^xxx’ 表示开头必须为xxx"></a>‘^xxx’ 表示开头必须为xxx</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
-FROM customers
-WHERE last_name REGEXP '^B'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://img-blog.csdnimg.cn/a873aa2e20d54f3d848f03f78ef2193d.png"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p><img src="https://img-blog.csdnimg.cn/805791851416430a99fb8168262980ff.png"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p>显然，<code>Create View</code>和我们创建时候的语句有些与不同，那是因为系统把缺省值也写进去了</p>
+<ul>
+<li>查看视图数据（表怎么查询，视图就怎么查询）</li>
+</ul>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> 视图名称<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<blockquote>
-<p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150244625.png" alt="image-20220302150244625"></p>
-</blockquote>
-<h3 id="‘xxx-’-结尾必须是xxx"><a href="#‘xxx-’-结尾必须是xxx" class="headerlink" title="‘xxx$’ 结尾必须是xxx"></a>‘xxx$’ 结尾必须是xxx</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
-FROM customers
-WHERE last_name REGEXP 'y$'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://img-blog.csdnimg.cn/1ffe2e7d0c5a4ddca7baca53a6c3e0b4.png"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<p><img src="https://img-blog.csdnimg.cn/3c431fc314ae4de4a0d1d92941495033.png"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p>
+<h5 id="2-3-修改视图"><a href="#2-3-修改视图" class="headerlink" title="2.3 修改视图"></a>2.3 修改视图</h5><p>方法一（其实和创建一个新视图是一回事）</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token operator">OR</span> <span class="token keyword">REPLACE</span> <span class="token keyword">VIEW</span> 视图名称 <span class="token keyword">AS</span> <span class="token keyword">SELECT</span>语句 <span class="token punctuation">[</span><span class="token keyword">WITH</span> <span class="token punctuation">[</span><span class="token keyword">CASCADED</span> <span class="token operator">|</span> <span class="token keyword">LOCAL</span><span class="token punctuation">]</span> <span class="token keyword">CHECK</span> <span class="token keyword">OPTION</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<blockquote>
-<p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150506128.png" alt="image-20220302150506128"></p>
-</blockquote>
-<h3 id="‘-’-or运算符"><a href="#‘-’-or运算符" class="headerlink" title="‘|’ or运算符"></a>‘|’ or运算符</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
-FROM customers
-WHERE last_name REGEXP 'field|mac'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>方法二</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">VIEW</span> 视图名称<span class="token punctuation">[</span><span class="token punctuation">(</span>列名列表<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token keyword">AS</span> <span class="token keyword">SELECT</span>语句 <span class="token punctuation">[</span><span class="token keyword">WITH</span> <span class="token punctuation">[</span><span class="token keyword">CASCADED</span> <span class="token operator">|</span> <span class="token keyword">LOCAL</span><span class="token punctuation">]</span> <span class="token keyword">CHECK</span> <span class="token keyword">OPTION</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<blockquote>
-<p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302150736979.png" alt="image-20220302150736979"></p>
-</blockquote>
-<h3 id="‘-abc-x’-表示中间选一个-ax-bx-cx"><a href="#‘-abc-x’-表示中间选一个-ax-bx-cx" class="headerlink" title="‘[abc]x’ []表示中间选一个 ax | bx | cx"></a>‘[abc]x’ []表示中间选一个 ax | bx | cx</h3><h3 id="‘-a-h-x’-是-abcdefgh-x的缩写"><a href="#‘-a-h-x’-是-abcdefgh-x的缩写" class="headerlink" title="‘[a-h]x’ 是[abcdefgh]x的缩写"></a>‘[a-h]x’ 是[abcdefgh]x的缩写</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT *
-FROM customers
-WHERE last_name REGEXP '[gim]e'<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="2-4-删除视图"><a href="#2-4-删除视图" class="headerlink" title="2.4 删除视图"></a>2.4 删除视图</h5><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">DROP</span> <span class="token keyword">VIEW</span> <span class="token punctuation">[</span><span class="token keyword">IF</span> <span class="token keyword">EXISTS</span><span class="token punctuation">]</span> 视图名称 <span class="token punctuation">[</span><span class="token punctuation">,</span>视图名称<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<blockquote>
-<p><img src="C:\Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220302151052462.png" alt="image-20220302151052462"></p>
-</blockquote>
+
+
+<h3 id="3-检查选项"><a href="#3-检查选项" class="headerlink" title="3. 检查选项"></a>3. 检查选项</h3><p>我们可以对视图进行增删查改操作，这些操作会同步到物理存储的表当中。</p>
+<p>由于我们在创建视图时设置了一些条件，如果没有设置检查选项，对视图插入不符合条件的记录也能成功插入到物理表当中。</p>
+<p><img src="https://img-blog.csdnimg.cn/95694b85032e4b04bf4b575b3ca68fe8.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>此时没有设置检查选项，能够插入不符合条件的数据。</p>
+<p><img src="https://img-blog.csdnimg.cn/6f8afcf813b04424bae6bc9035252338.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>若我们加入检查选项，则这条记录的插入就会失败</p>
+<p><img src="https://img-blog.csdnimg.cn/f9f2ec1142cb4bafac805982610d9f75.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="CASCADED-级联"><a href="#CASCADED-级联" class="headerlink" title="CASCADED (级联)"></a>CASCADED (级联)</h5><p>physical table -&gt; view A -&gt; view B</p>
+<p>如果在 viewB 上增加检查选项 CASCADED 并执行插入时，MySQL会同时去检查view B和 view A中的条件。</p>
+<p><img src="/2022/04/16/Mysql%20%E8%A7%86%E5%9B%BE/Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220419165514030.png" alt="image-20220419165514030"></p>
+<p>刚开始我们创建一个视图 info_view ，不指定检查选项，发现 99 &gt; 5，仍然可以插入成功。</p>
+<p>基于 info_view 我们再创建一个视图 info_view2。</p>
+<p>当我们插入 id = 101 和 id = 4 时失败了，这是因为他们都不满足我们的检查条件。</p>
+<p>一层一层往上检查，类似于诛九族。</p>
+<p><img src="https://img-blog.csdnimg.cn/8ed58ba2556f424e856ef1cb7c18fbf9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>如果下面再创建一个视图 info_view3, 这个视图基于 info_view2。</p>
+<p>该视图没有设置检查选项。</p>
+<p>然而，前两个都插入成功，第三个插入失败了。</p>
+<p>前两个插入成功的原因是他们符合 info_view1 和 info_view2 的检查选项（5 &lt; x &lt;= 100），而第三条不符合。</p>
+<p><img src="https://img-blog.csdnimg.cn/486c6b7eddcb4b9bbd6d4c552ea12d1f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/6be68acfd5bb4cd2aa9b11ec3e8c19fc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/c501f3ed09284a6bad656e497a19b92e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>总而言之，如果使用 CASCADED 检查选项，其作用为：</p>
+<ul>
+<li>若当球视图<code>有检查选项</code>，则插入数据要满足<code>当前视图 + 当前视图所依赖的所有视图</code> 的检查选项。</li>
+<li>若当前视图<code>没有检查选项</code>，则插入数据要满足<code>当前视图所依赖的有检查选项的视图 + 该有检查选项的视图所依赖的视图</code>的检查选项。</li>
+</ul>
+<p>自己及祖先只要有检查条件就就直接递归到根。</p>
+<h5 id="local"><a href="#local" class="headerlink" title="local"></a>local</h5><p>第一层虽然 4 &lt; 5，但由于没设置检查选项，可以插入。</p>
+<p><img src="https://img-blog.csdnimg.cn/bfd5f8686bf9490492200062d8e805c6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>第二层设置了检查选项，因此 101 肯定无法插入。</p>
+<p><img src="https://img-blog.csdnimg.cn/6c9cc39f2e21439e81a47ab1977c8191.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>但是 4 却可以插入，因为MySQL也递归去检查，但是当前视图所依赖的视图没有检查选项，因此不再检查。</p>
+<p><img src="https://img-blog.csdnimg.cn/e3584ca7cd5a4213b64bb856e4114f82.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>第三层，这个 1000 虽然不满足当前条件，但是却没有添加检查选项，因此递归网上检查，发现不复合第二层的条件，因此插入失败。</p>
+<p><img src="https://img-blog.csdnimg.cn/69642d88fae24f6baff1215b10a6e3ac.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>如果我们给第一层也添加一个检查条件，会发现MySQL真的会递归检查。</p>
+<p>19 同时不符合条件，插入失败。</p>
+<p><img src="https://img-blog.csdnimg.cn/6aa1282ee5544522af08e9745cc02dc0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>21却可以。</p>
+<p><img src="https://img-blog.csdnimg.cn/512be49c27dd4055be624ec41d14bfb4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>总结：</p>
+<ul>
+<li>若当球视图<code>有检查选项</code>，则插入数据要满足<code>当前视图 + 当前视图所依赖的有检查选项的视图</code> 的检查选项。</li>
+<li>若当前视图<code>没有检查选项</code>，则插入数据要满足<code>当前视图所依赖的有检查选项的视图</code>的检查选项。</li>
+</ul>
+<p>简而言之，CASCADED 从自己开始往上找，只要碰到一个检查选项，从这一层开始及上面的所有选项都检查一遍，相当于只要发现一个上面全部连坐。LOCAL则是只有有检查选项才会检查。，相当于检查选项是local的，不会波及无辜。</p>
+<h3 id="4-更新-amp-作用"><a href="#4-更新-amp-作用" class="headerlink" title="4. 更新 &amp; 作用"></a>4. 更新 &amp; 作用</h3><h5 id="视图的更新条件"><a href="#视图的更新条件" class="headerlink" title="视图的更新条件"></a>视图的更新条件</h5><p><img src="https://img-blog.csdnimg.cn/2e40a7a8e47442f6ba5778b6f94f8c90.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/7bd4258cfd1141dcabe969eedb183b7f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/e2e7c38e72ec4a1fb9e85667d9723fa3.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_17,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/02b30d7f7a5d4daf8207a405cc4ca970.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 
                 
             </div>
@@ -484,7 +537,7 @@ WHERE last_name REGEXP '[gim]e'<span aria-hidden="true" class="line-numbers-rows
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/01/30/MySql/">https://sakkana.github.io/2022/01/30/MySql/</a>
+                    <a href="https://sakkana.github.io/2022/04/16/Mysql%20%E8%A7%86%E5%9B%BE/">https://sakkana.github.io/2022/04/16/Mysql%20%E8%A7%86%E5%9B%BE/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -567,62 +620,18 @@ WHERE last_name REGEXP '[gim]e'<span aria-hidden="true" class="line-numbers-rows
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/01/30/%E9%AD%9A%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0/">
+                <a href="/2022/04/16/Mysql%20%E8%A7%86%E5%9B%BE/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="はじめまして！">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="MySql - 视图">
                         
-                        <span class="card-title">はじめまして！</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                        <span class="chip bg-color">测试</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/01/30/MySql/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="MySQL - 语法0">
-                        
-                        <span class="card-title">MySQL - 语法0</span>
+                        <span class="card-title">MySql - 视图</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -633,12 +642,16 @@ WHERE last_name REGEXP '[gim]e'<span aria-hidden="true" class="line-numbers-rows
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-16
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -651,6 +664,43 @@ WHERE last_name REGEXP '[gim]e'<span aria-hidden="true" class="line-numbers-rows
                         <span class="chip bg-color">数据库</span>
                     </a>
                     
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/04/12/Linux%E5%A4%9A%E8%BF%9B%E7%A8%8B/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        
+                        <span class="card-title"></span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Ludovico
+                            
+                        </span>
+                    </div>
                 </div>
                 
             </div>
