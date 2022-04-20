@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="No Title, 魚のブログ">
+    <meta name="keywords" content="C++11标准与陌生用法, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>No Title | 魚のブログ</title>
+    <title>C++11标准与陌生用法 | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -250,12 +250,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">No Title</h1>
+                    <h1 class="description center-align post-title">C++11标准与陌生用法</h1>
                 </div>
             </div>
         </div>
@@ -371,14 +371,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                <span class="chip bg-color">测试</span>
+                            <a href="/tags/C-C/">
+                                <span class="chip bg-color">C/C++</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/C-C/" class="post-category">
+                                C/C++
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -387,7 +396,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-01-30
+                    2022-04-20
                 </div>
                 
 
@@ -396,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    261
+                    1.9k
                 </div>
                 
 
@@ -416,29 +425,179 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>春江花月夜</p>
+                <h1 id="C-11标准-与-陌生用法"><a href="#C-11标准-与-陌生用法" class="headerlink" title="C++11标准 与 陌生用法"></a>C++11标准 与 陌生用法</h1><p>最近开始读《C++ Primer》了，记录一些以前C++98中没有遇到过的但是比较优秀的用法以及陌生的知识点。</p>
+<p>由于这本书真的太厚了，里面些许知识点是自己已经掌握的，有些新特性与陌生用法是值得自己学习的。然而也不可能每次遇到问题书都在身边，于是将自己觉得有价值的部分记录下来。</p>
+<p>因此本文并不是全篇关注C++11，而是新标准与陌生知识相融合的一篇学习记录。</p>
+<h3 id="顶层const-amp-底层const"><a href="#顶层const-amp-底层const" class="headerlink" title="顶层const &amp; 底层const"></a>顶层const &amp; 底层const</h3><p>在这本书里看到了一个新概念：底层const与底层const</p>
+<p><code>顶层const</code> ： 任意对象是常量，指针本身是个常量。</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token operator">*</span><span class="token keyword">const</span> p1 <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span> <span class="token comment">// 指针本身是常量，不可以再指向别人，长相厮守</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">1e5</span><span class="token punctuation">;</span>	 <span class="token comment">// 变量N是个const，只读</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<p><code>底层const</code>：指针所指的对象是个const</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int *p2 = &amp;a;	// 不能通过指针修改其指向的对象
+const int &amp;ref = &amp;a;	// 声明引用的const的都是底层const<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<p>我们还可以见到这种杂合子</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int *const p3 = &amp;a;
+// 第一个是底层const，我们无法通过指针修改这个对象
+// 第二个是顶层const，长相厮守<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p>执行拷贝操作的时候，底层const会做一些坏事。</p>
+<p>拷入和拷出的时候两个数据对象必须具有相同的底层const资格。</p>
+<ul>
+<li>case 1</li>
+</ul>
+<p>这是错误的。</p>
+<p>因为p1拥有底层const，我们无法通过指针修改a的值。</p>
+<p>而p2却没有底层const，意味着我们可以通过p2修改p2指向的值，即p1指向的值，即a的值。</p>
+<p>这与我们的初衷相违背（p1不被允许修改a的值）。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int *const p1 = &amp;a;
+int *p2 = p1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="https://img-blog.csdnimg.cn/a32de98309f14546810b3d1718b841e0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>同理，这样也是不允许的。因为p有可能改变a的值。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int a = 9;
+int *const p = &amp;a;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="https://img-blog.csdnimg.cn/7bf0cf88ca3343bead078d81ad333516.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 2</p>
+<p>这样子是合法的，因为p1和p2都拥有相同的底层const，即p1和p2指向的对象都不能被修改。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int *const p1 = &amp;a;
+const int *p2 = p1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<p>case 3</p>
+<p>这样也是合法的，编译器可以将 <code>int*</code> 转成 <code>const int*</code></p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int i = 1;
+const int *p = &amp;i;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<p>case 4</p>
+<p>这样子是非法的，因为ref有修改i的可能性。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int i = 99;
+int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><img src="https://img-blog.csdnimg.cn/cb58dd30605549eca3326f0bf5fc2df6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 5</p>
+<p>这样自然就合法了，因为ref也是只读的。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int i = 99;
+const int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>上面这等价于：</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int i = 99, &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p>总而言之，在拷贝的时候，只要关注新定义的变量有没有可能修改<code>拥有底层const的变量</code>就可以了。</p>
+<h3 id="constexpr"><a href="#constexpr" class="headerlink" title="constexpr"></a>constexpr</h3><p>这是个c++11新增的类型，中文名叫 <code>常量表达式</code>。</p>
+<p>constexpr 变量的特点：</p>
+<ul>
+<li>值不会改变（这点和const一样）</li>
+<li>编译过程就能得到计算结果</li>
+</ul>
+<p>什么是常量表达式？</p>
+<p><img src="https://img-blog.csdnimg.cn/403266030fdc44f1899e1740138f0d08.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>等功力深厚了再来写。</p>
+<h3 id="using（取别名）"><a href="#using（取别名）" class="headerlink" title="using（取别名）"></a>using（取别名）</h3><p>这里介绍的using是普通场合的using，起作用等价于<code>typedef</code>。</p>
+<h3 id="auto"><a href="#auto" class="headerlink" title="auto"></a>auto</h3><p>让编译器自己推断变量的类型。</p>
+<p>case 1</p>
+<p>碰到引用，会顺藤摸瓜推断出<strong>最原始的值的类型</strong>。</p>
+<p>相当于 <code>int b = a</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/ee2f2ac15d1e46e7a34bfacc5954176c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_10,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 2 </p>
+<p><strong>忽略顶层const</strong>（任意对象是常量，指针本身是常量）</p>
+<p>如这里的变量a是个常量，但是会被auto忽略掉。</p>
+<p>auto出来的b是个普通变量，可以任意读写。</p>
+<p>相当于 <code>int b = 1</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/2621e443582443e485aa1918878e2b6d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_14,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 3</p>
+<p><strong>同时碰到引用和顶层const</strong>，依然遵循上面的规则。</p>
+<p>ri是个引用，引用了int类型的i，然而i是个const，但是顶层const会被忽略，因此b是个可读可写的int。</p>
+<p>相当于 <code>int b = i</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/1c84b425fd884e91b469a7880cf69fb6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_17,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 4</p>
+<p><strong>保留底层const</strong> （指针指向的内容是const）</p>
+<p>变量a是个常量， &amp;a取地址，因此ptr是个指针类型的变量。</p>
+<p>由于auto保留底层const，因此ptr无法修改其指向的值。</p>
+<p>相当于 <code>const int *ptr = &amp;a</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/4beb3b69da5c4948a586931767b06301.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 5</p>
+<p>如果想要auto推断出来的值是个const，可以显式地告诉编译器。</p>
+<p><img src="https://img-blog.csdnimg.cn/c568370dbaaa408587de99b3f1d5f98c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_17,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 6</p>
+<p>声明一个auto的引用时，顶层const会被保留。是否为引用对于auto有重要影响。</p>
+<p>由于我们想声明一个变量d作为c的引用，意味着我们可能使用d来修改c的值，然而c是个常量，具有顶层const属性，因此d也必须是一个常量。</p>
+<p>因此，我们无法修改d的值，会报错。</p>
+<p><img src="https://img-blog.csdnimg.cn/a77057214a16400a8d8ec3653214b4c0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_18,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 7</p>
+<p>一句auto中的变量需要是同一类型。</p>
+<ul>
+<li>1 </li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/73d983fa116545eca7bdd600bcc4d4fe.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<ul>
+<li>2</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/8e98128b413942e6a7b800b65a91d43f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_12,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<ul>
+<li>3</li>
+<li><img src="https://img-blog.csdnimg.cn/c3b7fbbe114c44e19be2f076b56a98e2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/375f98ace8564f2a97239262f1c7b2dc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>总结</p>
+<ul>
+<li>auto 最关注的是变量的类型，我们只希望获得类型，因此会忽略顶层const， 引用等等。他不希望我们沾染const，引用这种外壳。</li>
+<li>但是有些原则是不能触碰的，如果我们auto出来的变量可以修改只读的变量，这是大忌。因此auto不会忽略底层const。</li>
+<li>如果我们真的希望auto出来的变量确实是个const或者引用，那么我们就明确地告诉编译器。和普通变量命名规则一样，大家要么都是const要么都可读可写，一根绳上的蚂蚱。</li>
+</ul>
+<p>上面三条记牢，在用auto的时候就会少犯一些错你。</p>
+<h3 id="decltype"><a href="#decltype" class="headerlink" title="decltype"></a>decltype</h3><p>这个也是c++11除了auto之外引入的第二个新的类型说明符。</p>
+<p>他会根据括号内的操作数推断类型并返回。</p>
+<p>在此过程中，编译器推断表达式的类型但是不会计算它的值。</p>
+<p><img src="https://img-blog.csdnimg.cn/c5840dba69aa404f89b264286f2dedb2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_15,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>然,decltype处理<code>顶层const</code>和<code>引用</code>和auto有些许不同。</p>
+<p>case 1</p>
+<p>如果要推断一个变量，这个变量是啥就是啥，因为我们希望得到的结果和里面的变量一模一样。</p>
+<p>顶层const和引用它都会考虑进去。看起来比auto更加聪明也更危险。</p>
+<p>这个例子中，i拥有顶层const属性，因此decltype返回的也是个 const int，因而 a 不可以被修改。</p>
+<p><img src="https://img-blog.csdnimg.cn/96942ae413b34e59850d3d3ef0df50da.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>这里的 j 是个引用类型，与 i 绑定，因此修改 j 就是在修改 i。</p>
+<p>我们使用 decltype(j)，它会返回和 j 一样的数据类型，即int &amp;。 </p>
+<p>因此这条语句相当于 <code>int &amp;rj = j</code>。</p>
+<p>从而我们又将 rj 与 j 绑定。</p>
+<p>从这里开始， i, j, rj 都是同一根绳子上的蚂蚱，牵一发而动全身。 </p>
+<p><img src="https://img-blog.csdnimg.cn/59874bcbcb084e33a548598106214fbc.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>编译器怕我们太笨了也会告诉我们，这个 rj 是个引用变量，因此需要马上初始化。</p>
+<p>如果不绑定一个变量他就会报错。</p>
+<p><img src="https://img-blog.csdnimg.cn/3f5d1dcbb35f41cd86b8db96cac54f82.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_14,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 2</p>
+<p>如果decltypr使用的表达式不是一个变量，那么它会返回<code>表达式结果相对应的类型</code>。</p>
+<p>然而引用的代价太大了，有时候我们单纯只是像获得类型，就行auto那样。</p>
+<p>下面这个表达式 j + 0 会返回一个 int 类型的值，因此decltyp返回的就是一个普通的 int。</p>
+<p><img src="https://img-blog.csdnimg.cn/32502b5e0141448d8303035ade7492f7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_18,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 3</p>
+<p>奇怪的是，对地址的解引用操作也会返回引用类型。</p>
+<p>如下面的 decltype(*ptr) 就会返回 int &amp;，因此我们修改 ref 就是在修改 a。</p>
+<p><img src="https://img-blog.csdnimg.cn/3f8415e89e334a4d9c4e007ed398c510.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_19,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>case 3</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">decltype</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> 和 <span class="token keyword">decltype</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span> 是不一样的<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>不加括号就和上面的规则一样。</p>
+<p>相当于 <code>int b = a;</code>。</p>
+<p><img src="https://img-blog.csdnimg.cn/b3c73c8bff834a538ca89a7954a17c2c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_19,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>如果加上了一层括号，编译器会返回引用类型。</p>
+<p>相当于 <code>int &amp;b = a;</code></p>
+<p><img src="https://img-blog.csdnimg.cn/0d4f0dd931c246908c3b00af227791e2.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_19,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <blockquote>
-</blockquote>
-<p>唐 · 张若虚</p>
-<p>春江潮水连海平，海上明月共潮生。</p>
-<p>滟滟随波千万里，何处春江无月明！</p>
-<p>江流宛转绕芳甸，月照花林皆似霰；</p>
-<p>空里流霜不觉飞，汀上白沙看不见。</p>
-<p>江天一色无纤尘，皎皎空中孤月轮。</p>
-<p>江畔何人初见月？江月何年初照人？</p>
-<p>人生代代无穷已，江月年年望相似。</p>
-<p>不知江月待何人，但见长江送流水。</p>
-<p>白云一片去悠悠，青枫浦上不胜愁。</p>
-<p>谁家今夜扁舟子？何处相思明月楼？</p>
-<p>可怜楼上月裴回，应照离人妆镜台。</p>
-<p>玉户帘中卷不去，捣衣砧上拂还来。</p>
-<p>此时相望不相闻，愿逐月华流照君。</p>
-<p>鸿雁长飞光不度，鱼龙潜跃水成文。</p>
-<p>昨夜闲潭梦落花，可怜春半不还家。</p>
-<p>江水流春去欲尽，江潭落月复西斜。</p>
-<p>斜月沉沉藏海雾，碣石潇湘无限路。</p>
-<p>不知乘月几人归，落月摇情满江树。</p>
+<p>哎，写到这里已经感受到C++的恶心了。</p>
 </blockquote>
 
                 
@@ -466,7 +625,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/01/30/%E6%98%A5%E6%B1%9F%E8%8A%B1%E6%9C%88%E5%A4%9C/">https://sakkana.github.io/2022/01/30/%E6%98%A5%E6%B1%9F%E8%8A%B1%E6%9C%88%E5%A4%9C/</a>
+                    <a href="https://sakkana.github.io/2022/04/20/C++11%E6%A0%87%E5%87%86%E4%B8%8E%E9%99%8C%E7%94%9F%E7%94%A8%E6%B3%95/">https://sakkana.github.io/2022/04/20/C++11%E6%A0%87%E5%87%86%E4%B8%8E%E9%99%8C%E7%94%9F%E7%94%A8%E6%B3%95/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -504,8 +663,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                    <span class="chip bg-color">测试</span>
+                                <a href="/tags/C-C/">
+                                    <span class="chip bg-color">C/C++</span>
                                 </a>
                             
                         </div>
@@ -549,17 +708,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/01/31/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/">
+                <a href="/2022/04/20/C++11%E6%A0%87%E5%87%86%E4%B8%8E%E9%99%8C%E7%94%9F%E7%94%A8%E6%B3%95/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="容斥原理 - 能被整除的数">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="C++11标准与陌生用法">
                         
-                        <span class="card-title">容斥原理 - 能被整除的数</span>
+                        <span class="card-title">C++11标准与陌生用法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -569,26 +729,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-31
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/C-C/" class="post-category">
+                                    C/C++
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E8%AE%BA/">
-                        <span class="chip bg-color">数论</span>
+                    <a href="/tags/C-C/">
+                        <span class="chip bg-color">C/C++</span>
                     </a>
                     
                 </div>
@@ -602,13 +763,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/01/30/%E9%AD%9A%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0/">
+                <a href="/2022/04/16/Mysql%20%E8%A7%86%E5%9B%BE/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="はじめまして！">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="MySql - 视图">
                         
-                        <span class="card-title">はじめまして！</span>
+                        <span class="card-title">MySql - 视图</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -619,12 +780,16 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-16
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -632,8 +797,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                        <span class="chip bg-color">测试</span>
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
                     </a>
                     
                 </div>
