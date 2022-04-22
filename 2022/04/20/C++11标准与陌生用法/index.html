@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.9k
+                    2.1k
                 </div>
                 
 
@@ -604,6 +604,44 @@ const int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span>
 <blockquote>
 <p>哎，写到这里已经感受到C++的恶心了。</p>
 </blockquote>
+<h3 id="内置数组初始化vector"><a href="#内置数组初始化vector" class="headerlink" title="内置数组初始化vector"></a>内置数组初始化vector</h3><p>曾经的C标准和C++标准不允许使用内置数组的元素直接初始化别的数组，也不允许使用vector初始化内置数组。</p>
+<p>新标准允许使用<code>内置数组</code>初始化<code>vector</code>了。</p>
+<h3 id="内置数组使用迭代器"><a href="#内置数组使用迭代器" class="headerlink" title="内置数组使用迭代器"></a>内置数组使用迭代器</h3><p>后面会细说。</p>
+<p>这里要介绍的是新标准中，允许内置数组使用迭代器了。</p>
+<p>其中,<code>begin</code> 返回第一个元素的指针，<code>end</code>返回最后一个尾后指针。</p>
+<p><img src="https://img-blog.csdnimg.cn/eba93297b58d4750a5039a4f13b4168c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/07e4e88c6b784d67b6ba0832d4250c32.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_17,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>更一般地，使用<code>vector&lt;T&gt; v(&amp;arr[i], &amp;arr[j])</code>便可以用下标区间在[i, j)之间的元素初始化vector了。</p>
+<h3 id="多维数组遍历"><a href="#多维数组遍历" class="headerlink" title="多维数组遍历"></a>多维数组遍历</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iterator&gt;</span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> ia<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">&amp;</span>i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">:</span> ia<span class="token punctuation">)</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">&amp;</span>j <span class="token operator">:</span> i<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            j <span class="token operator">=</span> <span class="token operator">++</span> cnt<span class="token punctuation">;</span>
+            cout <span class="token operator">&lt;&lt;</span> j <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span>size_t i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ia<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ia<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>size_t j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ia<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ia<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span> j<span class="token punctuation">)</span>
+            cout <span class="token operator">&lt;&lt;</span> ia<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>i<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">=</span> ia<span class="token punctuation">;</span> i <span class="token operator">!=</span> ia <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>j <span class="token operator">=</span> <span class="token operator">*</span>i<span class="token punctuation">;</span> j <span class="token operator">!=</span> <span class="token operator">*</span>i <span class="token operator">+</span> <span class="token number">7</span><span class="token punctuation">;</span> <span class="token operator">++</span> j<span class="token punctuation">)</span>
+            cout <span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>j <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 
                 
             </div>
@@ -989,7 +1027,7 @@ const int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">56.7k</span>&nbsp;字
+                class="white-color">64.6k</span>&nbsp;字
             
             
             
