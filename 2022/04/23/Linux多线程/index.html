@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    8.9k
+                    10.1k
                 </div>
                 
 
@@ -1225,7 +1225,7 @@ RETURN VALUE
 <p>和数据库中 <code>事务</code> 的概念一样，我们需要保证临界区代码执行的原子性，即要么都执行，要么都不执行，没有执行到一半别人来执行这么一个道理。</p>
 <p>虽然线程同步会带来一定的效率问题，因为必须等别的线程执行完了另一个线程才能进来。</p>
 <p>但同步是必须的。</p>
-<h2 id="9-互斥锁（一把锁）"><a href="#9-互斥锁（一把锁）" class="headerlink" title="9. 互斥锁（一把锁）"></a>9. 互斥锁（一把锁）</h2><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p><img src="https://img-blog.csdnimg.cn/d2bdd89d834146b08c4227780165aee9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h2 id="9-互斥锁"><a href="#9-互斥锁" class="headerlink" title="9. 互斥锁"></a>9. 互斥锁</h2><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p><img src="https://img-blog.csdnimg.cn/d2bdd89d834146b08c4227780165aee9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <p><img src="https://img-blog.csdnimg.cn/9bb04052ca33459daaa46e133faf0ca7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <h5 id="相关函数-1"><a href="#相关函数-1" class="headerlink" title="相关函数"></a>相关函数</h5><p><img src="https://img-blog.csdnimg.cn/0e9d42c391b14380b9634f45d68bfa9e.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <h5 id="pthread-mutex-init"><a href="#pthread-mutex-init" class="headerlink" title="pthread_mutex_init"></a>pthread_mutex_init</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">pthread_mutex_init</span><span class="token punctuation">(</span><span class="token class-name">pthread_mutex_t</span> <span class="token operator">*</span>mutex<span class="token punctuation">,</span> 
@@ -1415,7 +1415,7 @@ RETURN VALUE
 
 
 
-<h2 id="10-死锁（多把锁）"><a href="#10-死锁（多把锁）" class="headerlink" title="10. 死锁（多把锁）"></a>10. 死锁（多把锁）</h2><p>多个临界代码，多个🔒。</p>
+<h2 id="10-死锁"><a href="#10-死锁" class="headerlink" title="10. 死锁"></a>10. 死锁</h2><p>多个临界代码，多个🔒。</p>
 <p>如果两段临界代码挨得比较近，加一把锁锁起来是现实的。</p>
 <p>但是如果两段距离比较远，从头到尾锁起来就降低了程序执行的效率。</p>
 <p><img src="https://img-blog.csdnimg.cn/c5bb1f1159e74b6e8fdbf9595aee96b7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
@@ -2063,7 +2063,200 @@ RETURN VALUE
 
 
 
-<h2 id="14-信号量"><a href="#14-信号量" class="headerlink" title="14. 信号量"></a>14. 信号量</h2><h3 id="I-N-D-E-X"><a href="#I-N-D-E-X" class="headerlink" title="I N D E X"></a>I N D E X</h3><p><img src="https://img-blog.csdnimg.cn/e742a794620e437c9942c716d5e3ba78.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h2 id="14-信号量"><a href="#14-信号量" class="headerlink" title="14. 信号量"></a>14. 信号量</h2><p>阻塞线程，但是不能保证线程安全。</p>
+<p><img src="https://img-blog.csdnimg.cn/f7187f5b66754ccabd816c11bc19adc9.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="/2022/04/23/Linux%E5%A4%9A%E7%BA%BF%E7%A8%8B/Users\Sakana\AppData\Roaming\Typora\typora-user-images\image-20220425215852396.png" alt="image-20220425215852396"></p>
+<p>消费者消费一个，灭一个灯。</p>
+<p>生产者生产一个，亮一个灯。</p>
+<p>全灭了，表示容器满了，谁想访问会阻塞。</p>
+<h5 id="init"><a href="#init" class="headerlink" title="init"></a>init</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;semaphore.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">sem_init</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>sem<span class="token punctuation">,</span> <span class="token keyword">int</span> pshared<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+Link with <span class="token operator">-</span>pthread<span class="token punctuation">.</span>
+
+DESCRIPTION
+       <span class="token function">sem_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> initializes the unnamed semaphore at the address pointed to by 【sem】<span class="token punctuation">.</span>  
+       The 【value】 argument specifies the initial value <span class="token keyword">for</span> the semaphore<span class="token punctuation">.</span>
+
+       The 【pshared】 argument indicates 【whether this semaphore is to be shared】 between the threads of a process<span class="token punctuation">,</span> or between processes<span class="token punctuation">.</span>
+
+       If pshared has the value 【<span class="token number">0</span>】<span class="token punctuation">,</span> then the semaphore is shared 【between the threads】 of a process<span class="token punctuation">,</span> and should be located at some address that is visible to all <span class="token function">threads</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>g<span class="token punctuation">.</span><span class="token punctuation">,</span> a global variable<span class="token punctuation">,</span> or a variable allocated dynamically on the heap<span class="token punctuation">)</span><span class="token punctuation">.</span>
+       If  pshared  is 【nonzero】<span class="token punctuation">,</span> then the semaphore is shared 【between processes】<span class="token punctuation">,</span> and should be located in a region of shared <span class="token function">memory</span> <span class="token punctuation">(</span>see <span class="token function">shm_open</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">mmap</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> and <span class="token function">shmget</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>  <span class="token punctuation">(</span>Since a child created by <span class="token function">fork</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> inherits its parent’s memory mappings<span class="token punctuation">,</span> it canalso access the semaphore<span class="token punctuation">.</span><span class="token punctuation">)</span>  Any process that can access the shared memory region can operate on the semaphore using <span class="token function">sem_post</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">sem_wait</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span> and so on<span class="token punctuation">.</span>
+
+       Initializing a semaphore that has already been initialized results in undefined behavior<span class="token punctuation">.</span>
+
+RETURN VALUE
+       <span class="token function">sem_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> returns <span class="token number">0</span> on success<span class="token punctuation">;</span> on error<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span> is returned<span class="token punctuation">,</span> and errno is set to indicate the error<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><code>wait</code>：-1，对信号量加锁，占用一个坑位</p>
+<p><code>post</code>：+1  对信号量解锁，释放一个坑位</p>
+<h5 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;semaphore.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">sem_wait</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>sem<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">// -1操作，遇0阻塞</span>
+
+<span class="token keyword">int</span> <span class="token function">sem_trywait</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>sem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">sem_timedwait</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>sem<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">struct</span> <span class="token class-name">timespec</span> <span class="token operator">*</span>abs_timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+Link with <span class="token operator">-</span>pthread<span class="token punctuation">.</span>
+    
+     <span class="token function">sem_wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 【<span class="token function">decrements</span> <span class="token punctuation">(</span>locks<span class="token punctuation">)</span> the semaphor】e pointed to by 【sem】<span class="token punctuation">.</span>  
+     If the semaphore<span class="token char">''</span>s value is greater than zero<span class="token punctuation">,</span> then the decrement proceeds<span class="token punctuation">,</span> and the function returns<span class="token punctuation">,</span> immediately<span class="token punctuation">.</span>  
+     If the semaphore currently has the value zero<span class="token punctuation">,</span> then the call blocks until either it becomes possible to perform the <span class="token function">decrement</span> <span class="token punctuation">(</span>i<span class="token punctuation">.</span>e<span class="token punctuation">.</span><span class="token punctuation">,</span> the semaphore value rises above zero<span class="token punctuation">)</span><span class="token punctuation">,</span> or a signal handler interrupts the call<span class="token punctuation">.</span>
+
+       <span class="token function">sem_trywait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> is the same as <span class="token function">sem_wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> except that <span class="token keyword">if</span> the decrement cannot be immediately performed<span class="token punctuation">,</span> then call 【returns an erro】<span class="token function">r</span> <span class="token punctuation">(</span>errno set to EAGAIN<span class="token punctuation">)</span> instead of blocking<span class="token punctuation">.</span>
+
+       <span class="token function">sem_timedwait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> is the same as <span class="token function">sem_wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> except that 【abs_timeout】 specifies a limit on the amount of time that the call should block <span class="token keyword">if</span> the decrement cannot be immediately performed<span class="token punctuation">.</span>  
+       The abs_timeout argument points to a structure that  specifies an absolute timeout in 【seconds and nanoseconds】 since the Epoch<span class="token punctuation">,</span> <span class="token number">1970</span><span class="token operator">-</span><span class="token number">01</span><span class="token operator">-</span><span class="token number">01</span> <span class="token number">00</span><span class="token operator">:</span><span class="token number">00</span><span class="token operator">:</span><span class="token number">00</span> <span class="token operator">+</span><span class="token number">0000</span> <span class="token punctuation">(</span>UTC<span class="token punctuation">)</span><span class="token punctuation">.</span>  This structure is defined as follows<span class="token operator">:</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">timespec</span> <span class="token punctuation">{</span>
+    <span class="token class-name">time_t</span> tv_sec<span class="token punctuation">;</span>      <span class="token comment">/* Seconds */</span>
+    <span class="token keyword">long</span>   tv_nsec<span class="token punctuation">;</span>     <span class="token comment">/* Nanoseconds [0 .. 999999999] */</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+       If the timeout has already expired by the time of the call<span class="token punctuation">,</span> and the semaphore could not be locked immediately<span class="token punctuation">,</span> then <span class="token function">sem_timedwait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> fails with a timeout <span class="token function">error</span> <span class="token punctuation">(</span>errno set to ETIMEDOUT<span class="token punctuation">)</span><span class="token punctuation">.</span>
+
+       If the operation can be performed immediately<span class="token punctuation">,</span> then <span class="token function">sem_timedwait</span><span class="token punctuation">(</span><span class="token punctuation">)</span> never fails with a timeout error<span class="token punctuation">,</span> regardless of the value of abs_timeout<span class="token punctuation">.</span>  Furthermore<span class="token punctuation">,</span> the validity of abs_timeout is not checked in this <span class="token keyword">case</span><span class="token punctuation">.</span>
+
+RETURN VALUE
+       All of these functions <span class="token keyword">return</span> <span class="token number">0</span> on success<span class="token punctuation">;</span> 
+	   on error<span class="token punctuation">,</span> the value of the semaphore is left unchanged<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span> is returned<span class="token punctuation">,</span> and errno is set to indicate the error<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="post"><a href="#post" class="headerlink" title="post"></a>post</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;semaphore.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">sem_post</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>sem<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">// +1操作，唤醒被wait阻塞的线程</span>
+
+Link with <span class="token operator">-</span>pthread<span class="token punctuation">.</span>
+
+DESCRIPTION
+       <span class="token function">sem_post</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 【<span class="token function">increments</span> <span class="token punctuation">(</span>unlocks<span class="token punctuation">)</span> the semaphore】 pointed to by 【sem】<span class="token punctuation">.</span>  
+       If the semaphore<span class="token char">''</span>s value consequently becomes 【greater than zero】<span class="token punctuation">,</span> then another process or thread 【blocked in a <span class="token function">sem_wait</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> call】 will be 【woken up】 and proceed to lock the semaphore<span class="token punctuation">.</span>
+
+RETURN VALUE
+       <span class="token function">sem_post</span><span class="token punctuation">(</span><span class="token punctuation">)</span> returns <span class="token number">0</span> on success<span class="token punctuation">;</span> 
+	   on error<span class="token punctuation">,</span> the value of the semaphore is left unchanged<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span> is returned<span class="token punctuation">,</span> and errno is set to indicate the error<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="示例代码-5"><a href="#示例代码-5" class="headerlink" title="示例代码"></a>示例代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;semaphore.h&gt;</span></span>
+
+<span class="token comment">// 创建互斥锁</span>
+<span class="token class-name">pthread_mutex_t</span> mutex<span class="token punctuation">;</span>
+
+<span class="token comment">// 创建2个信号量</span>
+<span class="token class-name">sem_t</span> psem<span class="token punctuation">,</span> csem<span class="token punctuation">;</span>
+
+
+<span class="token comment">// 容器：链表</span>
+<span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span> num<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 头节点</span>
+<span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>head <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">producer</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>arg<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 不断生产并放入容器 ---&gt; 创建新节点头插</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 生产者生产一个 -1</span>
+        <span class="token function">sem_wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>psem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 对临界区加锁</span>
+        <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 开始生产</span>
+        <span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>newNode <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        newNode<span class="token operator">-&gt;</span>next <span class="token operator">=</span> head<span class="token punctuation">;</span>
+        head <span class="token operator">=</span> newNode<span class="token punctuation">;</span>
+        newNode<span class="token operator">-&gt;</span>num <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">1000</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"new node-&gt;num = %d; tid = %ld\n"</span><span class="token punctuation">,</span> newNode<span class="token operator">-&gt;</span>num<span class="token punctuation">,</span> <span class="token function">pthread_self</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 解锁</span>
+        <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 通知消费者 +1</span>
+        <span class="token function">sem_post</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>csem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">customer</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>arg<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 看看能不能消费，这里就不需要判断head==NULL了，因为如果csem ！= 0，说明生产者已经生产好了一，直接消费就成了</span>
+        <span class="token function">sem_wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>csem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 对共享资源加锁</span>
+        <span class="token function">pthread_mutex_lock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 开始消费</span>
+        <span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>tmp <span class="token operator">=</span> head<span class="token punctuation">;</span>
+        head <span class="token operator">=</span> head<span class="token operator">-&gt;</span>next<span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"del node-&gt;num = %d; tid = %ld\n"</span><span class="token punctuation">,</span> tmp<span class="token operator">-&gt;</span>num<span class="token punctuation">,</span> <span class="token function">pthread_self</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">free</span><span class="token punctuation">(</span>tmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 解锁</span>
+        <span class="token function">pthread_mutex_unlock</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 通知生产者，我消费了一个</span>
+        <span class="token function">sem_post</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>psem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+
+    <span class="token function">sem_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>psem<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 0-&gt;between thread</span>
+    <span class="token function">sem_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>csem<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 创建5个生产者线程，消费者线程</span>
+    <span class="token class-name">pthread_t</span> ptid<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">,</span> ctid<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>ptid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> producer<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>ctid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> customer<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 线程分离</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">pthread_detach</span><span class="token punctuation">(</span>ptid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">pthread_detach</span><span class="token punctuation">(</span>ctid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// 由于detach不阻塞，主线程会直接detach结束后销毁锁，退出；如果用join会阻塞等待</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们看到一切正常。</p>
+<p>生产者生产时是采用头插法，因此消费者消费时也是从头结点开始删除。</p>
+<p><img src="https://img-blog.csdnimg.cn/8ae09d89c4db4190a4e7cb168736e54c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_14,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>第一次编译时有个bug，因此segmentation fault了，后来发现是定义消费者的信号量时，将value设置成了8。</p>
+<p>这样的话消费者一开始就可以消费，有人有可能消费到空的容器，访问NULL的后继结点，因此段错误了。</p>
+<h3 id="I-N-D-E-X"><a href="#I-N-D-E-X" class="headerlink" title="I N D E X"></a>I N D E X</h3><p><img src="https://img-blog.csdnimg.cn/e742a794620e437c9942c716d5e3ba78.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <blockquote>
 <p>使用 <code>sudo apt-get install glibc-doc</code> 下载线程库函数的man手册</p>
 <p>使用 <code>man -k pthread</code> 查看</p>
@@ -2455,7 +2648,7 @@ RETURN VALUE
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">75.1k</span>&nbsp;字
+                class="white-color">77.5k</span>&nbsp;字
             
             
             

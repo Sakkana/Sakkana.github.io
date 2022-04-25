@@ -4428,7 +4428,7 @@ SHM_RDONLY
 </li>
 </ol>
 <ol start="5">
-<li>往 dev/null 中写的数据都会被丢弃到，即使系统调用用到了0，1，2，写了也会被丢弃。如果不打开1，2，3可能会出错。</li>
+<li>往 <code>dev/null</code> 中写的数据都会被丢弃到，即使系统调用用到了0，1，2，写了也会被丢弃。如果不打开1，2，3可能会出错。</li>
 </ol>
 <h5 id="示例代码-18"><a href="#示例代码-18" class="headerlink" title="示例代码"></a>示例代码</h5><p>写一个守护进程，每隔两秒获取一下系统时间，并写入磁盘文件当中。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
@@ -4900,7 +4900,7 @@ SHM_RDONLY
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">75.1k</span>&nbsp;字
+                class="white-color">77.5k</span>&nbsp;字
             
             
             

@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    2.4k
                 </div>
                 
 
@@ -482,7 +482,24 @@
 <li>客户端服务器端的<code>交互</code>是<code>请求-响应模式</code>，通常动态刷新页面，响应速度明显降低。</li>
 </ol>
 <p>看看就好了，没啥有营养的东西。</p>
-<h2 id="2-MAC地址、IP地址、端口"><a href="#2-MAC地址、IP地址、端口" class="headerlink" title="2. MAC地址、IP地址、端口"></a>2. MAC地址、IP地址、端口</h2><h2 id="3-网络模型"><a href="#3-网络模型" class="headerlink" title="3. 网络模型"></a>3. 网络模型</h2><h2 id="4-协议"><a href="#4-协议" class="headerlink" title="4. 协议"></a>4. 协议</h2><h2 id="5-网络通信的过程"><a href="#5-网络通信的过程" class="headerlink" title="5. 网络通信的过程"></a>5. 网络通信的过程</h2>
+<h2 id="2-MAC地址、IP地址、端口"><a href="#2-MAC地址、IP地址、端口" class="headerlink" title="2. MAC地址、IP地址、端口"></a>2. MAC地址、IP地址、端口</h2><h4 id="MAC-地址"><a href="#MAC-地址" class="headerlink" title="MAC 地址"></a>MAC 地址</h4><p>​        网卡是一块被设计用来允许计算机在计算机网络上进行通讯的计算机硬件，又称为网络适配器或网 络接口卡NIC。其拥有 MAC 地址，属于 OSI 模型的第 2 层，它使得用户可以通过电缆或无线相互 连接。每一个网卡都有一个被称为 MAC 地址的独一无二的 48 位串行号。</p>
+<p>​        网卡的主要功能：</p>
+<ul>
+<li>数据的封装与解封装</li>
+<li>链路管理</li>
+<li>数据编码与译码</li>
+</ul>
+<p>​        MAC 地址（Media Access Control Address），直译为媒体存取控制位址，也称为局域网地址、 以太网地址、物理地址或硬件地址，它是一个用来确认网络设备位置的位址，由网络设备制造商生 产时烧录在网卡中。</p>
+<p>​        在 OSI 模型中，<code>第三层网络层负责 IP 地址，第二层数据链路层则负责 MAC 位址</code> 。MAC 地址用于在网络中唯一标识一个网卡，一台设备若有一或多个网卡，则每个网卡都需 要并会有一个唯一的 MAC 地址。 MAC 地址的长度为 48 位（6个字节），通常表示为 12 个 16 进制数，如：00-16-EA-AE-3C-40 就 是一个MAC 地址，其中前 3 个字节，16 进制数 00-16-EA 代表网络硬件制造商的编号，它由 IEEE（电气与电子工程师协会）分配，而后 3 个字节，16进制数 AE-3C-40 代表该制造商所制造的 某个网络产品（如网卡）的系列号。只要不更改自己的 MAC 地址，MAC 地址在世界是唯一的。 形象地说，MAC 地址就如同身份证上的身份证号码，具有唯一性。</p>
+<h3 id="IP-地址"><a href="#IP-地址" class="headerlink" title="IP 地址"></a>IP 地址</h3><h5 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h5><p>​        IP 协议是为计算机网络相互连接进行通信而设计的协议。在因特网中，它是能使连接到网上的所有计算机网络实现<code>相互通信</code>的一套规则，规定了计算机在因特网上进行通信时应当遵守的规则。<code>任何厂家生产的计算机系统，只要遵守 IP 协议就可以与因特网互连互通。</code>各个厂家生产的网络系统 和设备，如以太网、分组交换网等，它们相互之间不能互通，不能互通的主要原因是因为它们所传 送数据的基本单元（技术上称之为“帧”）的格式不同。（相当于两个说中文和英文的人无法交流，如果大家约定都说法文，那么就可以交流了）</p>
+<p>​        IP 协议实际上是一套由软件程序组成的协议 软件，它把各种不同“帧”统一转换成“IP 数据报”格式，这种转换是因特网的一个最重要的特点，使所有各种计算机都能在因特网上实现互通，即具有“开放性”的特点。正是因为有了 IP 协议，因特 网才得以迅速发展成为世界上最大的、开放的计算机通信网络。因此，IP 协议也可以叫做“因特网 协议”。 </p>
+<p>​        IP 地址（Internet Protocol Address）是指互联网协议地址，又译为网际协议地址。IP 地址是 IP 协议提供的一种统一的地址格式，它为互联网上的每一个网络和每一台主机分配一个<code>逻辑地址</code>，以 此来<code>屏蔽物理地址的差异</code>。 IP 地址是一个 <code>32 位</code>的二进制数，通常被分割为 4 个“ 8 位二进制数”（也就是 4 个字节）。IP 地址 通常用“点分十进制”表示成（a.b.c.d）的形式，其中，a,b,c,d都是 0~255 之间的十进制整数。 例：点分十进IP地址（100.4.5.6），实际上是 32 位二进制数 （01100100.00000100.00000101.00000110）。（是个被分配的逻辑地址，相当于你的学号，并不是你与生俱来的，而是为了通信给你分配的）</p>
+<h5 id="IP-地址编址方式"><a href="#IP-地址编址方式" class="headerlink" title="IP 地址编址方式"></a>IP 地址编址方式</h5><p>​        最初设计互联网络时，为了便于寻址以及层次化构造网络，每个 IP 地址包括<code>两个标识码（ID）</code>，即<code>网络 ID</code> 和<code>主机 ID</code>。</p>
+<p>​        <code>同一个物理网络</code>上的所有主机都使用<code>同一个网络 ID</code>，网络上的<code>一个主机</code>（包括网络上工 作站，服务器和路由器等）有一个<code>主机 ID</code> 与其对应。Internet 委员会定义了 5 种 IP 地址类型以适合不 同容量的网络，即 A 类~ E 类。 其中 <code>A、B、C</code> 3类（如下表格）由 InternetNIC 在全球范围内统一分配，<code>D、E</code> 类为特殊地址。</p>
+<p>​        比如 IP <code>192.168.100.235</code>，前三个就是网络IP，这台电脑在 192.168.100 这个网段里面，最后的 235 就是主机 IP。</p>
+<p><img src="https://img-blog.csdnimg.cn/fe8b606af4df4b30b4acfdbff1dc9ab6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>A类最后不使用255，因为它一般被用作<code>广播地址</code>，可以给这个网段里所有的主机发送数据。</p>
+<h4 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h4><h2 id="3-网络模型"><a href="#3-网络模型" class="headerlink" title="3. 网络模型"></a>3. 网络模型</h2><h2 id="4-协议"><a href="#4-协议" class="headerlink" title="4. 协议"></a>4. 协议</h2><h2 id="5-网络通信的过程"><a href="#5-网络通信的过程" class="headerlink" title="5. 网络通信的过程"></a>5. 网络通信的过程</h2>
                 
             </div>
             <hr/>
@@ -867,7 +884,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">75.1k</span>&nbsp;字
+                class="white-color">77.5k</span>&nbsp;字
             
             
             
