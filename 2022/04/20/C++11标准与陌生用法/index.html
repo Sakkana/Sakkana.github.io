@@ -405,7 +405,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    3k
                 </div>
                 
 
@@ -642,6 +642,96 @@ const int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span>
 
 
 
+<h3 id="坑：类型转换"><a href="#坑：类型转换" class="headerlink" title="坑：类型转换"></a>坑：类型转换</h3><p>其实也说不上坑，只是我们在写程序时要注意，但又经常被忽略，一旦写不好会造成Bug的一个东西。</p>
+<p><strong>隐式转换</strong></p>
+<p>隐式的东西很危险，不要让编译器给你做。 —— 杜博士dubious</p>
+<p>当可以相互转换的不同数据类型做运，而你又没有干预的时候，隐式类型转换就发生了。</p>
+<p>具体可以去看看 csapp 第二章，讲的非常详细。</p>
+<p>高精度 -&gt; 低精度：精度损失</p>
+<p>低精度-&gt;高精度：精度提升</p>
+<p>（无符号数 op 有符号数 ）&amp;&amp; precision(无符号数 &gt;= 有符号数) —&gt; cast <strong>有符号数</strong> to <strong>无符号数</strong> </p>
+<p>这里可能会存在副作用，如 int(-1) —&gt; unsigned int(INT_MAX)</p>
+<p>（无符号数 op 有符号数 ）&amp;&amp; precision(无符号数 &lt; 有符号数) —&gt; 依赖于机器</p>
+<p>如果无符号数可以表示的数据∈有符号数可以表示的范围 —&gt; cast <strong>无符号数</strong> to <strong>有符号数</strong></p>
+<p>如果不能 cast <strong>有符号数</strong> to <strong>无符号数</strong></p>
+<p>凡是两个运算对象数据类型不同时，我们都要留心类型转换。</p>
+<p>可以做一些实验大量验证，动手比空想要好一点。</p>
+<p><strong>显式转换</strong></p>
+<p>程序员可以做的事情：强制类型转换。</p>
+<p>相比C语言，C++引入了新的转换形式。</p>
+<p><code>static_cast&lt;T&gt;(expression)</code> ：只要不包含<code>底层const</code>就可以转换。</p>
+<p>告诉编译器：我不在乎精度丢失，别给我warning。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span>	<span class="token comment">// void *是万能指针</span>
+<span class="token keyword">double</span> <span class="token operator">*</span>dp <span class="token operator">=</span> static_cast<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">*</span><span class="token operator">&gt;</span>pre<span class="token punctuation">;</span>	<span class="token comment">// cast void* to double*</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<p><code>dynamic_cast&lt;T&gt;(expression)</code> </p>
+<p><code>const_cast&lt;T&gt;(expression)</code> </p>
+<p><code>reinterprete_cast&lt;T&gt;(expression)</code> </p>
+<h3 id="函数参数传引用"><a href="#函数参数传引用" class="headerlink" title="函数参数传引用"></a>函数参数传引用</h3><p>对于占用内存非常大的对象我们常常传它的引用作为函数参数。</p>
+<p>函数只能 return 一个参数，我们可以通过传引用把其他的返回值通过引用的作为函数参数传入。其实这个在C中也经常用到，比如 <code>pthread_create</code>中传入的第一个参数就是个传出参数，像个钩子可以带出来子线程的tid。</p>
+<h3 id="函数参数要不要const？"><a href="#函数参数要不要const？" class="headerlink" title="函数参数要不要const？"></a>函数参数要不要const？</h3><p>避免修改</p>
+<p>避免 string &amp;s，传入字符串常量报错，修改成 —&gt; const string &amp;s</p>
+<h3 id="this指针"><a href="#this指针" class="headerlink" title="this指针"></a>this指针</h3><p>每个对象内部都有一个隐式参数—<code>this指针</code>。</p>
+<p>这个指针的地址指向<code>自己</code>，也就是说，他保存的是自己的首地址。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+using namespace std<span class="token punctuation">;</span>
+
+class Elephant<span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+    <span class="token keyword">int</span> longNose <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> fatLeg <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> greatTail <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+    <span class="token keyword">double</span> twoEyes <span class="token operator">=</span> <span class="token number">4.4</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">get_address</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> this<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Elephant a<span class="token punctuation">;</span>
+
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"&amp;a: "</span> <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>a <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"this: "</span> <span class="token operator">&lt;&lt;</span> a<span class="token punctuation">.</span><span class="token function">get_address</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+
+    cout <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>a<span class="token punctuation">.</span>longNose <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>a<span class="token punctuation">.</span>fatLeg <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>a<span class="token punctuation">.</span>greatTail <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token operator">&amp;</span>a<span class="token punctuation">.</span>twoEyes <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>&amp;a: 0x61fef8<br>this: 0x61fef8<br>0x61fef8<br>0x61fefc<br>0x61ff00<br>0x61ff08</p>
+</blockquote>
+<p>可以看到 <code>this</code>的值 = 对象a的首地址。</p>
+<h3 id="成员函数形参参数列表后面的const"><a href="#成员函数形参参数列表后面的const" class="headerlink" title="成员函数形参参数列表后面的const"></a>成员函数形参参数列表后面的const</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">std<span class="token operator">::</span>string <span class="token function">isbn</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> bookNo<span class="token punctuation">;</span> <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>紧跟在参数列表后的 const 是用来指定 this 指向一个常量，即我们不可以在函数中修改变量的值。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+using namespace std<span class="token punctuation">;</span>
+
+class Elephant<span class="token punctuation">{</span>
+public<span class="token operator">:</span>
+    <span class="token keyword">int</span> longNose <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> fatLeg <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> greatTail <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+    <span class="token keyword">double</span> twoEyes <span class="token operator">=</span> <span class="token number">4.4</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">get_address</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span>
+    <span class="token punctuation">{</span>
+        longNose <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果你尝试这么做，编译器会报错。</p>
+<p>因为你在参数列表后指定了const，表面不可以该改变this指针指向的对象。</p>
+<p>this指向一个常量。</p>
 
                 
             </div>
@@ -751,18 +841,17 @@ const int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/04/20/C++11%E6%A0%87%E5%87%86%E4%B8%8E%E9%99%8C%E7%94%9F%E7%94%A8%E6%B3%95/">
+                <a href="/2022/04/23/Linux%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="C++11标准与陌生用法">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Linux多线程">
                         
-                        <span class="card-title">C++11标准与陌生用法</span>
+                        <span class="card-title">Linux多线程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -772,22 +861,21 @@ const int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span>
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-20
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-04-23
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C-C/" class="post-category">
-                                    C/C++
+                            <a href="/categories/%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    系统编程
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1027,7 +1115,7 @@ const int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">64.6k</span>&nbsp;字
+                class="white-color">73k</span>&nbsp;字
             
             
             
