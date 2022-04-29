@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="并查集, 魚のブログ">
+    <meta name="keywords" content="openGL配置-个人用, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>并查集 | 魚のブログ</title>
+    <title>openGL配置-个人用 | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -263,12 +263,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">并查集</h1>
+                    <h1 class="description center-align post-title">openGL配置-个人用</h1>
                 </div>
             </div>
         </div>
@@ -384,8 +384,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                                <span class="chip bg-color">数据结构</span>
+                            <a href="/tags/openGL/">
+                                <span class="chip bg-color">openGL</span>
                             </a>
                         
                     </div>
@@ -396,8 +396,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                算法
+                            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" class="post-category">
+                                图形学
                             </a>
                         
                     </div>
@@ -409,7 +409,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-02-02
+                    2022-04-29
                 </div>
                 
 
@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    441
+                    351
                 </div>
                 
 
@@ -443,70 +443,29 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>一共有 n 个数，编号是  1 ~ n，最开始每个数各自在一个集合中。</p>
-<p>现在要进行 m 个操作，操作共有两种：</p>
-<ol>
-<li><code>M a b</code>，将编号为 a 和 b 的两个数所在的集合合并，如果两个数已经在同一个集合中，则忽略这个操作；</li>
-<li><code>Q a b</code>，询问编号为 a 和 b 的两个数是否在同一个集合中；</li>
-</ol>
-<h4 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h4><p>第一行输入整数 n 和 m。</p>
-<p>接下来 m 行，每行包含一个操作指令，指令为 <code>M a b</code> 或 <code>Q a b</code> 中的一种。</p>
-<h4 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h4><p>对于每个询问指令 <code>Q a b</code>，都要输出一个结果，如果 a 和 b 在同一集合内，则输出 <code>Yes</code>，否则输出 <code>No</code>。</p>
-<p>每个结果占一行。</p>
-<h4 id="数据范围"><a href="#数据范围" class="headerlink" title="数据范围"></a>数据范围</h4><p>1 ≤ n, m ≤ 10<sup>5</sup></p>
-<h4 id="输入样例："><a href="#输入样例：" class="headerlink" title="输入样例："></a>输入样例：</h4><pre class="line-numbers language-none"><code class="language-none">4 5
-M 1 2
-M 3 4
-Q 1 2
-Q 1 3
-Q 3 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="输出样例："><a href="#输出样例：" class="headerlink" title="输出样例："></a>输出样例：</h4><pre class="line-numbers language-none"><code class="language-none">Yes
-No
-Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码:"></a>AC代码:</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdio&gt;</span></span>
-<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
-
-<span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">1e5</span> <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> p<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> n<span class="token punctuation">,</span> m<span class="token punctuation">;</span>
-
-<span class="token comment">// 带路径压缩返回祖宗节点</span>
-<span class="token keyword">int</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">!=</span> x<span class="token punctuation">)</span> p<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> p<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    cin <span class="token operator">&gt;&gt;</span> n <span class="token operator">&gt;&gt;</span> m<span class="token punctuation">;</span>
-    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span> p<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>	<span class="token comment">// 初始化， 刚开始p[i] = i, 每个人都是一个独立的集合</span>
-    
-    <span class="token keyword">while</span><span class="token punctuation">(</span>m<span class="token operator">--</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">char</span> op<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">//%s吃掉空格，回车... %c会读乱七八糟的字符</span>
-        <span class="token keyword">int</span> a<span class="token punctuation">,</span> b<span class="token punctuation">;</span>
-        <span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%s%d%d"</span><span class="token punctuation">,</span> op<span class="token punctuation">,</span> <span class="token operator">&amp;</span>a<span class="token punctuation">,</span> <span class="token operator">&amp;</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>op<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token char">'M'</span><span class="token punctuation">)</span> p<span class="token punctuation">[</span><span class="token function">find</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">else</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">find</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">find</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Yes"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">else</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"No"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-    
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<blockquote>
-<p> 并查集支持操作：</p>
-<p> 1.将两个集合合并<br>  2.询问两个元素是否在同一个集合</p>
-<p>  每一个集合都用一颗树来维护，树根的编号就是整个集合的编号</p>
-</blockquote>
+                <h1 id="openGL配置属性一劳永逸"><a href="#openGL配置属性一劳永逸" class="headerlink" title="openGL配置属性一劳永逸"></a>openGL配置属性一劳永逸</h1><p>​    刚开始写一些练习题只是在一个文件夹新建了一个工程一路写到黑，写完一个小工程就把main，着色器程序复制粘贴存下来。后来需要新建新工程了，每次配置环境都太麻烦了，因此学了下如何持久化已设定的配置。</p>
+<h3 id="1-include-目录-amp-库目录（lib）"><a href="#1-include-目录-amp-库目录（lib）" class="headerlink" title="1. include 目录 &amp; 库目录（lib）"></a>1. include 目录 &amp; 库目录（lib）</h3><p><img src="https://img-blog.csdnimg.cn/ae1af821324d463783c4eb30f9d1af02.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="1-1-include-目录"><a href="#1-1-include-目录" class="headerlink" title="1.1 include 目录"></a>1.1 include 目录</h5><p>放需要引入的第三方库的<code>头文件</code>路径</p>
+<p><img src="https://img-blog.csdnimg.cn/09a4687e58c14f5dbc7a4717d114a9a3.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="1-2-库目录"><a href="#1-2-库目录" class="headerlink" title="1.2 库目录"></a>1.2 库目录</h5><p>放对应的  <code>xxx.lib</code></p>
+<p><img src="https://img-blog.csdnimg.cn/33fdf561b3844560b2087e67059a1d54.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>这里的附加include目录和上面好像没啥区别</p>
+<p>我把这两个路径放到 <code>VC++目录</code> 下程序也能照样跑</p>
+<p><img src="https://img-blog.csdnimg.cn/a852fc2168794e55907bd2580837e6cf.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p> <img src="https://img-blog.csdnimg.cn/43838667c0d8473089016bb48b6a2794.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h3 id="2-动态链接库"><a href="#2-动态链接库" class="headerlink" title="2. 动态链接库"></a>2. 动态链接库</h3><p>目前只用到了这三个库</p>
+<p><img src="https://img-blog.csdnimg.cn/dd139136874f4db8bbc636aefed90e4a.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h3 id="3-glad-c"><a href="#3-glad-c" class="headerlink" title="3. glad.c"></a>3. glad.c</h3><p>然后记得把 <code>glad.c</code> 和工程放到同一个目录下</p>
+<p><img src="https://img-blog.csdnimg.cn/37bc06670a3941558455e858331d5b83.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h3 id="4-assimp-模型加载库"><a href="#4-assimp-模型加载库" class="headerlink" title="4. assimp 模型加载库"></a>4. assimp 模型加载库</h3><p>把 <code>assimp-xxx.lib</code> 放到Debug或者Release目录下，即和可执行程序同一个目录</p>
+<p><img src="https://img-blog.csdnimg.cn/fa84b83a1fa241f7bf565d036ec5d2cf.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"> </p>
+<h3 id="5-引用配置好的属性"><a href="#5-引用配置好的属性" class="headerlink" title="5. 引用配置好的属性"></a>5. 引用配置好的属性</h3><p>在<code>属性管理器</code>右键可以新建一个项目属性表，按照上面的方式配置好保存在一个路径当中就行了。（放哪儿无所谓）</p>
+<p>然后随便开一个新项目，在项目属性表中引用之前我们配置好的属性。</p>
+<p> <img src="https://img-blog.csdnimg.cn/68fabc4468e34f40a86a28fee95141dd.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>成功导入。</p>
+<p><img src="https://img-blog.csdnimg.cn/f93b2d56642c4a62b4c138ce30036f0b.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>打开属性页，可以惊奇地发现一切都那么熟悉。</p>
+<p><img src="https://img-blog.csdnimg.cn/e6612b553d3d4c9b957e5fd11b822686.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 
                 
             </div>
@@ -533,7 +492,7 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/02/02/%E5%B9%B6%E6%9F%A5%E9%9B%86/">https://sakkana.github.io/2022/02/02/%E5%B9%B6%E6%9F%A5%E9%9B%86/</a>
+                    <a href="https://sakkana.github.io/2022/04/29/openGL%E9%85%8D%E7%BD%AE-%E4%B8%AA%E4%BA%BA%E7%94%A8/">https://sakkana.github.io/2022/04/29/openGL%E9%85%8D%E7%BD%AE-%E4%B8%AA%E4%BA%BA%E7%94%A8/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -571,8 +530,8 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                                    <span class="chip bg-color">数据结构</span>
+                                <a href="/tags/openGL/">
+                                    <span class="chip bg-color">openGL</span>
                                 </a>
                             
                         </div>
@@ -616,17 +575,18 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/02/04/DFS%20-%20n%E7%9A%87%E5%90%8E/">
+                <a href="/2022/04/29/openGL%E9%85%8D%E7%BD%AE-%E4%B8%AA%E4%BA%BA%E7%94%A8/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="DFS - n皇后">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="openGL配置-个人用">
                         
-                        <span class="card-title">DFS - n皇后</span>
+                        <span class="card-title">openGL配置-个人用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -636,26 +596,27 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-04
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" class="post-category">
+                                    图形学
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/">
-                        <span class="chip bg-color">深度优先搜索</span>
+                    <a href="/tags/openGL/">
+                        <span class="chip bg-color">openGL</span>
                     </a>
                     
                 </div>
@@ -669,13 +630,13 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/02/%E6%A8%A1%E6%8B%9F%E5%A0%86/">
+                <a href="/2022/04/27/HTML/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="模拟堆">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="学一点前端-HTML">
                         
-                        <span class="card-title">模拟堆</span>
+                        <span class="card-title">学一点前端-HTML</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -686,14 +647,14 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-04-27
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
-                                    算法
+                            <a href="/categories/Web/" class="post-category">
+                                    Web
                                 </a>
                             
                             
@@ -703,8 +664,8 @@ Yes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
-                        <span class="chip bg-color">数据结构</span>
+                    <a href="/tags/HTML/">
+                        <span class="chip bg-color">HTML</span>
                     </a>
                     
                 </div>

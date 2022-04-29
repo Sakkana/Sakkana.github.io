@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3k
+                    3.2k
                 </div>
                 
 
@@ -454,15 +454,15 @@
 
 
 <p><code>底层const</code>：指针所指的对象是个const</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int *p2 = &amp;a;	// 不能通过指针修改其指向的对象
-const int &amp;ref = &amp;a;	// 声明引用的const的都是底层const<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span>p2 <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span>	<span class="token comment">// 不能通过指针修改其指向的对象</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>ref <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span>	<span class="token comment">// 声明引用的const的都是底层const</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
 
 <p>我们还可以见到这种杂合子</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int *const p3 = &amp;a;
-// 第一个是底层const，我们无法通过指针修改这个对象
-// 第二个是顶层const，长相厮守<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span><span class="token keyword">const</span> p3 <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span>
+<span class="token comment">// 第一个是底层const，我们无法通过指针修改这个对象</span>
+<span class="token comment">// 第二个是顶层const，长相厮守</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -475,42 +475,42 @@ const int &amp;ref = &amp;a;	// 声明引用的const的都是底层const<span ar
 <p>因为p1拥有底层const，我们无法通过指针修改a的值。</p>
 <p>而p2却没有底层const，意味着我们可以通过p2修改p2指向的值，即p1指向的值，即a的值。</p>
 <p>这与我们的初衷相违背（p1不被允许修改a的值）。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int *const p1 = &amp;a;
-int *p2 = p1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span><span class="token keyword">const</span> p1 <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token operator">*</span>p2 <span class="token operator">=</span> p1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p><img src="https://img-blog.csdnimg.cn/a32de98309f14546810b3d1718b841e0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <p>同理，这样也是不允许的。因为p有可能改变a的值。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int a = 9;
-int *const p = &amp;a;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token operator">*</span><span class="token keyword">const</span> p <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p><img src="https://img-blog.csdnimg.cn/7bf0cf88ca3343bead078d81ad333516.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <p>case 2</p>
 <p>这样子是合法的，因为p1和p2都拥有相同的底层const，即p1和p2指向的对象都不能被修改。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int *const p1 = &amp;a;
-const int *p2 = p1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span><span class="token keyword">const</span> p1 <span class="token operator">=</span> <span class="token operator">&amp;</span>a<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span>p2 <span class="token operator">=</span> p1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
 
 <p>case 3</p>
 <p>这样也是合法的，编译器可以将 <code>int*</code> 转成 <code>const int*</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int i = 1;
-const int *p = &amp;i;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token operator">&amp;</span>i<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
 
 <p>case 4</p>
 <p>这样子是非法的，因为ref有修改i的可能性。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int i = 99;
-int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">99</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token operator">&amp;</span>ref <span class="token operator">=</span> i<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p><img src="https://img-blog.csdnimg.cn/cb58dd30605549eca3326f0bf5fc2df6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <p>case 5</p>
 <p>这样自然就合法了，因为ref也是只读的。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int i = 99;
-const int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">99</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>ref <span class="token operator">=</span> i<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>上面这等价于：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int i = 99, &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">99</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>ref <span class="token operator">=</span> i<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
@@ -682,9 +682,12 @@ const int &amp;ref = i;<span aria-hidden="true" class="line-numbers-rows"><span>
 <p><code>dynamic_cast&lt;T&gt;(expression)</code> </p>
 <p><code>const_cast&lt;T&gt;(expression)</code> </p>
 <p><code>reinterprete_cast&lt;T&gt;(expression)</code> </p>
-<h3 id="函数参数传引用"><a href="#函数参数传引用" class="headerlink" title="函数参数传引用"></a>函数参数传引用</h3><p>对于占用内存非常大的对象我们常常传它的引用作为函数参数。</p>
+<h3 id="pass-by-reference-还是-by-value？"><a href="#pass-by-reference-还是-by-value？" class="headerlink" title="pass by reference 还是 by value？"></a>pass by reference 还是 by value？</h3><p>对于占用内存非常大的对象我们常常传它的引用作为函数参数。</p>
 <p>函数只能 return 一个参数，我们可以通过传引用把其他的返回值通过引用的作为函数参数传入。其实这个在C中也经常用到，比如 <code>pthread_create</code>中传入的第一个参数就是个传出参数，像个钩子可以带出来子线程的tid。</p>
-<h3 id="函数参数要不要const？"><a href="#函数参数要不要const？" class="headerlink" title="函数参数要不要const？"></a>函数参数要不要const？</h3><p>避免修改</p>
+<p>侯捷老师：传引用很快，形式也很漂亮。C语言中擅长传递指针，也很轻量级。所有传参都传引用。如果不想要改 value ，就 pass by reference to const。</p>
+<h3 id="return-by-reference-还是-by-value？"><a href="#return-by-reference-还是-by-value？" class="headerlink" title="return by reference 还是 by value？"></a>return by reference 还是 by value？</h3><p>返回尽量by reference。有些情况下不可以。</p>
+<p>千万不要返回局部变量的reference。</p>
+<h3 id="函数参数要不要-const？"><a href="#函数参数要不要-const？" class="headerlink" title="函数参数要不要 const？"></a>函数参数要不要 const？</h3><p>避免修改</p>
 <p>避免 string &amp;s，传入字符串常量报错，修改成 —&gt; const string &amp;s</p>
 <h3 id="this指针"><a href="#this指针" class="headerlink" title="this指针"></a>this指针</h3><p>每个对象内部都有一个隐式参数—<code>this指针</code>。</p>
 <p>这个指针的地址指向<code>自己</code>，也就是说，他保存的是自己的首地址。</p>
@@ -746,6 +749,34 @@ public<span class="token operator">:</span>
 <p>因为你在参数列表后指定了const，表面不可以该改变this指针指向的对象。</p>
 <p>this指向一个常量。</p>
 <p><img src="https://img-blog.csdnimg.cn/ab1f60204b9843c090b5798dfc562852.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p>如果我定义了一个 const 的对象，并且调用某个成员函数，该成员函数内部修改了成员变量的值，就会报错。</p>
+<p><img src="https://img-blog.csdnimg.cn/7f98e8119ea542c381a4a2e5347a1f7f.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<p><img src="https://img-blog.csdnimg.cn/9364a2b6811b42638405bcbc6ec8b1a6.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h3 id="同一个-class-实例化的-objects-互为-friends"><a href="#同一个-class-实例化的-objects-互为-friends" class="headerlink" title="同一个 class 实例化的 objects 互为 friends"></a>同一个 class 实例化的 objects 互为 friends</h3><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">class</span> <span class="token class-name">complex</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">complex</span><span class="token punctuation">(</span><span class="token keyword">double</span> _r<span class="token punctuation">,</span> <span class="token keyword">double</span> _i<span class="token punctuation">)</span>
+        <span class="token operator">:</span> <span class="token function">re</span><span class="token punctuation">(</span>_r<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">im</span><span class="token punctuation">(</span>_i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword">double</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token keyword">const</span> complex<span class="token operator">&amp;</span> param<span class="token punctuation">)</span>	<span class="token comment">// 这是完全合法的</span>
+    <span class="token punctuation">{</span> <span class="token keyword">return</span> param<span class="token punctuation">.</span>re <span class="token operator">+</span> param<span class="token punctuation">.</span>im<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+ 
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">double</span> re<span class="token punctuation">,</span> im<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    complex <span class="token function">c1</span><span class="token punctuation">(</span><span class="token number">19.2</span><span class="token punctuation">,</span> <span class="token number">10.1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">c2</span><span class="token punctuation">(</span><span class="token number">90.1</span><span class="token punctuation">,</span> <span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> c1<span class="token punctuation">.</span><span class="token function">func</span><span class="token punctuation">(</span>c2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -1129,7 +1160,7 @@ public<span class="token operator">:</span>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">77.5k</span>&nbsp;字
+                class="white-color">90.3k</span>&nbsp;字
             
             
             
