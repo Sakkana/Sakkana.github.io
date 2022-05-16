@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    17.1k
+                    18.8k
                 </div>
                 
 
@@ -1871,7 +1871,8 @@ optlen<span class="token punctuation">)</span><span class="token punctuation">;<
 <p>现在把所有的文件描述符给内核检查，只调用一次就行了。</p>
 <p><img src="https://img-blog.csdnimg.cn/6519308b434842c794bc06858a34819e.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
 <p><img src="https://img-blog.csdnimg.cn/403c641c968d4caf9c27c4ff088a4f15.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
-<h3 id="19-2-select"><a href="#19-2-select" class="headerlink" title="19.2 select"></a>19.2 select</h3><p>主旨思想：</p>
+<h3 id="19-2-select"><a href="#19-2-select" class="headerlink" title="19.2 select"></a>19.2 select</h3><p>不使用多进程或多线程。</p>
+<p>主旨思想：</p>
 <ul>
 <li>构造一个关于<code>文件描述符</code>的<code>列表</code>，将要监听的文件描述符添加到列表中。</li>
 <li>调用一个系统函数，监听该列表中的文件描述符，直到这些文件描述符中<code>一个或多个</code>进行IO操作时，函数返回。<ul>
@@ -1907,7 +1908,7 @@ optlen<span class="token punctuation">)</span><span class="token punctuation">;<
 </li>
 <li><p>readfds：要检测的文件描述符的读的集合，委托内核检测那些文件描述符的读属性</p>
 <p>​                  对应对方发送过来的数据，读是被动接受数据，检测读缓冲区</p>
-<p>​                  传入 + 传出参数</p>
+<p>​                  传入 + 传出参数 long int</p>
 </li>
 <li><p>writefds：要检测的文件描述符的写的集合，委托内核检测那些文件描述符的写属性</p>
 <p>​                  检测写缓冲区是否还可以写数据，不满就可以写</p>
@@ -1941,7 +1942,330 @@ optlen<span class="token punctuation">)</span><span class="token punctuation">;<
 <h5 id="FD-ZERO"><a href="#FD-ZERO" class="headerlink" title="FD_ZERO"></a>FD_ZERO</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">FD_ZERO</span><span class="token punctuation">(</span>fd_set <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>作用：fdset的1024个比特位全部初始化为 0</p>
-<h5 id="示例代码-1"><a href="#示例代码-1" class="headerlink" title="示例代码"></a>示例代码</h5><h3 id="19-3-poll"><a href="#19-3-poll" class="headerlink" title="19.3 poll"></a>19.3 poll</h3><h5 id="相关函数-1"><a href="#相关函数-1" class="headerlink" title="相关函数"></a>相关函数</h5><h5 id="示例代码-2"><a href="#示例代码-2" class="headerlink" title="示例代码"></a>示例代码</h5><h3 id="19-4-epoll"><a href="#19-4-epoll" class="headerlink" title="19.4 epoll"></a>19.4 epoll</h3><h5 id="相关函数-2"><a href="#相关函数-2" class="headerlink" title="相关函数"></a>相关函数</h5><h5 id="示例代码-3"><a href="#示例代码-3" class="headerlink" title="示例代码"></a>示例代码</h5><h2 id="20-UDP"><a href="#20-UDP" class="headerlink" title="20. UDP"></a>20. UDP</h2><h3 id="20-1-UDP-通信"><a href="#20-1-UDP-通信" class="headerlink" title="20.1 UDP 通信"></a>20.1 UDP 通信</h3><h3 id="20-2-广播"><a href="#20-2-广播" class="headerlink" title="20.2 广播"></a>20.2 广播</h3><h3 id="20-3-组播"><a href="#20-3-组播" class="headerlink" title="20.3 组播"></a>20.3 组播</h3><h3 id="20-4-本地套接字通信"><a href="#20-4-本地套接字通信" class="headerlink" title="20.4 本地套接字通信"></a>20.4 本地套接字通信</h3>
+<h5 id="示例代码-1"><a href="#示例代码-1" class="headerlink" title="示例代码"></a>示例代码</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;arpa/inet.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/select.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 1. 创建 socket</span>
+    <span class="token keyword">int</span> listen_fd <span class="token operator">=</span> <span class="token function">socket</span><span class="token punctuation">(</span>PF_INET<span class="token punctuation">,</span> SOCK_STREAM<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">sockaddr_in</span> serverAddr<span class="token punctuation">;</span>
+    serverAddr<span class="token punctuation">.</span>sin_port <span class="token operator">=</span> <span class="token function">htons</span><span class="token punctuation">(</span><span class="token number">9999</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    serverAddr<span class="token punctuation">.</span>sin_family <span class="token operator">=</span> AF_INET<span class="token punctuation">;</span>
+    serverAddr<span class="token punctuation">.</span>sin_addr<span class="token punctuation">.</span>s_addr <span class="token operator">=</span> INADDR_ANY<span class="token punctuation">;</span>
+
+    <span class="token comment">// 2. 绑定 </span>
+    <span class="token function">bind</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>serverAddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>serverAddr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 3. 监听</span>
+    <span class="token function">listen</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 4. fd_set</span>
+    fd_set rdset<span class="token punctuation">,</span> tmp<span class="token punctuation">;</span>
+    <span class="token function">FD_ZERO</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>rdset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">FD_SET</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>rdset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> maxfd <span class="token operator">=</span> listen_fd<span class="token punctuation">;</span>  <span class="token comment">// 要监听的最大的 fd</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        tmp <span class="token operator">=</span> rdset<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">select</span><span class="token punctuation">(</span>maxfd <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>tmp<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 永久阻塞</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"select"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>  <span class="token comment">// 这里没可能</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">FD_ISSET</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>tmp<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">struct</span> <span class="token class-name">sockaddr_in</span> clientAddr<span class="token punctuation">;</span>
+                <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>clientAddr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">int</span> client_fd <span class="token operator">=</span> <span class="token function">accept</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>clientAddr<span class="token punctuation">,</span> <span class="token operator">&amp;</span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token comment">// 通信文件描述符添加到集合中</span>
+                <span class="token function">FD_SET</span><span class="token punctuation">(</span>client_fd<span class="token punctuation">,</span> <span class="token operator">&amp;</span>rdset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                maxfd <span class="token operator">=</span> maxfd <span class="token operator">&gt;</span> client_fd <span class="token operator">?</span> maxfd <span class="token operator">:</span> client_fd<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> listen_fd <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> maxfd<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">FD_ISSET</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token operator">&amp;</span>rdset<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token comment">// 说明该 fd 对应的客户端发来了数据</span>
+                    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+                    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"read"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"client closed ...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">close</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">FD_CLR</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token operator">&amp;</span>rdset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"server read:%s\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">write</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 回写</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">close</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<p><img src="https://img-blog.csdnimg.cn/8c7b63fe0a194d85b5dc72d05257df6b.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h3 id="19-3-poll"><a href="#19-3-poll" class="headerlink" title="19.3 poll"></a>19.3 poll</h3><p>优化版的 select，支持文件描述符数组重用，不需要额外的开销。</p>
+<p>但是没多大差别</p>
+<h5 id="相关函数-1"><a href="#相关函数-1" class="headerlink" title="相关函数"></a>相关函数</h5><h5 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;poll.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">poll</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">pollfd</span> <span class="token operator">*</span>fds<span class="token punctuation">,</span> <span class="token class-name">nfds_t</span> nfds<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">pollfd</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> fd<span class="token punctuation">;</span>					<span class="token comment">// 委托内核检测的文件描述符</span>
+    <span class="token keyword">short</span> <span class="token keyword">int</span> events<span class="token punctuation">;</span>		<span class="token comment">// 委托内核检测文件描述符的什么事件</span>
+    <span class="token keyword">short</span> <span class="token keyword">int</span> revents<span class="token punctuation">;</span>		<span class="token comment">// 文件描述符实际发生的事件</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>参数：</p>
+<ul>
+<li>fds：一个 struct pollfd 类型的结构体数组，要检测的文件描述符的集合</li>
+<li>nfds：第一个参数数组中的最后一个有效元素的下标</li>
+<li>timeout：阻塞市时长<ul>
+<li>0：不阻塞</li>
+<li>-1：阻塞，当文件描述符有变化时，接触阻塞</li>
+<li>&gt; 0：阻塞时长</li>
+</ul>
+</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>-1：失败</li>
+<li>&gt; 0 (n)：成功，检测到了n个文件描述符发生变化</li>
+</ul>
+<p>event 对应的宏</p>
+<p><img src="https://img-blog.csdnimg.cn/fbf00fbf751b4506acfcf7c909799f85.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动">编辑</p>
+<h5 id="示例代码-2"><a href="#示例代码-2" class="headerlink" title="示例代码"></a>示例代码</h5><p>呃呃，我的代码有bug，还没有调好。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;arpa/inet.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;poll.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// 1. 创建 socket</span>
+    <span class="token keyword">int</span> listen_fd <span class="token operator">=</span> <span class="token function">socket</span><span class="token punctuation">(</span>PF_INET<span class="token punctuation">,</span> SOCK_STREAM<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">sockaddr_in</span> serverAddr<span class="token punctuation">;</span>
+    serverAddr<span class="token punctuation">.</span>sin_port <span class="token operator">=</span> <span class="token function">htons</span><span class="token punctuation">(</span><span class="token number">9999</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    serverAddr<span class="token punctuation">.</span>sin_family <span class="token operator">=</span> AF_INET<span class="token punctuation">;</span>
+    serverAddr<span class="token punctuation">.</span>sin_addr<span class="token punctuation">.</span>s_addr <span class="token operator">=</span> INADDR_ANY<span class="token punctuation">;</span>
+
+    <span class="token comment">// 2. 绑定 </span>
+    <span class="token function">bind</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>serverAddr<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>serverAddr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 3. 监听</span>
+    <span class="token function">listen</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 4. 要维护的监听到有改变的文件描述符集合</span>
+    <span class="token keyword">struct</span> <span class="token class-name">pollfd</span> fds<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1024</span><span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>fd <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>events <span class="token operator">=</span> POLLIN<span class="token punctuation">;</span>     <span class="token comment">// hope 检测读的事件</span>
+    <span class="token punctuation">}</span>
+
+    fds<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>fd <span class="token operator">=</span> listen_fd<span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> nfds <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">// 最大的有新数据的文件描述符</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// 调用poll系统函数，让内核帮检测哪些文件描述符有数据</span>
+        <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token function">poll</span><span class="token punctuation">(</span>fds<span class="token punctuation">,</span> nfds <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"poll"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>  <span class="token comment">// 这里没可能</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>ret <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>   <span class="token comment">// 监听到了有文件描述符发生变化</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>fds<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>revents <span class="token operator">&amp;</span> POLLIN<span class="token punctuation">)</span> <span class="token comment">// 判断 revents，即实际发生的事件</span>
+            <span class="token punctuation">{</span>
+                <span class="token comment">// 说明有客户端向监听端口发消息了，他想要连接进来</span>
+                <span class="token keyword">struct</span> <span class="token class-name">sockaddr_in</span> clientAddr<span class="token punctuation">;</span>
+                <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>clientAddr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">int</span> client_fd <span class="token operator">=</span> <span class="token function">accept</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">sockaddr</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>clientAddr<span class="token punctuation">,</span> <span class="token operator">&amp;</span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token comment">// 把新连接进来的客户端加入集合添加到集合中</span>
+                <span class="token comment">// 从头遍历找空闲文件描述符</span>
+
+                <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1024</span><span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+                    <span class="token keyword">if</span><span class="token punctuation">(</span>fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>fd <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>fd <span class="token operator">=</span> client_fd<span class="token punctuation">;</span>
+                        fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>events <span class="token operator">=</span> POLLIN<span class="token punctuation">;</span>
+
+                        <span class="token comment">// 更新目前最大的文件描述符</span>
+                        nfds <span class="token operator">=</span> nfds <span class="token operator">&gt;</span> i <span class="token operator">?</span> nfds <span class="token operator">:</span> i<span class="token punctuation">;</span>
+
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                    
+            <span class="token punctuation">}</span>
+
+            <span class="token comment">// 响应客户端</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> nfds<span class="token punctuation">;</span> <span class="token operator">++</span> i<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>revents <span class="token operator">&amp;</span> POLLIN<span class="token punctuation">)</span>
+                <span class="token punctuation">{</span>
+                    <span class="token comment">// 说明该 fd 对应的客户端发来了数据</span>
+                    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+                    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">read</span><span class="token punctuation">(</span>fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>fd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token function">perror</span><span class="token punctuation">(</span><span class="token string">"read"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"client closed ...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">close</span><span class="token punctuation">(</span>fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment">// i 是索引，真正的文件描述符要去取</span>
+                        fds<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>fd <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">{</span>
+                        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"server read:%s\n"</span><span class="token punctuation">,</span> buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">write</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 回写</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">close</span><span class="token punctuation">(</span>listen_fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="19-4-epoll"><a href="#19-4-epoll" class="headerlink" title="19.4 epoll"></a>19.4 epoll</h3><p>​    通过 <code>epoll_create</code> 在内核中创建一个 epoll 实例 (struct，包含一个rbtree和一个就绪的链表)，返回一个 int，是个文件描述符。但并不是通过 read，write 直接操作，而是通过 epoll 相关的 api。</p>
+<p>​    希望内核检测的文件描述符存储在 <code>rbr</code> 中，实际发生改变的文件描述符就存储在 <code>rdlist</code> 里面。</p>
+<p>​    通过 <code>epoll_ctl</code>  一些参数，通过 <code>epoll_wait</code> 等待内核检测并通过传出参数返回改变了的文件描述符，会拷贝一次。</p>
+<p><img src="https://img-blog.csdnimg.cn/7d03e5b89da345bfb5c1c91a8ed9e6ea.png" alt="img"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==" alt="点击并拖拽以移动"></p>
+<h5 id="相关函数-2"><a href="#相关函数-2" class="headerlink" title="相关函数"></a>相关函数</h5><h5 id="epoll-create"><a href="#epoll-create" class="headerlink" title="epoll_create"></a>epoll_create</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/epoll.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token keyword">int</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> creates a new epoll instance<span class="token punctuation">.</span>  Since Linux <span class="token number">2.6</span><span class="token number">.8</span><span class="token punctuation">,</span> the size argument is ignored<span class="token punctuation">,</span> but must be 【greater than zero】<span class="token punctuation">;</span> see NOTES below<span class="token punctuation">.</span>
+
+       <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  returns  a  【file  descriptor】 referring to the new epoll instance<span class="token punctuation">.</span>  This file descriptor is used <span class="token keyword">for</span> all the subsequent calls to the epoll interface<span class="token punctuation">.</span>  When no longer required<span class="token punctuation">,</span> the file descriptor returned by <span class="token function">epoll_create</span><span class="token punctuation">(</span><span class="token punctuation">)</span> should be closed by using 【close】<span class="token punctuation">.</span>  When  all  file  descriptors referring to an epoll instance have been closed<span class="token punctuation">,</span> the kernel destroys the instance and releases the associated resources <span class="token keyword">for</span> reuse<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>size：目前没有意义了，随便写一个非零的数。以前使用哈希去实现的，现在被改进了。</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>失败： -1</li>
+<li>成功：&gt; 0，一个文件描述符，用于操作 epoll 实例，通过这个返回的文件描述符就可以找到内核中的这块数据</li>
+</ul>
+<h5 id="epoll-ctl"><a href="#epoll-ctl" class="headerlink" title="epoll_ctl"></a>epoll_ctl</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/epoll.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">epoll_ctl</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">int</span> op<span class="token punctuation">,</span> <span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span>event<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+DESCRIPTION
+       This  system  call is used to add<span class="token punctuation">,</span> modify<span class="token punctuation">,</span> or remove entries in the interest list of the <span class="token function">epoll</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span> instance referred to by the file descriptor epfd<span class="token punctuation">.</span>
+       It requests that the operation op be performed <span class="token keyword">for</span> the target file descriptor<span class="token punctuation">,</span> fd<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>作用：control interface for an epoll file descriptor</p>
+<p>参数：</p>
+<ul>
+<li><p><code>epfd</code> 指定了在内核中实例化的 <code>epoll实例</code>，本质上就是一块数据，通过 epfd 来引用。</p>
+</li>
+<li><p><code>op</code> 是我们想要对 <code>fd</code> 这个文件描述符做的事情包括：</p>
+<ul>
+<li>EPOLL_CTL_<strong>ADD</strong> 增加</li>
+</ul>
+<p>​    Add fd to the interest list and associate the settings specified in event with the internal file linked to fd. 往红黑树中新添加一个结点。</p>
+<ul>
+<li>EPOLL_CTL_<strong>MOD</strong> 修改</li>
+</ul>
+<p>​    Change the settings associated with fd in the interest list to the new settings specified in event.</p>
+<ul>
+<li>EPOLL_CTL_**DEL **删除</li>
+</ul>
+<p>​    Remove (deregister) the target file descriptor fd from the interest list.  The event argument is ignored and can be NULL (but see  BUGS  below).</p>
+</li>
+<li><p><code>fd</code>：被操作的文件描述符,这个系统调用的主角</p>
+</li>
+<li><p>event：要检测的事件，如果检测到了就让内核去做 <code>op</code> 这个事件（EPOLLIN, EPOLLOUT, EPOLLERR等）</p>
+</li>
+</ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">union</span> epoll_data <span class="token punctuation">{</span>	<span class="token comment">// 一些用户的数据信息，一般来说使用 fd 就成</span>
+    <span class="token keyword">void</span>        <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+    <span class="token keyword">int</span>          fd<span class="token punctuation">;</span>
+    <span class="token class-name">uint32_t</span>     u32<span class="token punctuation">;</span>
+    <span class="token class-name">uint64_t</span>     u64<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token class-name">epoll_data_t</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token punctuation">{</span>
+    <span class="token class-name">uint32_t</span>     events<span class="token punctuation">;</span>      <span class="token comment">/* Epoll events */</span>
+    <span class="token class-name">epoll_data_t</span> data<span class="token punctuation">;</span>        <span class="token comment">/* User data variable */</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="epoll-wait"><a href="#epoll-wait" class="headerlink" title="epoll_wait"></a>epoll_wait</h5><p>检测函数</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/epoll.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">epoll_wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> epfd<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">epoll_event</span> <span class="token operator">*</span>events<span class="token punctuation">,</span>
+               <span class="token keyword">int</span> maxevents<span class="token punctuation">,</span> <span class="token keyword">int</span> timeout<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+The  <span class="token function">epoll_wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  system  call  waits  <span class="token keyword">for</span> events on the epoll instance referred to by the file descriptor 【epfd】<span class="token punctuation">.</span>  The memory area pointed to by 【events】 will contain the events that will be available <span class="token keyword">for</span> the caller<span class="token punctuation">.</span>  Up to 【maxevents】 are returned by <span class="token function">epoll_wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>  The maxevents  argument  must be greater than zero<span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>作用：wait for an I/O event on an epoll file descriptor</p>
+<p>参数：</p>
+<ul>
+<li>epfd</li>
+<li>epoll_event：传出参数，发生改变的那几个文件描述符信息</li>
+<li>maxevents：第二个参数 epoll_event 的大小</li>
+<li>timeout：阻塞时间<ul>
+<li>0：不阻塞</li>
+<li>-1：阻塞，知道检测到信息解除阻塞</li>
+<li>&gt; 0：要阻塞的时长</li>
+</ul>
+</li>
+</ul>
+<p>返回值：</p>
+<ul>
+<li>成功：<ul>
+<li>&gt; 0：发生改变的文件描述符数量</li>
+<li>= 0：没有任何变化</li>
+</ul>
+</li>
+<li>失败：-1</li>
+</ul>
+<h5 id="示例代码-3"><a href="#示例代码-3" class="headerlink" title="示例代码"></a>示例代码</h5><h2 id="20-UDP"><a href="#20-UDP" class="headerlink" title="20. UDP"></a>20. UDP</h2><h3 id="20-1-UDP-通信"><a href="#20-1-UDP-通信" class="headerlink" title="20.1 UDP 通信"></a>20.1 UDP 通信</h3><h3 id="20-2-广播"><a href="#20-2-广播" class="headerlink" title="20.2 广播"></a>20.2 广播</h3><h3 id="20-3-组播"><a href="#20-3-组播" class="headerlink" title="20.3 组播"></a>20.3 组播</h3><h3 id="20-4-本地套接字通信"><a href="#20-4-本地套接字通信" class="headerlink" title="20.4 本地套接字通信"></a>20.4 本地套接字通信</h3>
                 
             </div>
             <hr/>
@@ -2324,7 +2648,7 @@ optlen<span class="token punctuation">)</span><span class="token punctuation">;<
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">95k</span>&nbsp;字
+                class="white-color">97.6k</span>&nbsp;字
             
             
             
