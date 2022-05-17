@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    662
+                    1.9k
                 </div>
                 
 
@@ -519,9 +519,240 @@ output:
     <span class="token keyword">return</span> combined
 
 add_func <span class="token operator">=</span> combine_func<span class="token punctuation">(</span>add<span class="token punctuation">)</span> <span class="token comment"># 内部执行 add(f, g)</span>
+<span class="token comment"># 这里本质上只是一个内置库里的加法函数，因此写成这样也是可以的</span>
+<span class="token comment"># lambda x, y: x + y</span>
 h <span class="token operator">=</span> add_func<span class="token punctuation">(</span>sin<span class="token punctuation">,</span> cos<span class="token punctuation">)</span> <span class="token comment"># 得到一个h(x) = add(sin(x), cos(x))</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>h<span class="token punctuation">(</span>pi <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">print</span><span class="token punctuation">(</span>h<span class="token punctuation">(</span>pi <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>能否写出一个函数 <code>if_func(1 / x, x &gt; 0, 0)</code>， whcih 看起来像 1 / x if x &gt; 0 else 0 ？<br>IMPOSSIABLE! 因为表达式总会求值，一旦求值进到函数里的就不是我们看到的样子了，而是一个实实在在的值。<br>但是我们可以用下面这种方式</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># defination:</span>
+<span class="token keyword">def</span> <span class="token function">if_func</span><span class="token punctuation">(</span>then_expr<span class="token punctuation">,</span> condition<span class="token punctuation">,</span> else_expr<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> then_expr<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> condition <span class="token keyword">else</span> else_expr<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment"># call:</span>
+if_func<span class="token punctuation">(</span><span class="token keyword">lambda</span> x <span class="token punctuation">:</span> <span class="token number">1</span> <span class="token operator">/</span> x<span class="token punctuation">,</span> x <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">lambda</span> <span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>例子：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">if_func</span><span class="token punctuation">(</span>then_expr<span class="token punctuation">,</span> condition<span class="token punctuation">,</span> else_expr<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> then_expr<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">if</span> condition <span class="token keyword">else</span> else_expr<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+x <span class="token operator">=</span> <span class="token number">2</span>
+res <span class="token operator">=</span> if_func<span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">:</span> <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'is fucking 2'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> x <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token keyword">lambda</span><span class="token punctuation">:</span> <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'is not 2'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""
+output:
+is fucking 2
+None
+"""</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>lambda后面直接是冒号 <code>:</code> 说明该匿名函数不接受任何参数，即 f(void)</p>
+<h2 id="关于-Enviroment"><a href="#关于-Enviroment" class="headerlink" title="关于 Enviroment"></a>关于 Enviroment</h2><p>先来看个小例子</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">'outer'</span>
+
+<span class="token keyword">def</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">h</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">'inner'</span>
+    g<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+h<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""
+output:
+outer
+"""</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里有三层frame，第一层是 <code>global frame</code>, 包含 f(), g() 和 h() 三个函数<br>调用 h() 之后便<code>创建了一个新的 frame</code>，由 h() 主宰，并且它的 parent 是 global frame<br>h() 内部 def 了一个属于 h() 的 f()，并且调用 g(),<br>于是<code>又创建了一个新的 frame</code>，由 h() 内部的 g() 主宰<br>g() 会去调用 f()，那么，这个 f() 是 h()内部的还是 global frame 中的呢？<br>由于我们现在在 g() 主宰的 frame 中，而 g() 是被定义在 global frame 中，<br>解释器在 g() 主宰的 frame 中没有找到 f(), 因此再往上一层到它的 parent frame ，即global frame中寻找<br>于是找到了 return ‘outer’ 的f()，打印 ‘outer’。</p>
+<p>在 redefination 这方面，python和c/c++是类似的，都具有各自的environment和覆盖替换规则</p>
+<p>执行流程：</p>
+<ol>
+<li>add f to global frame</li>
+<li>add g to global frame, pointing to f(which return 0)</li>
+<li>redefination f, f pointing to which returnn 1</li>
+<li>execuate g, and return 0<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token number">0</span>
+
+g <span class="token operator">=</span> f
+
+<span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token number">1</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>g<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""
+output:
+0
+"""</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<p>执行流程：</p>
+<ol>
+<li>f(return 0) -&gt; global frame</li>
+<li>g -&gt; global frame</li>
+<li>rewrite f, now f return 1, cover the f which return 0</li>
+<li>execuate g(), and call f(), which now return 1<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token number">0</span>
+
+<span class="token keyword">def</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token number">1</span>
+
+g<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token string">""</span>"
+output<span class="token punctuation">:</span>
+<span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<p>执行流程：</p>
+<ol>
+<li>f -&gt; global frame<br> function f receive a function as variable, whose formal name is f,same as the function name<br> and inside the function f we call formal parameter f with parameter 1</li>
+<li>g -&gt; global frame</li>
+<li>call f, and pass function g<br> then we got f(g), where f = g, and call f(1), aka g(1), and print 1<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    f<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">g</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+
+f<span class="token punctuation">(</span>g<span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""
+output:
+1
+"""</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<p>关键是在调用g()的时候，内部执行return 0的f还是return 1的f?<br>由于p = k = g，g的 parent 是 global frame，因此调用 f 时会去 global frame中寻找 f<br>因此执行的是 global frame 中 return 0 的 f</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token number">0</span>
+
+<span class="token keyword">def</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> f<span class="token punctuation">(</span><span class="token punctuation">)</span> 
+
+<span class="token keyword">def</span> <span class="token function">h</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">1</span>
+    p <span class="token operator">=</span> k
+    <span class="token keyword">return</span> p<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>h<span class="token punctuation">(</span>g<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""
+output:
+0
+"""</span>
+
+
+f1 frame<span class="token punctuation">:</span>
+p <span class="token operator">=</span> <span class="token boolean">None</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">0</span>
+k <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token boolean">True</span> <span class="token operator">-</span><span class="token operator">&gt;</span> f<span class="token punctuation">(</span>g<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+
+f2 frame<span class="token punctuation">:</span>
+p <span class="token operator">=</span> g<span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">1</span>
+k <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token boolean">False</span> <span class="token operator">-</span><span class="token operator">&gt;</span> p<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> g<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">print</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span>
+k <span class="token operator">=</span> <span class="token number">0</span>? <span class="token number">1</span>?
+
+我们在 f2 frame 中调用 g，这个 g 是上一层 f1 frame 传进来的，因此这个 g 属于 f1 frame，
+因此在 f1 frmae 中寻找 k<span class="token punctuation">,</span> 发现 k<span class="token operator">=</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>def f(p, k):<br>    def g():<br>        print(k)<br>    if k == 0:<br>        f(g, 1)<br>    else:<br>        p()</p>
+<p>f(None, 0)</p>
+<p>“””<br>output:<br>0<br>“””</p>
+<p>C语言中 pass by value 并不会修改原来的值，而是修改一模一样的拷贝，除了函数各自安好。<br>python中也一样。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'before call: x = '</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    x <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'bin the function: x = '</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span>
+
+f<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'after call: x = '</span><span class="token punctuation">,</span> x<span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""
+output:
+before call: x =  1
+bin the function: x =  2
+after call: x =  1
+"""</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="关于柯里化-Currying"><a href="#关于柯里化-Currying" class="headerlink" title="关于柯里化(Currying)"></a>关于柯里化(Currying)</h2><p>老师的课件上是这么定义的：<br>The term currying refers to converting a multi-argument function into one<br>that takes one argument and returns a fcuntion that takes the next argument, and so on.</p>
+<p>该函数接受一个参数，并且内部又定义了两个匿名函数</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">curry2</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token keyword">lambda</span> x <span class="token punctuation">:</span> <span class="token keyword">lambda</span> y <span class="token punctuation">:</span> f<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+
+<span class="token keyword">from</span> operator <span class="token keyword">import</span> add
+
+res <span class="token operator">=</span> curry2<span class="token punctuation">(</span>add<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+
+ans <span class="token operator">=</span> curry2<span class="token punctuation">(</span>sub<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>ans<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""
+output:
+11
+15
+"""</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其实也可以转写成这样：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">curry2</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token keyword">lambda</span> x<span class="token punctuation">:</span> \
+                <span class="token keyword">lambda</span> y<span class="token punctuation">:</span> \
+                    f<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>或者这样</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">curry2</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">g</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">def</span> <span class="token function">h</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> f<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> h
+    <span class="token keyword">return</span> g<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<h2 id="关于-Linear-Recursion"><a href="#关于-Linear-Recursion" class="headerlink" title="关于 Linear Recursion"></a>关于 Linear Recursion</h2><p>下面这种也是很常见的递归，实时计算<br>迭代版本每次计算完当轮结果都会立刻更新答案，递归版本则是产生一条 frame chain，<br>在每个状态的 frame 中存储变量的值，原封不动递归到下一层，直到递归到底部再自下而上一条链<br>回收所有计算过的答案。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">sum_square</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> N <span class="token operator">&lt;</span> <span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">0</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> sum_square<span class="token punctuation">(</span>N <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> N <span class="token operator">**</span> <span class="token number">2</span>
+
+x <span class="token operator">=</span> sum_square<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""
+output:
+385
+"""</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>尾递归<br>下面是两个版本的求平方和函数，通过 python Tutor 可以观察执行状态。<br>这种尾递归的方式层层深入计算，最后一次递归致命一击，计算出一锤定音的结果并一路沿着 frame chain<br>直接返回到最开始。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 迭代</span>
+<span class="token keyword">def</span> <span class="token function">sum_squares_iter</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""The sum of k**2"""</span>
+    accum <span class="token operator">=</span> <span class="token number">0</span>
+    k <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token keyword">while</span> k <span class="token operator">&lt;=</span> N<span class="token punctuation">:</span>
+        accum <span class="token operator">+=</span> k <span class="token operator">**</span> <span class="token number">2</span>
+        k <span class="token operator">+=</span> <span class="token number">1</span>
+    <span class="token keyword">return</span> accum
+
+<span class="token keyword">def</span> <span class="token function">sum_squares_recur</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">part_sum</span><span class="token punctuation">(</span>accum<span class="token punctuation">,</span> k<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> k <span class="token operator">&lt;=</span> N<span class="token punctuation">:</span>
+            <span class="token keyword">return</span> part_sum<span class="token punctuation">(</span>accum <span class="token operator">+</span> k <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">,</span> k <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> accum
+
+    <span class="token keyword">return</span> part_sum<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+
+x <span class="token operator">=</span> sum_squares_iter<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+y <span class="token operator">=</span> sum_squares_recur<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">"""
+385 385
+"""</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="关于-Tree-Recursion"><a href="#关于-Tree-Recursion" class="headerlink" title="关于 Tree Recursion"></a>关于 Tree Recursion</h2>
                 
             </div>
             <hr/>
@@ -906,7 +1137,7 @@ h <span class="token operator">=</span> add_func<span class="token punctuation">
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">97.6k</span>&nbsp;字
+                class="white-color">98.8k</span>&nbsp;字
             
             
             
