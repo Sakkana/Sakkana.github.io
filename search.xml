@@ -29,31 +29,6 @@
     
     
     <entry>
-      <title>计算机网络笔记</title>
-      <link href="/2022/07/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/"/>
-      <url>/2022/07/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/</url>
-      
-        <content type="html"><![CDATA[<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><p>暑假闲来无事，翻看了一下《网络是怎样连接的》，将一些我认为重要的东西记录了下来。<br>从浏览器中输入 url 开始到屏幕上显示数据，经过了怎么样一个过程？<br>网络这个黑盒里面装了什么？</p><h3 id="①-网络边缘-客户端"><a href="#①-网络边缘-客户端" class="headerlink" title="① 网络边缘 - 客户端"></a>① 网络边缘 - 客户端</h3><h3 id="职责：生成-HTTP-请求消息-gt-委托操作系统发送消息"><a href="#职责：生成-HTTP-请求消息-gt-委托操作系统发送消息" class="headerlink" title="职责：生成 HTTP 请求消息 -> 委托操作系统发送消息"></a>职责：生成 HTTP 请求消息 -&gt; 委托操作系统发送消息</h3><table><thead><tr><th>地点</th><th>事件</th></tr></thead><tbody><tr><td>Web 浏览器</td><td>解析 <strong>url</strong>，生成 <strong>HTTP</strong> 消息</td></tr><tr><td>Web 浏览器 -&gt; DNS 解析器 (调用 Socket 库) -&gt; 协议栈(OS 内部的网络控制软件)</td><td>访问 <strong>DNS 服务器</strong>，查找目标服务器域名对应的 <strong>IP 地址</strong></td></tr><tr><td>协议栈，网卡</td><td>创建套接字，写入数据 用 TCP (UDP) 协议传输</td></tr></tbody></table>]]></content>
-      
-      
-      <categories>
-          
-          <category> 网络 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 网络 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>cs61a学习小记</title>
       <link href="/2022/05/16/cs61a%20%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0/"/>
       <url>/2022/05/16/cs61a%20%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0/</url>
