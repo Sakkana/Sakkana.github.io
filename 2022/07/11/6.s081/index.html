@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.0.0">
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
 </head>
 
 
@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3k
+                    6.7k
                 </div>
                 
 
@@ -581,21 +581,174 @@
 <blockquote>
 <p>操作系统可以做些什么？<br>断言<br>类型检查<br>堆栈保护<br>…</p>
 </blockquote>
-<h2 id="LEC-4-Page-tables"><a href="#LEC-4-Page-tables" class="headerlink" title="LEC 4 - Page tables"></a>LEC 4 - Page tables</h2><h2 id="LAB-2-System-calls"><a href="#LAB-2-System-calls" class="headerlink" title="LAB 2 - System calls"></a>LAB 2 - System calls</h2><p>lab2 花了我挺久的说实话。<br>这个 lab 大头在于修改内核的代码的过程中，理解 xv6 的进程、内存、系统调用是如何工作的，通过自己写代码的方式为 xv6 添加新的系统调用。</p>
-<h3 id="trace"><a href="#trace" class="headerlink" title="trace"></a>trace</h3><p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/labs/syscall.html">lab 2 - System calls 地址</a></p>
-<h5 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h5><blockquote>
+<h2 id="LEC-4-Page-tables"><a href="#LEC-4-Page-tables" class="headerlink" title="LEC 4 - Page tables"></a>LEC 4 - Page tables</h2><h3 id="调试-xv6"><a href="#调试-xv6" class="headerlink" title="调试 xv6"></a>调试 xv6</h3><p>启动 qemu-gdb 服务器端<br>再启动 gdb-multiarch 客户端<br>打上断点 <code>b kvminit</code>，执行 <code>c</code> 来到 kernel pagetbale 初始化的函数<br>进入 <code>layout split</code> 布局下<br><img src="https://cdn.acwing.com/media/article/image/2022/07/24/104388_97120ed90b-%E6%8D%95%E8%8E%B7.JPG" alt="捕获.JPG"> </p>
+<h5 id="kvminit"><a href="#kvminit" class="headerlink" title="kvminit"></a>kvminit</h5><p>在 kvminit() 中，调用 kvmmake() 来初始化。<br>该函数对内核地址空间做了恒等映射，使得 IO 设备与  DRAM 中的物理地址与虚拟地址对应了起来。</p>
+<h5 id="kvminithart"><a href="#kvminithart" class="headerlink" title="kvminithart"></a>kvminithart</h5><p>之后，便进入了 kvminithart() 函数。<br>该函数用于启用页表。<br><img src="https://cdn.acwing.com/media/article/image/2022/07/24/104388_929c5eb30b-%E6%8D%95%E8%8E%B7.JPG" alt="捕获.JPG"><br>该函数调用 <code>kernel/riscv.h</code> 中的 <code>w_satp</code>，将刚才设置的页表地址写入 <code>stap</code> 寄存器。<br><img src="https://cdn.acwing.com/media/article/image/2022/07/24/104388_1f4962bb0b-%E6%8D%95%E8%8E%B7.JPG" alt="捕获.JPG"><br>在这条指令给使用之前，使用的还是物理地址，这条指令一旦执行，便开启了虚拟地址和映射，每一个地址都会使用我们设置的页表去进行转换，整个世界都变了。</p>
+<h2 id="LEC-5-Calling-Convention"><a href="#LEC-5-Calling-Convention" class="headerlink" title="LEC 5 - Calling Convention"></a>LEC 5 - Calling Convention</h2><p>讲了些关于汇编、指令、寄存器的知识。</p>
+<h2 id="LEC-6-Isolation-amp-system-call-entry-exit"><a href="#LEC-6-Isolation-amp-system-call-entry-exit" class="headerlink" title="LEC 6 - Isolation &amp; system call entry/exit"></a>LEC 6 - Isolation &amp; system call entry/exit</h2><p>这部分要求阅读 xv6-book 的 Chapter 4 (except 4.6)<br>下面是 xv6-book 的笔记</p>
+<h3 id="6-1-异常控制流"><a href="#6-1-异常控制流" class="headerlink" title="6.1 异常控制流"></a>6.1 异常控制流</h3><p>这部分和 csapp 的 Chapter 8 内容是一致的。<br>CPU 平时会乖乖地执行指令，岁月安好无恙。但是有三种情况 CPU 不会像往常一样正常地执行指令，这是因为发生了一些特殊的事情。</p>
+<blockquote>
+<ol>
+<li>trap (陷阱)：用户代码引起了系统调用，ecall 指令使得操作系统陷入内核，在内核态执行系统调用。</li>
+<li>fault (故障)：非法指令（除数为0）、访问非法内存等。</li>
+<li>device interrupt (中断)：处理器外部的 I/O 设备发过来的信号，比如磁盘完成读写。</li>
+</ol>
+</blockquote>
+<p>我们希望代码正常执行，且看不到异常的发生，这就要求我们内核处理异常是透明的，一切都在暗中悄无声息地解决。<br>因此，发生异常后 xv6 的处理顺序是这样的：</p>
+<blockquote>
+<ol>
+<li>处理器将控制权由用户态传递给内核态。</li>
+<li>内核保存寄存器和一些状态，以便后面恢复。</li>
+<li>内核执行适当的处理程序（系统调用或设备驱动）。</li>
+<li>内核恢复寄存器中的值，恢复状态，从异常中返回。</li>
+<li>继续执行原先正在执行的用户代码。</li>
+</ol>
+</blockquote>
+<p>xv6 的异常处理分为四个阶段：</p>
+<blockquote>
+<ol>
+<li>RISC-V CPU 采取一些硬件操作</li>
+<li>与内核 C 代码适配的一些汇编指令</li>
+<li>处理异常的 C 函数</li>
+<li>系统调用、设备驱动服务程序<br>这里原文是 device-driver service routine (a part of a computer program that does a particular operation)</li>
+</ol>
+</blockquote>
+<p>此外，可以将异常分为三种来源：</p>
+<blockquote>
+<ol>
+<li>来自用户</li>
+<li>来自内核</li>
+<li>来自处理器的时钟中断</li>
+</ol>
+</blockquote>
+<h3 id="6-2-RISC-V-异常处理机制"><a href="#6-2-RISC-V-异常处理机制" class="headerlink" title="6.2 RISC-V 异常处理机制"></a>6.2 RISC-V 异常处理机制</h3><p>RISC-V 芯片由一套控制寄存器用于处理异常、通知内核异常的发生。<br>在源码 <code>riscv-h</code> 中定义了一系列寄存器：</p>
+<blockquote>
+<ol>
+<li>stvec：写入异常处理程序的地址</li>
+<li>sepc：保存程序计数器 PC，sret 指令可以在程序从异常中返回时将 sepc 中保存的值复制到用户的 PC</li>
+<li>scause：异常发生的原因</li>
+<li>sscartch：保存一个 value，在异常处理程序一开始时会派上用场</li>
+<li>sstatus：SIT 位决定是否允许设备中断，SPP 位标记异常来自内核还是用户，一次来决定 sret 的返回状态。</li>
+</ol>
+</blockquote>
+<p>这些寄存器用户是不可以修改的，工作在 superviosr mode 下。<br>当异常发生（除了时钟中断）时，RISC-V 硬件会做这些事：</p>
+<blockquote>
+<ol>
+<li>如果是设备中断，不做下面的任何事。</li>
+<li>将 sstatus 中的 SIE 位清空，关闭中断。</li>
+<li>拷贝 pc -&gt; sepc (异常发生前的 pc 存的地址)。</li>
+<li>保存当前的模式 (supervisor/user) 到 ssatus 中的 SSP 位。</li>
+<li>设置 sscause 来反映异常发生的原因。</li>
+<li>将模式转换成 supervisor。</li>
+<li>拷贝 stvec (异常处理程序的地址) -&gt; pc。</li>
+<li>执行新 pc 指向的代码。</li>
+</ol>
+</blockquote>
+<p>硬件只是设置一些参数，并不切换到内核页表、内核栈，除了 pc 也不保存其他的寄存器。<br>之所以这么精简是因为这些任务都留给了软件 - 内核。<br>内核需要做这些准备工作。这是为了效率考虑，比如有些操作系统就不会切换页表来加速异常处理。</p>
+<h3 id="6-3-来自用户空间的异常"><a href="#6-3-来自用户空间的异常" class="headerlink" title="6.3 来自用户空间的异常"></a>6.3 来自用户空间的异常</h3><p>xv6 区分异常的来源——来自用户空间亦或是内核空间，以此来决定如何处理异常。<br>上面提过，有三种情况会引起异常。</p>
+<blockquote>
+<ol>
+<li>trap (陷阱)：用户代码引起了系统调用，ecall 指令使得操作系统陷入内核，在内核态执行系统调用。</li>
+<li>fault (故障)：非法指令（除数为0）、访问非法内存等。</li>
+<li>device interrupt (中断)：处理器外部的 I/O 设备发过来的信号，比如磁盘完成读写。</li>
+</ol>
+</blockquote>
+<p>xv6 通过 <strong>uservec (汇编代码)<strong>，</strong>usertrap (C程序)<strong>，</strong>usertrapret (C程序)<strong>，</strong>userret (汇编代码)</strong> 来完成异常的处理。</p>
+<p>设计 xv6 异常处理程序的一个限制是，RISC-V 硬件遇到异常时并不切换页表。这意味着 <code>stvec</code> 中的异常处理程序的地址在用户页表中是合法的，因为这是异常处理程序在开始执行的时候这张页表是有效的。此外，xv6 异常处理代码需要切换到内核的页表，且能够在内核中继续执行，这就要求 <code>stvec</code> 指向的异常处理程序在内核的页表中也有一个映射。</p>
+<p>xv6 通过一个叫做 <code>trampoline (蹦床，可以理解为跳转到蹦床上会被弹到另一个代码处)</code> 的页来实现这个需求，这个页包含一段由 <code>stvec</code> 指向的异常处理代码——<code>uservec (用户向量表)</code>。这个蹦床页被映射在每一个进程页表和内核页表中的 <code>TRAMPOLINE</code> 地址处（位于虚拟地址的最高处）。由于被映射在同一个地址，因此，这里的代码可以在切换用户页表和内核页表的时候可以被连续不中断地执行，无缝衔接。</p>
+<p><code>uservec</code> 的代码在 <code>trampoline.S</code> 文件中。当 <code>uservec</code> 开始执行的时候，所有 32 个寄存器都保存了被中断的用户代码的值。这 32 个值需要被保存在内存中的某处，因此在异常返回用户区域后可以被恢复原样。</p>
+<h4 id="uservec-的职责-来到蹦床"><a href="#uservec-的职责-来到蹦床" class="headerlink" title="uservec  的职责 (来到蹦床)"></a>uservec  的职责 (来到蹦床)</h4><ol>
+<li><p><code>uservec</code> 中一开始的代码就是用 <code>csrrw</code> 指令交换 <code>a0</code> 寄存器和 <code>sscratch</code> 的值。这样一来，a0 的值就保存在了 sscratch 中，内核之间存放在 ssratch 中的值就存放在了 a0 中。</p>
+</li>
+<li><p><code>uservec</code> 下一个工作便是保存 32 个寄存器中的值。<br>在进入用户区域之前，内核设置 <code>sscratch</code> 指向一个每个进程都有的结构体 <code>trapframe</code>，该结构体拥有存放 32 个用户寄存器的空间。由于 <code>satp (保存 root 级别页表的物理地址)</code> 仍然保存的是用户页表的地址，因此 <code>uservec</code> 需要 <code>trapframe</code> 被映射到用户地址空间。<br>在每个进程创建之初，xv6 为进程的 <code>trapframe</code> 在 <code>TRAPFRAME</code> 地址处创建一个页，位于 <code>TRAMPOLINE</code> 的正下方。进程控制块的 <code>p-&gt;trapframe</code> 变量也指向这个 <code>trapframe</code> 的物理地址（内核页表中许多地址都是恒等映射），因此内核可以通过内核页表使用它。<br>交换好了 <code>a0</code> 和 <code>sscratch</code> 之后，<code>a0</code> 保存的便是指向当前进程 <code>trapframe</code> 的指针。这样一来，<code>uservec</code> 就可以在这里保存所有寄存器了，包括用户从 <code>sscratch</code> 读到并保存在 <code>a0</code> 中的值。</p>
+</li>
+<li><p><code>trapframe</code> 包含：<br>当前进程内核栈的地址<br>当前 CPU 的 hartid<br>usertrap() 函数的地址<br>内核页表的地址<br><code>uservec</code> 会拿到这些值，并将内核页表的地址放入 <code>satp</code> 寄存器，调用 <code>usertrap</code> ，从蹦床上蹦出去，来到真正执行异常处理的逻辑代码部分。</p>
+</li>
+</ol>
+<h4 id="usertrap-的职责-（离开蹦床，正式处理异常）"><a href="#usertrap-的职责-（离开蹦床，正式处理异常）" class="headerlink" title="usertrap 的职责 （离开蹦床，正式处理异常）"></a>usertrap 的职责 （离开蹦床，正式处理异常）</h4><ol>
+<li>改变 <code>stvec</code> 的值，因此在内核中发生的异常会由 <code>kernelvec</code> 处理，而不是 <code>uservec</code>。其次，将程序计数器保存在 <code>sepc</code> 中，因为 <code>usertrap</code> 可能会调用 <code>yield</code> 来切换线程，导致该线程在用户空间修改程序计数器的值。</li>
+<li>如果该异常是系统调用，<code>syscall</code> 会去处理；如果该异常是设备中断，<code>devintr</code> 会去处理；如果该异常是真的出错了，那么内核会杀死这个出错的进程。</li>
+<li>在退出时，<code>usertrap</code> 先检查该进程是否已经被杀死或放弃了 CPU (如果是个时钟中断)。</li>
+</ol>
+<h4 id="usertrapret-的职责-（回到用户空间的第一步）"><a href="#usertrapret-的职责-（回到用户空间的第一步）" class="headerlink" title="usertrapret 的职责 （回到用户空间的第一步）"></a>usertrapret 的职责 （回到用户空间的第一步）</h4><p>这个函数用来设置 RISC-V 的控制寄存器来为下一个来自用户空间的异常做准备。</p>
+<ol>
+<li>改变 <code>stvec</code> 的值，使其引用 <code>uservec</code>。</li>
+<li>准备好 <code>uservec</code> 所依赖的 <code>trapframe</code>。</li>
+<li>恢复 <code>sepc</code> 中保存的程序计数器到真正的 <code>pc</code>。</li>
+<li>调用 <code>trampoline</code> 页中的 <code>userret</code>。 </li>
+</ol>
+<h4 id="userret-的职责-（回到蹦床）"><a href="#userret-的职责-（回到蹦床）" class="headerlink" title="userret 的职责 （回到蹦床）"></a>userret 的职责 （回到蹦床）</h4><p><code>usertrapret</code> 调用 <code>userret</code> 的时候传递了两个参数，其中 <code>a0</code> 是<code>trapframe</code> 的地址，<code>a1</code> 是该进程的用户页表地址。</p>
+<ol>
+<li><code>userret</code> 将 <code>satp</code> 中的地址转换为用户页表的地址。</li>
+<li>将 <code>trapframe</code> 中保存的用户 <code>a0</code> 寄存器的内容拷贝到 <code>sscratch</code>，为下一个异常做准备。</li>
+<li>恢复 <code>trapframe</code> 保存的所有用户寄存器。</li>
+<li>交换 <code>a0</code> 和 <code>sscratch</code> 中的内容。</li>
+</ol>
+<h4 id="示意图如下"><a href="#示意图如下" class="headerlink" title="示意图如下"></a>示意图如下</h4><p><img src="https://cdn.acwing.com/media/article/image/2022/08/01/104388_e2b6657511-usertrap.png" alt="usertrap.png"> </p>
+<h2 id="LAB-2-System-calls"><a href="#LAB-2-System-calls" class="headerlink" title="LAB 2 - System calls"></a>LAB 2 - System calls</h2><p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/labs/syscall.html">lab 2 - System calls 地址</a></p>
+<p>lab2 花了我挺久的说实话。<br>这个 lab 大头在于修改内核的代码的过程中，理解 xv6 的进程、内存、系统调用是如何工作的，通过自己写代码的方式为 xv6 添加新的系统调用。</p>
+<h3 id="trace"><a href="#trace" class="headerlink" title="trace"></a>trace</h3><h5 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h5><blockquote>
 <p>In this assignment you will add a system call tracing feature that may help you when debugging later labs. You’ll create a new trace system call that will control tracing. It should take one argument, an integer “mask”, whose bits specify which system calls to trace. For example, to trace the fork system call, a program calls trace(1 &lt;&lt; SYS_fork), where SYS_fork is a syscall number from kernel/syscall.h. You have to modify the xv6 kernel to print out a line when each system call is about to return, if the system call’s number is set in the mask. The line should contain the process id, the name of the system call and the return value; you don’t need to print the system call arguments. The trace system call should enable tracing for the process that calls it and any children that it subsequently forks, but should not affect other processes.</p>
 </blockquote>
-<h5 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h5><ol>
-<li>在 Makefile 中加入 trace 文件</li>
-<li>此时编译 xv6 会报错，因为 trace.c 中的 trace() 没有被声明。在 <code>user/user.h</code> 中加入用户态 <code>trace</code> 函数的声明，并且在脚本 <code>user/usys.pl</code> 中加入声明。此外，在内核态的 <code>kernel/syscall.h</code> 中也要加入声明。Makefile 会调用 perl 语言编写的 <code>user.usys.pl</code> 脚本，并且生成汇编文件 <code>user/usys.S</code>。实际上系统调用是通过 RISC-V 的 <code>ecall</code> 指令进陷入内核的。</li>
+<h5 id="提示-做法"><a href="#提示-做法" class="headerlink" title="提示 + 做法"></a>提示 + 做法</h5><ol>
+<li>在 Makefile 中加入 trace 文件。</li>
+<li>此时编译 xv6 会报错，因为 trace.c 中的 trace() 没有被声明。在 <code>user/user.h</code> 中加入用户态 <code>trace</code> 函数的声明，并且在脚本 <code>user/usys.pl</code> 中加入声明。此外，在内核态的 <code>kernel/syscall.h</code> 中也要加入声明。Makefile 会调用 perl 语言编写的 <code>user.usys.pl</code> 脚本，并且生成汇编文件 <code>user/usys.S</code>。实际上系统调用是通过 RISC-V 的 <code>ec all</code> 指令进陷入内核的。</li>
 <li>在内核态文件 <code>kernel/sysproc.c</code> 中实现系统调用 <code>sys_trace()</code>，并且在 <code>kernel/proc.h</code> 中的 <code>proc 结构体</code> 中加入该系统调用需要的新变量。这个系统调用需要获得这个用户态传过来的变量（用户的传入参数，即要追踪的系统调用 mask），且可以在 <code>kernel/syscall.c</code> 中查看获取变量的方法。此外，要在 <code>kernel/syscall.c</code> 中声明该与内核态的函数，在 <code>kernel/syscall.h</code> 中 define 鱼该系统调用对应的宏。</li>
 <li>修改 <code>kernel/proc.c</code> 中的 <code>fork()</code> 函数，从而实现 fork 子进程后也可以追踪子进程。</li>
 <li>修改 <code>kernel/syscall.c</code> 中的 <code>syscall()</code> 函数，使得我们调用系统调用时可以打印我们要追踪的 system calls。 同时也需要获得该系统调用的名称。</li>
 </ol>
 <p><strong>气死我了 trace children 评测点一直超时</strong></p>
 <h3 id="sysinfo"><a href="#sysinfo" class="headerlink" title="sysinfo"></a>sysinfo</h3><p>有空再更</p>
-
+<h2 id="LAB-3-Page-Table"><a href="#LAB-3-Page-Table" class="headerlink" title="LAB 3 - Page Table"></a>LAB 3 - Page Table</h2><p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/labs/pgtbl.html">lab 3 - Page Table 地址</a></p>
+<h3 id="Speed-up-system-calls"><a href="#Speed-up-system-calls" class="headerlink" title="Speed up system calls"></a>Speed up system calls</h3><h5 id="要求-1"><a href="#要求-1" class="headerlink" title="要求"></a>要求</h5><blockquote>
+<p>Some operating systems (e.g., Linux) speed up certain system calls by sharing data in a read-only region between userspace and the kernel. This eliminates the need for kernel crossings when performing these system calls. To help you learn how to insert mappings into a page table, your first task is to implement this optimization for the getpid() system call in xv6.</p>
+</blockquote>
+<blockquote>
+<p>When each process is created, map one read-only page at USYSCALL (a VA defined in memlayout.h). At the start of this page, store a struct usyscall (also defined in memlayout.h), and initialize it to store the PID of the current process. For this lab, ugetpid() has been provided on the userspace side and will automatically use the USYSCALL mapping. You will receive full credit for this part of the lab if the ugetpid test case passes when running pgtbltest.</p>
+</blockquote>
+<h5 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h5><ol>
+<li>在 <code>kernel/proc.c</code>中的<code>proc_pagetable()</code>做地址映射，将<code>kernel/memlayout.h</code>中的<code>struct usyscall</code>结构体映射到以 <code>USYSCALL</code> 开头的页面。</li>
+<li>设置好该页面的访问权限。</li>
+<li>模仿 <code>mappages()</code> 进行内存映射。</li>
+<li>在 <code>allocproc.c</code> 和 <code>freeproc.c</code> 中进行页面的分配和释放，解映射。</li>
+</ol>
+<p>首先，我们要映射的是一个结构体，该结构体包含一个参数 <code>pid</code>。由于我们每次调用 <code>getpid()</code> 会陷入内核，内核态和用户态的转换会消耗一定的 cpu 时间，因此如果我们把进程的 pid 保存在一个共享的只读区域，用户态可以直接去读取，因此可以加速该系统调用。<br>既然要映射一个新的页面，那就模仿 <code>trapframe' 一样在 </code>struct proc<code>中新建一个变量</code>struct usyscall *mypid<code>。 下一步，在 </code>allocproc()<code>中为该页面使用</code>kalloc()<code>分配内存，切记一定要在创建页表之前分配内存，并且</code>mypid-&gt;pid = pid<code>。之后在 </code>proc_pagetable()<code>中使用</code>mappages<code>做地址的映射，设置好恰当的 flags </code>PTE_R | PTE_U<code>。 最后，在 </code>freeproc()` 中先释放所有的内存，再解除映射，释放页表。这是因为我们要通过页表去索引每个虚拟地址的物理地址，因此这样可以释放他们的内存，最后都释放干净了就可以解除映射关系，释放页表了。</p>
+<h3 id="Print-a-page-table"><a href="#Print-a-page-table" class="headerlink" title="Print a page table"></a>Print a page table</h3><h5 id="要求-2"><a href="#要求-2" class="headerlink" title="要求"></a>要求</h5><p>简而言之就是设计一个函数，通过给定的 page table 打印其内容。</p>
+<blockquote>
+<p>To help you visualize RISC-V page tables, and perhaps to aid future debugging, your second task is to write a function that prints the contents of a page table.</p>
+</blockquote>
+<blockquote>
+<p>Define a function called vmprint(). It should take a <code>pagetable_t (uint64*)</code> argument, and print that pagetable in the format described below. Insert if(p-&gt;pid==1) vmprint(p-&gt;pagetable) in exec.c just before the return argc, to print the first process’s page table. You receive full credit for this part of the lab if you pass the pte printout test of make grade.</p>
+</blockquote>
+<p>Now when you start xv6 it should print output like this, describing the page table of the first process at the point when it has just finished exec()ing init:</p>
+<p>page table 0x0000000087f6e000<br> ..0: pte 0x0000000021fda801 pa 0x0000000087f6a000<br> .. ..0: pte 0x0000000021fda401 pa 0x0000000087f69000<br> .. .. ..0: pte 0x0000000021fdac1f pa 0x0000000087f6b000<br> .. .. ..1: pte 0x0000000021fda00f pa 0x0000000087f68000<br> .. .. ..2: pte 0x0000000021fd9c1f pa 0x0000000087f67000<br> ..255: pte 0x0000000021fdb401 pa 0x0000000087f6d000<br> .. ..511: pte 0x0000000021fdb001 pa 0x0000000087f6c000<br> .. .. ..509: pte 0x0000000021fdd813 pa 0x0000000087f76000<br> .. .. ..510: pte 0x0000000021fddc07 pa 0x0000000087f77000<br> .. .. ..511: pte 0x0000000020001c0b pa 0x0000000080007000</p>
+<p>The first line displays the argument to vmprint. After that there is a line for each PTE, including PTEs that refer to page-table pages deeper in the tree. Each PTE line is indented by a number of “ ..” that indicates its depth in the tree. Each PTE line shows the PTE index in its page-table page, the pte bits, and the physical address extracted from the PTE. Don’t print PTEs that are not valid. In the above example, the top-level page-table page has mappings for entries 0 and 255. The next level down for entry 0 has only index 0 mapped, and the bottom-level for that index 0 has entries 0, 1, and 2 mapped.<br>Your code might emit different physical addresses than those shown above. The number of entries and the virtual addresses should be the same.</p>
+<h5 id="提示-1"><a href="#提示-1" class="headerlink" title="提示"></a>提示</h5><ol>
+<li>将 <code>vmprint()</code> 写入 <code>kernel/vm.c</code>。</li>
+<li>使用 <code>kernel/riscv.h</code>最后的宏。</li>
+<li>使用 <code>freewalk()</code>。</li>
+<li>再 <code>kernel/defs.h</code> 中声明 <code>vmprint()</code> 的函数原型，这样可以使用 <code>exec.c</code> 调用。</li>
+<li>在 <code>printf()</code> 中使用 <code>%p</code> 打印 64 位的八进制 PTEs 和 地址。</li>
+</ol>
+<h5 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h5><p>直接递归遍历三级的页表，按照要求排版打印就行了。</p>
+<h3 id="Detecting-which-pages-have-been-accessed"><a href="#Detecting-which-pages-have-been-accessed" class="headerlink" title="Detecting which pages have been accessed"></a>Detecting which pages have been accessed</h3><h5 id="要求-3"><a href="#要求-3" class="headerlink" title="要求"></a>要求</h5><p>简而言之就是实现一个系统调用 <code>pgaccess()</code> 用来汇报哪些页被访问过。</p>
+<blockquote>
+<p>Some garbage collectors (a form of automatic memory management) can benefit from information about which pages have been accessed (read or write). In this part of the lab, you will add a new feature to xv6 that detects and reports this information to userspace by inspecting the access bits in the RISC-V page table. The RISC-V hardware page walker marks these bits in the PTE whenever it resolves a TLB miss</p>
+</blockquote>
+<blockquote>
+<p>Your job is to implement pgaccess(), a system call that reports which pages have been accessed. The system call takes three arguments. First, it takes the starting virtual address of the first user page to check. Second, it takes the number of pages to check. Finally, it takes a user address to a buffer to store the results into a bitmask (a datastructure that uses one bit per page and where the first page corresponds to the least significant bit). You will receive full credit for this part of the lab if the pgaccess test case passes when running pgtbltest.</p>
+</blockquote>
+<h5 id="提示-2"><a href="#提示-2" class="headerlink" title="提示"></a>提示</h5><ol>
+<li>在 <code>kernel/sysproc.c</code> 中实现 sys_pgaccess()`。</li>
+<li>用 <code>argaddr()</code> 和 <code>argint()</code> 解析参数。</li>
+<li>对于输出的 <code>bitmask</code>，在填完之后在内核建立一个临时的缓冲区，再使用 <code>copyout()</code> 拷贝到用户区会更方便。</li>
+<li>可以设置一个扫描的页表的上限。</li>
+<li>使用 <code>kernel/vm.c</code> 中的 <code>walk()</code> 来寻找正确的 PTEs。</li>
+<li>在 <code>kernel/riscv.h</code> 中定义 <code>PTE_A (access bit)</code> 。查阅 RISC-V 手册来决定它的参数。</li>
+<li>检查完之后要清空 <code>PTE_A</code>，不然就不知道这个 PTE 是这次检测到的还是上次检测到的。</li>
+<li>可以使用 <code>vmprint()</code> 来 debug。</li>
+</ol>
+<h5 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h5>
                 
             </div>
             <hr/>
@@ -980,7 +1133,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">106.5k</span>&nbsp;字
+                class="white-color">110.2k</span>&nbsp;字
             
             
             
