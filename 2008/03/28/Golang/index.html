@@ -441,7 +441,7 @@
                 <p>第一门入门语言是 C，第二门是 C++。<br>这两门是写过最多的语言吧。<br>Python 有事情的时候用过点，写函数式编程的时候用过点。<br>其他时间也没怎么用过了。<br>Java 写课程设计用过点，生产实习用过点。<br>其他时间也没用过了，也没好好学。<br>Golang 应该可以算是第三们语言吧，继 C/C++ 之后。</p>
 <h3 id="如何使用-go-mod-管理包"><a href="#如何使用-go-mod-管理包" class="headerlink" title="如何使用 go mod 管理包"></a>如何使用 go mod 管理包</h3><p>之前使用 go get 下载源码总是出问题，后来学习了一下 go 管理工具的知识才明白一点。<br>总的来说 go 经历了三代包管理工具的优化，gopath，vendor 和现在的 go mod。<br>这里使用 go mod 管理，提前要把  go env 中的 go1111nmoudle 设置为 on。<br>进入要使用某个框架的目录，执行 <code>go mod init</code>，此时会创建一个名为 <code>go.mod</code> 的文件。<br>现在使用 <code>go get</code> 拉去框架后会把依赖的信息自动添加到这个文件中。</p>
 <p>下面的笔记部分来自于 go-tour 和开源文档《go语言圣经》（ “go pragramming language” 的民间翻译版本，质量颇高）。</p>
-<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><h5 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h5><p>var 声明变量列表，类型在最后<br>经常用于包和函数级别的变量</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><p>var 声明变量列表，类型在最后<br>经常用于包和函数级别的变量</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
@@ -487,7 +487,7 @@
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c<span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="Go-基本类型"><a href="#Go-基本类型" class="headerlink" title="Go 基本类型"></a>Go 基本类型</h5><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token builtin">bool</span>
+<h3 id="Go-基本类型"><a href="#Go-基本类型" class="headerlink" title="Go 基本类型"></a>Go 基本类型</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token builtin">bool</span>
 
 <span class="token builtin">string</span>
 
@@ -519,7 +519,7 @@
 <blockquote>
 <p>3 5 5.830951894845301 5</p>
 </blockquote>
-<h5 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h5><p>下面这个程序可以测试目标变量的类型</p>
+<h3 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h3><p>下面这个程序可以测试目标变量的类型</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
@@ -529,7 +529,7 @@
 	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"v is of type %T\n"</span><span class="token punctuation">,</span> v<span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h5><p>常量非常奇怪，不支持 <code>:=</code>，也不用写 <code>var</code></p>
+<h3 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h3><p>常量非常奇怪，不支持 <code>:=</code>，也不用写 <code>var</code></p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
@@ -546,7 +546,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h5 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h5><p>很惊喜，Go 也有指针。<br>逃不掉的。</p>
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><p>很惊喜，Go 也有指针。<br>逃不掉的。</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
@@ -559,7 +559,7 @@
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token operator">*</span>p1<span class="token punctuation">,</span> <span class="token operator">*</span>p2<span class="token punctuation">,</span> <span class="token operator">*</span>p3<span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h5><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+<h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
 
@@ -613,7 +613,7 @@
 <blockquote>
 <p>{1 2} {88 99} {0 0} &amp;{12 12} {12 12}</p>
 </blockquote>
-<h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><p>有点怪异</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>有点怪异</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
@@ -869,7 +869,7 @@ func main() {
 <p>此外，忽略第二个变量可以直接取到索引。</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">for</span> i <span class="token operator">:=</span> <span class="token keyword">range</span> pow<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h5 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h5><p>一个 map 被表示成 <code>map[K]V</code>，这个概念 C++、Java、Python 啥的也都有。</p>
+<h3 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h3><p>一个 map 被表示成 <code>map[K]V</code>，这个概念 C++、Java、Python 啥的也都有。</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
@@ -1018,7 +1018,7 @@ func main() {
 <blockquote>
 <p>0<br>1<br>1<br>2<br>3<br>5<br>8<br>13<br>21<br>34</p>
 </blockquote>
-<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h3><h5 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h5><p>for 循环是 Go 唯一一种循环结构<br>和 C++，Java 非常不同，for 后面没有小括号，但是必须要有大括号</p>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><h3 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h3><p>for 循环是 Go 唯一一种循环结构<br>和 C++，Java 非常不同，for 后面没有小括号，但是必须要有大括号</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
@@ -1141,7 +1141,7 @@ func main() {
     fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"误差：%v\n"</span><span class="token punctuation">,</span> stdres<span class="token operator">-</span>myres<span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h5><p>Go 的 switch 自动在每个 case 后面添加了 break，只要走完一个 case 马上退出。<br>这是和 C++、Java 不同的地方。</p>
+<h3 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h3><p>Go 的 switch 自动在每个 case 后面添加了 break，只要走完一个 case 马上退出。<br>这是和 C++、Java 不同的地方。</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
@@ -1182,7 +1182,7 @@ func main() {
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h5><p>推迟执行，该函数返回后才会执行该语句。<br>我目前的水平还不知道这个有什么鸟用。</p>
+<h3 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h3><p>推迟执行，该函数返回后才会执行该语句。<br>我目前的水平还不知道这个有什么鸟用。</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
@@ -1215,7 +1215,7 @@ func main() {
 <blockquote>
 <p>counting<br>done<br>9<br>8<br>7<br>6<br>5<br>4<br>3<br>2<br>1<br>0</p>
 </blockquote>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><h5 id="函数的入参与返回值"><a href="#函数的入参与返回值" class="headerlink" title="函数的入参与返回值"></a>函数的入参与返回值</h5><p>传入两个参数，一个返回值的函数写法</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="函数的入参与返回值"><a href="#函数的入参与返回值" class="headerlink" title="函数的入参与返回值"></a>函数的入参与返回值</h3><p>传入两个参数，一个返回值的函数写法</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
