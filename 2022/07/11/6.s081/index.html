@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.0.0">
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
 </head>
 
 
@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.7k
+                    8.6k
                 </div>
                 
 
@@ -529,6 +529,7 @@
 <td>删除文件</td>
 </tr>
 </tbody></table>
+<hr>
 <h2 id="LEC-3-OS-organization-and-system-calls"><a href="#LEC-3-OS-organization-and-system-calls" class="headerlink" title="LEC 3 - OS organization and system calls"></a>LEC 3 - OS organization and system calls</h2><p>这一节主要围绕操作系统如何为用户提供服务以及提供抽象展开。</p>
 <p>操作系统的一大目的：<strong>同时</strong>支持<strong>多个</strong>计算活动<br>因此，操作系统需要提供：<br>① time-share the resources of the computer among these processes<br>② arrange for isolation between the processes<br>③ if one process has a bug and malfunctions, it shouldn’t affect processes that don’t depend on the buggy process<br>总结下来就是三点：多路复用、隔离性、防御性</p>
 <h3 id="3-1-抽象物理资源"><a href="#3-1-抽象物理资源" class="headerlink" title="3.1 抽象物理资源"></a>3.1 抽象物理资源</h3><pre><code>为什么要做抽象？如果程序直接运行在硬件上面会怎么样？
@@ -581,10 +582,13 @@
 <blockquote>
 <p>操作系统可以做些什么？<br>断言<br>类型检查<br>堆栈保护<br>…</p>
 </blockquote>
+<hr>
 <h2 id="LEC-4-Page-tables"><a href="#LEC-4-Page-tables" class="headerlink" title="LEC 4 - Page tables"></a>LEC 4 - Page tables</h2><h3 id="调试-xv6"><a href="#调试-xv6" class="headerlink" title="调试 xv6"></a>调试 xv6</h3><p>启动 qemu-gdb 服务器端<br>再启动 gdb-multiarch 客户端<br>打上断点 <code>b kvminit</code>，执行 <code>c</code> 来到 kernel pagetbale 初始化的函数<br>进入 <code>layout split</code> 布局下<br><img src="https://cdn.acwing.com/media/article/image/2022/07/24/104388_97120ed90b-%E6%8D%95%E8%8E%B7.JPG" alt="捕获.JPG"> </p>
 <h5 id="kvminit"><a href="#kvminit" class="headerlink" title="kvminit"></a>kvminit</h5><p>在 kvminit() 中，调用 kvmmake() 来初始化。<br>该函数对内核地址空间做了恒等映射，使得 IO 设备与  DRAM 中的物理地址与虚拟地址对应了起来。</p>
 <h5 id="kvminithart"><a href="#kvminithart" class="headerlink" title="kvminithart"></a>kvminithart</h5><p>之后，便进入了 kvminithart() 函数。<br>该函数用于启用页表。<br><img src="https://cdn.acwing.com/media/article/image/2022/07/24/104388_929c5eb30b-%E6%8D%95%E8%8E%B7.JPG" alt="捕获.JPG"><br>该函数调用 <code>kernel/riscv.h</code> 中的 <code>w_satp</code>，将刚才设置的页表地址写入 <code>stap</code> 寄存器。<br><img src="https://cdn.acwing.com/media/article/image/2022/07/24/104388_1f4962bb0b-%E6%8D%95%E8%8E%B7.JPG" alt="捕获.JPG"><br>在这条指令给使用之前，使用的还是物理地址，这条指令一旦执行，便开启了虚拟地址和映射，每一个地址都会使用我们设置的页表去进行转换，整个世界都变了。</p>
+<hr>
 <h2 id="LEC-5-Calling-Convention"><a href="#LEC-5-Calling-Convention" class="headerlink" title="LEC 5 - Calling Convention"></a>LEC 5 - Calling Convention</h2><p>讲了些关于汇编、指令、寄存器的知识。</p>
+<hr>
 <h2 id="LEC-6-Isolation-amp-system-call-entry-exit"><a href="#LEC-6-Isolation-amp-system-call-entry-exit" class="headerlink" title="LEC 6 - Isolation &amp; system call entry/exit"></a>LEC 6 - Isolation &amp; system call entry/exit</h2><p>这部分要求阅读 xv6-book 的 Chapter 4 (except 4.6)<br>下面是 xv6-book 的笔记</p>
 <h3 id="6-1-异常控制流"><a href="#6-1-异常控制流" class="headerlink" title="6.1 异常控制流"></a>6.1 异常控制流</h3><p>这部分和 csapp 的 Chapter 8 内容是一致的。<br>CPU 平时会乖乖地执行指令，岁月安好无恙。但是有三种情况 CPU 不会像往常一样正常地执行指令，这是因为发生了一些特殊的事情。</p>
 <blockquote>
@@ -660,15 +664,26 @@
 <h4 id="uservec-的职责-来到蹦床"><a href="#uservec-的职责-来到蹦床" class="headerlink" title="uservec  的职责 (来到蹦床)"></a>uservec  的职责 (来到蹦床)</h4><ol>
 <li><p><code>uservec</code> 中一开始的代码就是用 <code>csrrw</code> 指令交换 <code>a0</code> 寄存器和 <code>sscratch</code> 的值。这样一来，a0 的值就保存在了 sscratch 中，内核之间存放在 ssratch 中的值就存放在了 a0 中。</p>
 </li>
-<li><p><code>uservec</code> 下一个工作便是保存 32 个寄存器中的值。<br>在进入用户区域之前，内核设置 <code>sscratch</code> 指向一个每个进程都有的结构体 <code>trapframe</code>，该结构体拥有存放 32 个用户寄存器的空间。由于 <code>satp (保存 root 级别页表的物理地址)</code> 仍然保存的是用户页表的地址，因此 <code>uservec</code> 需要 <code>trapframe</code> 被映射到用户地址空间。<br>在每个进程创建之初，xv6 为进程的 <code>trapframe</code> 在 <code>TRAPFRAME</code> 地址处创建一个页，位于 <code>TRAMPOLINE</code> 的正下方。进程控制块的 <code>p-&gt;trapframe</code> 变量也指向这个 <code>trapframe</code> 的物理地址（内核页表中许多地址都是恒等映射），因此内核可以通过内核页表使用它。<br>交换好了 <code>a0</code> 和 <code>sscratch</code> 之后，<code>a0</code> 保存的便是指向当前进程 <code>trapframe</code> 的指针。这样一来，<code>uservec</code> 就可以在这里保存所有寄存器了，包括用户从 <code>sscratch</code> 读到并保存在 <code>a0</code> 中的值。</p>
-</li>
-<li><p><code>trapframe</code> 包含：<br>当前进程内核栈的地址<br>当前 CPU 的 hartid<br>usertrap() 函数的地址<br>内核页表的地址<br><code>uservec</code> 会拿到这些值，并将内核页表的地址放入 <code>satp</code> 寄存器，调用 <code>usertrap</code> ，从蹦床上蹦出去，来到真正执行异常处理的逻辑代码部分。</p>
+<li><p><code>uservec</code> 下一个工作便是保存 32 个寄存器中的值。<br>在进入用户区域之前，内核设置 <code>sscratch</code> 指向一个每个进程都有的结构体 <code>trapframe</code>，该结构体拥有存放 32 个用户寄存器的空间。由于 <code>satp (保存 root 级别页表的物理地址)</code> 仍然保存的是用户页表的地址，因此 <code>uservec</code> 需要 <code>trapframe</code> 被映射到用户地址空间。</p>
+<blockquote>
+<p>RISC-V 有 32 个整数寄存器，我们为什么要保存他们？<br>我们希望内核能够响应中断，之后在用户程序完全无感知的情况下再恢复用户代码的执行。所以这意味着32个用户寄存器不能被内核弄乱。但是这些寄存器又要被内核代码所使用，所以在trap之前，你必须先在某处保存这32个用户寄存器。</p>
+</blockquote>
 </li>
 </ol>
+<p>在每个进程创建之初，xv6 为进程的 <code>trapframe</code> 在 <code>TRAPFRAME</code> 地址处创建一个页，位于 <code>TRAMPOLINE</code> 的正下方。进程控制块的 <code>p-&gt;trapframe</code> 变量也指向这个 <code>trapframe</code> 的物理地址（内核页表中许多地址都是恒等映射），因此内核可以通过内核页表使用它。<br>交换好了 <code>a0</code> 和 <code>sscratch</code> 之后，<code>a0</code> 保存的便是指向当前进程 <code>trapframe</code> 的指针。这样一来，<code>uservec</code> 就可以在这里保存所有寄存器了，包括用户从 <code>sscratch</code> 读到并保存在 <code>a0</code> 中的值。</p>
+<ol start="3">
+<li><code>trapframe</code> 包含：<br>当前进程内核栈的地址<br>当前 CPU 的 hartid<br>usertrap() 函数的地址<br>内核页表的地址<br><code>uservec</code> 会拿到这些值，并将内核页表的地址放入 <code>satp</code> 寄存器，调用 <code>usertrap</code> ，从蹦床上蹦出去，来到真正执行异常处理的逻辑代码部分。</li>
+</ol>
 <h4 id="usertrap-的职责-（离开蹦床，正式处理异常）"><a href="#usertrap-的职责-（离开蹦床，正式处理异常）" class="headerlink" title="usertrap 的职责 （离开蹦床，正式处理异常）"></a>usertrap 的职责 （离开蹦床，正式处理异常）</h4><ol>
-<li>改变 <code>stvec</code> 的值，因此在内核中发生的异常会由 <code>kernelvec</code> 处理，而不是 <code>uservec</code>。其次，将程序计数器保存在 <code>sepc</code> 中，因为 <code>usertrap</code> 可能会调用 <code>yield</code> 来切换线程，导致该线程在用户空间修改程序计数器的值。</li>
-<li>如果该异常是系统调用，<code>syscall</code> 会去处理；如果该异常是设备中断，<code>devintr</code> 会去处理；如果该异常是真的出错了，那么内核会杀死这个出错的进程。</li>
-<li>在退出时，<code>usertrap</code> 先检查该进程是否已经被杀死或放弃了 CPU (如果是个时钟中断)。</li>
+<li><p>改变 <code>stvec</code> 的值，因此在内核中发生的异常会由 <code>kernelvec</code> 处理，而不是 <code>uservec</code>。其次，将程序计数器保存在 <code>sepc</code> 中，因为 <code>usertrap</code> 可能会调用 <code>yield</code> 来切换线程，导致该线程在用户空间修改程序计数器的值。</p>
+<blockquote>
+<p>为什么要将程序计数器保存至 sepc？<br>我们需要能够在用户程序运行中断的位置继续执行用户程序。</p>
+</blockquote>
+</li>
+<li><p>如果该异常是系统调用，<code>syscall</code> 会去处理；如果该异常是设备中断，<code>devintr</code> 会去处理；如果该异常是真的出错了，那么内核会杀死这个出错的进程。</p>
+</li>
+<li><p>在退出时，<code>usertrap</code> 先检查该进程是否已经被杀死或放弃了 CPU (如果是个时钟中断)。</p>
+</li>
 </ol>
 <h4 id="usertrapret-的职责-（回到用户空间的第一步）"><a href="#usertrapret-的职责-（回到用户空间的第一步）" class="headerlink" title="usertrapret 的职责 （回到用户空间的第一步）"></a>usertrapret 的职责 （回到用户空间的第一步）</h4><p>这个函数用来设置 RISC-V 的控制寄存器来为下一个来自用户空间的异常做准备。</p>
 <ol>
@@ -685,6 +700,100 @@
 <li>交换 <code>a0</code> 和 <code>sscratch</code> 中的内容。</li>
 </ol>
 <h4 id="示意图如下"><a href="#示意图如下" class="headerlink" title="示意图如下"></a>示意图如下</h4><p><img src="https://cdn.acwing.com/media/article/image/2022/08/01/104388_6bef49bb11-usertrap.png" alt="usertrap.png"> </p>
+<h3 id="6-4-Code-调用系统调用"><a href="#6-4-Code-调用系统调用" class="headerlink" title="6.4 Code: 调用系统调用"></a>6.4 Code: 调用系统调用</h3><p>了解了内核处理异常的具体细节，那么内核是如何实现一个用户申请的系统调用的呢？<br>以 xv6 启动时调用 <code>exec</code> 开始说起，<code>initcode.S</code> 将调用 <code>exec</code> 需要的参数放入 <code>a0</code> 和 <code>a1</code> 寄存器中，把代表 <code>exec</code> 的宏 <code>SYS_exec</code> 放入 <code>a7</code> 寄存器中。内核检查到该异常后走异常处理程序，发现是一个系统调用，于是走系统调用的流程，调用 <code>syscall()</code>函数。内核从<code>a7</code> 寄存器中取出代表该系统调用的宏，检查系统调用表（一个函数指针数组）中与之对应的函数，调用它。当该系统调用返回后，<code>syscall()</code> 将返回值记录在 <code>myproc()-&gt;trapframe-&gt;a0</code> 中。</p>
+<h3 id="6-5-Code-系统调用的参数"><a href="#6-5-Code-系统调用的参数" class="headerlink" title="6.5 Code: 系统调用的参数"></a>6.5 Code: 系统调用的参数</h3><p>内核若想实现该系统调用，需要获得用户传入的参数（如果有的话）。RISC-V 将用户的参数放在寄存器中，因此内核的异常处理代码会将用户寄存器中的参数存入当前进程的 <code>trapframe</code> 中。详见 <code>sysycall.c</code> 中的 <code>argint()</code>，<code>argaddr()</code>，<code>argraw()</code>等。<br>上面提及的 <code>exec</code> 系统调用会向内核传递若干指针，这些指针指向用户空间中字符串。这就带来了两个挑战：<br>① 用户代码有可能是有 bug 或者恶意的，因此这个指针可能指向一段恶意代码访问内核的地址而不是用户地址。②内核的页表和用户进程的页表映射是不同的，因此内核无法用普通的指令来加载或者存储用户提供的地址。</p>
+<p><strong>解决措施</strong>：<br><code>fetch()</code> 函数具有获取字符串的功能，其中调用了一个叫 <code>copyin()</code> 的函数，该函数使用 <code>walkaddr()</code> 来从用户页表中找到该地址，并将内容从用户空间拷贝到内核空间。如果找到了这个地址，说明它在用户空间是合法的，反之亦然。<br>关键还是 <code>walk()</code> 找到对应的 PTE，将物理地址返回到 <code>walkaddr()</code>，然后开始拷贝。</p>
+<p><strong>copyinstr</strong></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
+<span class="token function">copyinstr</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>dst<span class="token punctuation">,</span> uint64 srcva<span class="token punctuation">,</span> uint64 max<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  uint64 n<span class="token punctuation">,</span> va0<span class="token punctuation">,</span> pa0<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> got_null <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">while</span><span class="token punctuation">(</span>got_null <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> max <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment">// 内存向下对齐，一页首虚拟地址</span>
+    va0 <span class="token operator">=</span> <span class="token function">PGROUNDDOWN</span><span class="token punctuation">(</span>srcva<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 获得该虚拟内存对应的物理页的首地址</span>
+    pa0 <span class="token operator">=</span> <span class="token function">walkaddr</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> va0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>pa0 <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+      <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment">// 该虚拟地址并不是用户地址空间中的合法映射</span>
+
+    n <span class="token operator">=</span> PGSIZE <span class="token operator">-</span> <span class="token punctuation">(</span>srcva <span class="token operator">-</span> va0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span><span class="token punctuation">(</span>n <span class="token operator">&gt;</span> max<span class="token punctuation">)</span>
+      n <span class="token operator">=</span> max<span class="token punctuation">;</span>
+
+    <span class="token comment">// 从该地址将本页剩下的都复制过来</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>pa0 <span class="token operator">+</span> <span class="token punctuation">(</span>srcva <span class="token operator">-</span> va0<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>n <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">*</span>p <span class="token operator">==</span> <span class="token char">'\0'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token operator">*</span>dst <span class="token operator">=</span> <span class="token char">'\0'</span><span class="token punctuation">;</span>
+        got_null <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token operator">*</span>dst <span class="token operator">=</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token operator">--</span>n<span class="token punctuation">,</span> <span class="token operator">--</span>max<span class="token punctuation">;</span> <span class="token comment">// 本页剩余，需求剩余（如果超过一页需要申请下一页的内容）</span>
+      p<span class="token operator">++</span><span class="token punctuation">,</span> dst<span class="token operator">++</span><span class="token punctuation">;</span> <span class="token comment">// 拷贝源，拷贝目的地</span>
+    <span class="token punctuation">}</span>
+
+    srcva <span class="token operator">=</span> va0 <span class="token operator">+</span> PGSIZE<span class="token punctuation">;</span>   <span class="token comment">// 下一页的开头</span>
+  <span class="token punctuation">}</span>
+  
+  <span class="token keyword">if</span><span class="token punctuation">(</span>got_null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>walkaddr</strong></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">uint64
+<span class="token function">walkaddr</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">,</span> uint64 va<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+  <span class="token class-name">pte_t</span> <span class="token operator">*</span>pte<span class="token punctuation">;</span>
+  uint64 pa<span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span>va <span class="token operator">&gt;=</span> MAXVA<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  pte <span class="token operator">=</span> <span class="token function">walk</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> va<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span>pte <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">*</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">*</span>pte <span class="token operator">&amp;</span> PTE_U<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  pa <span class="token operator">=</span> <span class="token function">PTE2PA</span><span class="token punctuation">(</span><span class="token operator">*</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> pa<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="6-6-来自内核的异常"><a href="#6-6-来自内核的异常" class="headerlink" title="6.6 来自内核的异常"></a>6.6 来自内核的异常</h3><p>在前面也看到了，一旦进入内核， <code>stvec</code> 就被设置指向 <code>kernelvec (in kernelvec.S)</code>——用于处理来自内核的异常的处理程序。<br>这段代码会做三件事情：</p>
+<ol>
+<li>将寄存器保存在当前线程的栈中，因为这些寄存器的值属于当前线程，因为线程调度可能切换到另一个线程上。</li>
+<li>跳转到一个叫 <code>kerneltrap()</code> 的函数中。<br>这个函数专门处理两种异常：①设备中断 ②错误<br>如果是设备中断，<code>devintr()</code> 会妥善处理。<br>如果是错误，内核会直接调用 <code>panic()</code> 并停止运行。<br>如果 <code>kerneltrap()</code> 是由时钟中断引起的，该函数会调用 <code>yield()</code> 放弃 CPU，转而其他的线程。</li>
+<li>恢复信息<br>在刚进入 <code>kerneltrap()</code> 的时候保存了 <code>sepc</code>，<code>sstatus</code>和<code>scause</code>，因此在返回前将他们恢复到寄存器当中。<br>xv6 会在 CPU 一进入内核空间的时候就将 <code>stvec</code> 设置为指向<code>kernelvec</code>。然而，在这里有个窗口期：开始执行 trap 机制到设置 stvec 之间。这个期间有可能会发生设备中断。此时若发生设备终端，目前执行的用户异常处理会转而变成先处理内核异常，然而此时的 <code>stvec</code> 仍然保存的是 <code>uservec</code>，因此会出错。<br>但是 RISC-V 硬件设置好了在开始 trap 程序时关闭中断，直到 xv6 设置好 <code>stvec</code> 指向 <code>kernelvec</code> 后才会再次开启。</li>
+</ol>
+<h3 id="notice"><a href="#notice" class="headerlink" title="notice"></a>notice</h3><p><img src="https://img1.imgtp.com/2022/08/03/qpbPBV3C.png" alt="register vs memory"><br>a0,a1 等寄存器是存在于 CPU 中的高速读写存储单元。<br>内存是独立的一块用于存储代码、指令、数据的存储单元，读写速度比寄存器慢。<br>xv6 中内核态和用户态的转换涉及用户状态的保存，其中 a1、a0、sp等是模拟真实的<strong>寄存器</strong>。p-&gt;trapframe-&gt;a0 等是同时映射于内核和用户空间中 trapframe 页的一块内存。<br>在进入内核态之前，我们需要保存所有用户态的寄存器，具体图示如下：<br><img src="https://img1.imgtp.com/2022/08/03/jzC08U8N.png" alt="fuck"></p>
+<hr>
+<h2 id="LEC-7-Page-Fault"><a href="#LEC-7-Page-Fault" class="headerlink" title="LEC 7 - Page Fault"></a>LEC 7 - Page Fault</h2><p>xv6 处理错误异常时非常单调的：若来自用户空间，直接杀死；若来自内核空间，内核直接 panic。<br>但是现实中的操作系统通常有更多有趣的机制来处理错误。</p>
+<h3 id="7-1-copy-on-write"><a href="#7-1-copy-on-write" class="headerlink" title="7.1 copy on write"></a>7.1 copy on write</h3><p>许多内核使用 <code>page fault</code> 来实现 <code>copy-on-write (写时拷贝)</code>。原本操作系统调用 <code>fork()</code> 后将父进程的内存给子进原封不动复制一份，xv6 使用 <code>uvmcopy()</code> 来给子进程分配内存并拷贝父进程的内存到其中。我们有个大胆的想法：如果父子进程可以共享同一份内存空间，这会极大地提高效率。但是粗犷地这么实现是行不通的，因为父子进程共享同一个堆栈，会互相扰乱对方代码的执行。</p>
+<p>但是，父子进程可以通过合适的方式利用页表的权限和 page fault 来实现 COW。<br>CPU 在三种情况下会引起 page fault：</p>
+<ol>
+<li>访问的虚拟地址在物理地址中没有映射。</li>
+<li>虚拟内存映射到了一个 <code>PTE_V = 0</code> 的不合法地址。</li>
+<li>存在这个映射，并且也合法，但是 <code>PET_R/W/X/U</code> 拒绝了这个访问。</li>
+</ol>
+<p>RISC-V 会在虚拟地址无法被翻译时区分三种 page fault：</p>
+<ol>
+<li>load page fault</li>
+<li>store page fault</li>
+<li>instruction page fault</li>
+</ol>
+<p><code>sscause</code> 寄存器会保存错误的类型，<code>stval</code> 寄存器会保存无法翻译的虚拟地址。</p>
+<h3 id="7-2-lazy-allocation"><a href="#7-2-lazy-allocation" class="headerlink" title="7.2 lazy allocation"></a>7.2 lazy allocation</h3><h3 id="7-3-demand-paging"><a href="#7-3-demand-paging" class="headerlink" title="7.3 demand paging"></a>7.3 demand paging</h3><h3 id="7-4-paging-to-disk"><a href="#7-4-paging-to-disk" class="headerlink" title="7.4 paging to disk"></a>7.4 paging to disk</h3><hr>
 <h2 id="LAB-2-System-calls"><a href="#LAB-2-System-calls" class="headerlink" title="LAB 2 - System calls"></a>LAB 2 - System calls</h2><p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/labs/syscall.html">lab 2 - System calls 地址</a></p>
 <p>lab2 花了我挺久的说实话。<br>这个 lab 大头在于修改内核的代码的过程中，理解 xv6 的进程、内存、系统调用是如何工作的，通过自己写代码的方式为 xv6 添加新的系统调用。</p>
 <h3 id="trace"><a href="#trace" class="headerlink" title="trace"></a>trace</h3><h5 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h5><blockquote>
@@ -699,6 +808,7 @@
 </ol>
 <p><strong>气死我了 trace children 评测点一直超时</strong></p>
 <h3 id="sysinfo"><a href="#sysinfo" class="headerlink" title="sysinfo"></a>sysinfo</h3><p>有空再更</p>
+<hr>
 <h2 id="LAB-3-Page-Table"><a href="#LAB-3-Page-Table" class="headerlink" title="LAB 3 - Page Table"></a>LAB 3 - Page Table</h2><p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/labs/pgtbl.html">lab 3 - Page Table 地址</a></p>
 <h3 id="Speed-up-system-calls"><a href="#Speed-up-system-calls" class="headerlink" title="Speed up system calls"></a>Speed up system calls</h3><h5 id="要求-1"><a href="#要求-1" class="headerlink" title="要求"></a>要求</h5><blockquote>
 <p>Some operating systems (e.g., Linux) speed up certain system calls by sharing data in a read-only region between userspace and the kernel. This eliminates the need for kernel crossings when performing these system calls. To help you learn how to insert mappings into a page table, your first task is to implement this optimization for the getpid() system call in xv6.</p>
@@ -748,7 +858,9 @@
 <li>检查完之后要清空 <code>PTE_A</code>，不然就不知道这个 PTE 是这次检测到的还是上次检测到的。</li>
 <li>可以使用 <code>vmprint()</code> 来 debug。</li>
 </ol>
-<h5 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h5>
+<h5 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h5><p>从给定的页和要检查的数量，根据 PGSIZE 遍历这几页，通过 <code>walk</code> 寻找。</p>
+<hr>
+<h2 id="LAB-4-Traps"><a href="#LAB-4-Traps" class="headerlink" title="LAB 4 - Traps"></a>LAB 4 - Traps</h2>
                 
             </div>
             <hr/>
@@ -1133,7 +1245,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">110.2k</span>&nbsp;字
+                class="white-color">115.3k</span>&nbsp;字
             
             
             

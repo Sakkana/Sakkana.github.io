@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="C++11标准与陌生用法, 魚のブログ">
+    <meta name="keywords" content="C++, 魚のブログ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>C++11标准与陌生用法 | 魚のブログ</title>
+    <title>C++ | 魚のブログ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.0.0">
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
 </head>
 
 
@@ -263,12 +263,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">C++11标准与陌生用法</h1>
+                    <h1 class="description center-align post-title">C++</h1>
                 </div>
             </div>
         </div>
@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.2k
+                    6.3k
                 </div>
                 
 
@@ -438,7 +438,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="C-11标准-与-陌生用法"><a href="#C-11标准-与-陌生用法" class="headerlink" title="C++11标准 与 陌生用法"></a>C++11标准 与 陌生用法</h1><p>最近开始读《C++ Primer》了，记录一些以前C++98中没有遇到过的但是比较优秀的用法以及陌生的知识点。</p>
+                <h1 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h1><p>最近开始读《C++ Primer》了，记录一些以前C++98中没有遇到过的但是比较优秀的用法以及陌生的知识点。</p>
 <p>由于这本书真的太厚了，里面些许知识点是自己已经掌握的，有些新特性与陌生用法是值得自己学习的。然而也不可能每次遇到问题书都在身边，于是将自己觉得有价值的部分记录下来。</p>
 <p>因此本文并不是全篇关注C++11，而是新标准与陌生知识相融合的一篇学习记录。</p>
 <h3 id="顶层const-amp-底层const"><a href="#顶层const-amp-底层const" class="headerlink" title="顶层const &amp; 底层const"></a>顶层const &amp; 底层const</h3><p>在这本书里看到了一个新概念：底层const与底层const</p>
@@ -772,6 +772,386 @@ public<span class="token operator">:</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="auto-decltype-与-尾置返回类型"><a href="#auto-decltype-与-尾置返回类型" class="headerlink" title="auto, decltype 与 尾置返回类型"></a>auto, decltype 与 尾置返回类型</h3><p> 在使用模板的时候，有时我们需要编译器自己推导返回类型。<br> 但是像下面的情况，编译就会报错，这是因为返回类型声明位 <code>decltype(l + r)</code>，意为需要返回和 <code>l + r</code> 相同类型的返回值。但是编译器是由左往右扫描的，在扫描到 <code>TL l, TR r</code> 之前并没有找到关于 l 和 r 的声明，因此直接报错了。<br> </p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+template&lt;typename TL, typename TR&gt;
+decltype(l + r) f(TL l, TR r) {
+    return l + r;
+}
+
+int main() {
+
+    auto it = f&lt;int, int&gt;(1, 2);
+    cout &lt;&lt; it &lt;&lt; endl;
+
+    return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<blockquote>
+<p>Main.cpp:5:10: error: ‘l’ was not declared in this scope<br>    5 | decltype(l + r) f(TL l, TR r) {<br>      |          ^<br>Main.cpp:5:10: error: ‘l’ was not declared in this scope<br>Main.cpp:5:14: error: ‘r’ was not declared in this scope<br>    5 | decltype(l + r) f(TL l, TR r) {<br>      |              ^</p>
+</blockquote>
+<p>解决办法之一便是使用位置返回类型，在函数头尾部显式指定返回的类型。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename TL, typename TR&gt;
+auto f(TL l, TR r) -&gt; decltype(l + r) {
+    return l + r;
+}
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后，直接用 auto 也是可以过的。</p>
+<h3 id="转换函数与non-explict-one-argument-ctor"><a href="#转换函数与non-explict-one-argument-ctor" class="headerlink" title="转换函数与non-explict-one-argument ctor"></a>转换函数与non-explict-one-argument ctor</h3><h5 id="转换函数：转出去"><a href="#转换函数：转出去" class="headerlink" title="转换函数：转出去"></a>转换函数：转出去</h5><p>我是一个 Fraction 类。<br>当我与一个 double (要求返回 double，int -&gt; double) 类型做加法的时候，编译器会去寻找我有没有一个重载函数重载加号，使得 Fraction 和 double 得以相加。很可惜没有。<br>由于返回值是 double 类型，编译器再去寻找有没有可能将 Fraction 类型的变量转换成 double。很幸运它找到了。<br>因此 f1 -&gt; double， double = double + double，一切都顺理成章。<br>加法运算中 <code>4 + f1</code> 和 <code>f1 + 4</code> 都是可以的，因为最后都会将 Fraction 类型转换为 double。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+class Fraction {
+public:
+    Fraction(int _num, int _den = 1): m_numerator(_num), m_denominator(_den) {}
+    operator double() const {
+        return static_cast&lt;double&gt;(m_numerator / m_denominator);
+    }
+private:
+    int m_numerator;       // 分子
+    int m_denominator;     // 分母
+};
+
+int main() {
+
+    Fraction f1(3, 5);
+    double result = 4 + f1;
+
+    cout &lt;&lt; result &lt;&lt; endl;
+
+    return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="non-explict-one-argument-ctor：转进来"><a href="#non-explict-one-argument-ctor：转进来" class="headerlink" title="non-explict-one argument ctor：转进来"></a>non-explict-one argument ctor：转进来</h5><p>编译器还是去寻找能不能将一个 Fraction 和一个非 Fraction 类型相加的重载函数。<br>很幸运它找到了。<br>我们重载了加号，使得两个 Fraction 可以相加。可是，我们给定的是一个数值型变量呀。<br>玄机在于构造函数，我们的构造函数是一个 non-explict-one-argement 的构造函数，支持传入一个 int 并转换为一个 Fraction 类型的对象。<br>这在数学上也成立，因为一个数值 x 代表 x / 1，也是一个分数，因此分母的默认值便是 1。<br>这里只能 <code>4 + f1</code>，因为重载的加号只提供一个用户的输入参数：Fraction 类型。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+int gcd(int a, int b) { return b ? gcd(b, a % b) : a;}
+
+class Fraction {
+public:
+    Fraction(int _num, int _den = 1): m_numerator(_num), m_denominator(_den) {}
+
+    Fraction operator + (const Fraction &amp;f) {
+        int res_numerator, res_denominator;
+
+        // 通分
+        if (f.m_denominator == 1) {
+            res_numerator = m_numerator + f.m_numerator * m_denominator;
+            res_denominator = m_denominator;
+        } else {
+            res_numerator = m_numerator * f.m_denominator + m_denominator * f.m_numerator;
+            res_denominator = m_denominator * f.m_denominator;
+        }
+
+        // 约分
+        int g = gcd(res_numerator, res_denominator);
+        res_numerator /= g, res_denominator /= g;
+        return Fraction(res_numerator, res_denominator);
+    }
+
+    friend ostream &amp;operator &lt;&lt; (ostream &amp;os, Fraction &amp;f) {
+        os &lt;&lt; f.m_numerator &lt;&lt; "/" &lt;&lt; f.m_denominator;
+        return os;
+    }
+    
+private:
+    int m_numerator;       // 分子
+    int m_denominator;     // 分母
+};
+
+int main() {
+
+    Fraction f1(3, 5);
+    Fraction result = f1 + 4;
+
+    cout &lt;&lt; result &lt;&lt; endl;
+
+    return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="explict-one-argument-ctor"><a href="#explict-one-argument-ctor" class="headerlink" title="explict-one-argument ctor"></a>explict-one-argument ctor</h5><p>如果我们把转换函数和重载加号放在一起会怎么样呢？<br>f1 + 4 会直接报错，4 + f1 却可以顺利编译。<br>这是为什么呢？<br>这是因为，前者我们给编译器提供了两个选项：<br>①使用重载加号将 Fraction 与 数值相加，返回 Fraction 直接赋值。<br>②使用转换函数将 Fraction 转换为 double，与数值相加，再转为 Fraction。<br>但是后者只有一条路：<br>直接使用转换函数将 Fraction 转换为 double，与 double 相加，再转成 Fraction。<br>任何提供二义性的操作编译器都不会给过。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include &lt;iostream&gt;
+using namespace std;
+
+int gcd(int a, int b) { return b ? gcd(b, a % b) : a;}
+
+class Fraction {
+public:
+    Fraction(int _num, int _den = 1): m_numerator(_num), m_denominator(_den) {}
+
+    operator double() const {
+        return static_cast&lt;double&gt;(m_numerator / m_denominator);
+    }
+
+    Fraction operator + (const Fraction &amp;f) {
+        int res_numerator, res_denominator;
+
+        // 通分
+        if (f.m_denominator == 1) {
+            res_numerator = m_numerator + f.m_numerator * m_denominator;
+            res_denominator = m_denominator;
+        } else {
+            res_numerator = m_numerator * f.m_denominator + m_denominator * f.m_numerator;
+            res_denominator = m_denominator * f.m_denominator;
+        }
+
+        // 约分
+        int g = gcd(res_numerator, res_denominator);
+        res_numerator /= g, res_denominator /= g;
+        return Fraction(res_numerator, res_denominator);
+    }
+
+    friend ostream &amp;operator &lt;&lt; (ostream &amp;os, Fraction &amp;f) {
+        os &lt;&lt; f.m_numerator &lt;&lt; "/" &lt;&lt; f.m_denominator;
+        return os;
+    }
+    
+private:
+    int m_numerator;       // 分子
+    int m_denominator;     // 分母
+};
+
+int main() {
+
+    Fraction f1(3, 5);
+    Fraction result = f1 + 4;   // 4 + f1 成立
+
+    cout &lt;&lt; result &lt;&lt; endl;
+
+    return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然而，解决方案也是有的，使用 <code>explict</code> 命令编译器，构造函数只能起构造函数的作用，不要做任何额外的构造，只有做构造的时候才去调用。不可以再把数值变成一个 Fraction。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">explict Fraction(int _num, int _den = 1): m_numerator(_num), m_denominator(_den) {}<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这样一些，就没有二义性的问题了，编译器会直接报错。</p>
+<h5 id="转换函数在标准库中的应用"><a href="#转换函数在标准库中的应用" class="headerlink" title="转换函数在标准库中的应用"></a>转换函数在标准库中的应用</h5><p>模板的偏特化<br>根据 [] 索引取出来的应该是 bool 类型的变量，然而重载后的 [] 传出来的是 reference 类型，用 reference 代表 bool。因此，在 reference 类中有个转换函数将 reference 转换为 bool，转出去。<br><img src="https://i.bmp.ovh/imgs/2022/08/04/ba202f468a14e6f6.png"></p>
+<h3 id="智能指针（Pointer-like-classes）"><a href="#智能指针（Pointer-like-classes）" class="headerlink" title="智能指针（Pointer-like classes）"></a>智能指针（Pointer-like classes）</h3><p>一个 C++ Class 实例化出<br>来的对象像一个指针。<br>指针能做的事，他都能做。<br>最首先，他需要实现 <code>.</code> 和 <code>-&gt;</code>。</p>
+<h5 id="shared-ptr"><a href="#shared-ptr" class="headerlink" title="shared_ptr"></a>shared_ptr</h5><p><img src="https://i.bmp.ovh/imgs/2022/08/04/6e889657002edef0.png"></p>
+<pre class="line-numbers language-none"><code class="language-none">#include &lt;iostream&gt;
+using namespace std;
+
+struct Foo {
+    void print() {
+        cout &lt;&lt; "hello world!" &lt;&lt; endl;
+    }
+    int a;
+};
+
+template&lt;class T&gt;
+class myshared_ptr{
+public:
+    myshared_ptr(T* p): px(p) {}
+    T&amp; operator*() const {
+        return *px;
+    }
+    T* operator-&gt;() const {
+        return px;
+    }
+private:
+    T*       px;
+    long*    pn;
+};
+
+int main() {
+    myshared_ptr&lt;Foo&gt; sp(new Foo);
+    sp-&gt;print();
+    return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="iterator"><a href="#iterator" class="headerlink" title="iterator"></a>iterator</h5><p><img src="https://i.bmp.ovh/imgs/2022/08/04/18b06e460750f384.png"><br><img src="https://i.bmp.ovh/imgs/2022/08/04/ecff0775a3cb2630.png"><br>不旦要重载普通指针需要的 <code>.</code> 和 <code>-&gt;</code> 操作符，还要重载 ++，– 等。<br>具体还会开专题写</p>
+<h3 id="仿函数（Function-like-classes）"><a href="#仿函数（Function-like-classes）" class="headerlink" title="仿函数（Function-like classes）"></a>仿函数（Function-like classes）</h3><p>长得像函数，用起来也像函数的 class。<br>函数需要一个 <code>() （function call operator）</code> 来操作。<br>这个 class 实例化出来的对象可以接受 <code>()</code> 操作符。<br>其中灰色的地方是继承了一串很长的东西。<br><img src="https://i.bmp.ovh/imgs/2022/08/04/5c4852e547b7b1ae.png"><br><img src="https://i.bmp.ovh/imgs/2022/08/04/b76b5d80e237244c.png"><br><img src="https://pic.imgdb.cn/item/62eb8adf16f2c2beb188048e.jpg"><br><img src="https://pic.imgdb.cn/item/62eb885316f2c2beb184b0f5.jpg"><br>灰色的部分就是继承了这个奇怪的类。<br>这个类的大小理论上是 0。<br><img src="https://pic.imgdb.cn/item/62eb886b16f2c2beb184d0fa.jpg"></p>
+<h3 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h3><p><img src="https://pic.imgdb.cn/item/62eb8f8916f2c2beb18d72b3.jpg"><br>不同人开发了同一个名字的变量或函数，使用他自己的 namespace 把他的数据包裹起来，起到防止命名冲突的作用。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include &lt;iostream&gt; 
+using namespace std;
+
+namespace dog{
+    void f() {
+        cout &lt;&lt; "namespace : dog" &lt;&lt; endl;
+    }
+}
+
+namespace cat {
+    void f() {
+        cout &lt;&lt; "namespace : cat" &lt;&lt; endl;
+    }
+}
+
+int main() { 
+
+    dog::f();
+    cat::f();
+ 
+    return 0;
+} <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><h5 id="定义基类"><a href="#定义基类" class="headerlink" title="定义基类"></a>定义基类</h5><pre class="line-numbers language-none"><code class="language-none">
+class Quoto {
+// 派生类和外部都可以访问
+public:
+    // ************* 构造函数 ************
+    // 默认构造
+    Quoto() = default;
+    // 有参构造
+    Quoto(const string _bookNo, int _price): 
+        bookNo(_bookNo), price(_price) {}
+    // 拷贝构造
+    Quoto(const Quoto &amp;o) = default;
+    
+    // ************* 成员函数 *************
+    string isbn() const { return bookNo; }
+    // 计算总价，派生类覆盖，分别计算不同的折扣
+    virtual double total_price(int n) const {
+        return n * price;
+    }
+    // 继承关系中根节点通常用虚析构函数
+    virtual ~Quoto() = default;
+
+// 派生类和外部都不可以访问
+private:
+    string bookNo;          // 书籍编号
+
+// 派生类可以访问，外部不可以访问
+protected:
+    double price = 0.0;     // 价格
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>基类通过在成员函数前加上 <code>virtual</code> 使得该函数执行<code>动态绑定</code>。<br><code>virtual</code> 只能出现在类内部的声明前，不能出现在类外部的函数定义。<br>基类的虚函数在派生类中隐式地也是虚函数。<br>非虚函数的解析过程发生在编译时，而不是运行时。</p>
+<h5 id="定义派生类"><a href="#定义派生类" class="headerlink" title="定义派生类"></a>定义派生类</h5><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class Bulk_quoto: public Quoto{
+public:
+    // ************* 构造函数 ************
+    // 默认构造
+    Bulk_quoto() = default;
+    // 有参数构造
+    // 父类2参数 + 子类2参数
+    Bulk_quoto(const string&amp; _bookNo, double _price, int _mq, double _dst):
+            Quoto(_bookNo, _price), min_quantity(_mq), discount(_dst) {}
+    // 拷贝构造
+    Bulk_quoto(const Bulk_quoto &amp;o) = default;
+
+    // ************* 成员函数 *************
+    // 重写父类的折扣计算方法
+    // 如果不重写，则直接执行父类的版本
+    // override 显式注明它重写了某个成员函数的虚函数
+    double total_price(int n) const override {
+        return n &gt;= min_quantity? n * price * discount : n * price;
+    }
+private:
+    int min_quantity;   // 满足折扣价格的最低购买量
+    double discount;    // 折扣率
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>派生类需要重新声明从父类中继承过来，并且需要重覆盖重写的成员函数。<br>如果派生类没有重写某个虚函数，那么该虚函数和其他普通成员函数的行为一样，调用时使用的是基类的版本。<br>在重写的虚函数后面显式地加上 <code>override</code> 可以注明该函数重写了基类的虚函数。</p>
+<h5 id="派生类对象与基类对象的转换"><a href="#派生类对象与基类对象的转换" class="headerlink" title="派生类对象与基类对象的转换"></a>派生类对象与基类对象的转换</h5><p>一个派生类可以看作是多个子对象的集合：本类的数据，父类们的数据。<br>因此，在派生类的对象内存中存在基类的数据，因此可以将派生类当作基类来用。</p>
+<p><img src="https://pic.imgdb.cn/item/62ebb1218c61dc3b8e606a11.jpg"></p>
+<p>总结来说就是：</p>
+<ol>
+<li>基类指针可以指向子类对象 （中的基类部分）</li>
+<li>基类引用绑定到子类对象 （中的基类部分）</li>
+</ol>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">Quoto item;
+Bulk_quoto bulk;
+Quoto *p = &amp;item;   // 基类指针指向基类对象
+p = &amp;bulk;          // 基类指针指向子类对象
+Quoto &amp;r = bulk;    // 基类引用绑定到子类对象身上
+
+cout &lt;&lt; r.total_price(10);      // 合法
+cout &lt;&lt; p-&gt;total_price(10);     // 合法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="派生类构造函数"><a href="#派生类构造函数" class="headerlink" title="派生类构造函数"></a>派生类构造函数</h5><p>派生类无法直接初始化基类中继承过来的成员，只能和创建基类对象一样，使用基类的构造函数初始化。<br>核心：每个类需要自己来控制其自身的初始化。<br>因此，在构造函数参数列表中需要传入：基类1构造参数，基类2构造参数…，派生类自己的构造参数。<br>在初始化列表中，需要提供：基类1(基类1构造参数)，基类2(基类2构造参数)…，派生类一一赋值。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">Bulk_quoto(const string&amp; _bookNo, double _price, int _mq, double _dst):
+            Quoto(_bookNo, _price), min_quantity(_mq), discount(_dst) {}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h5 id="派生类访问基类成员"><a href="#派生类访问基类成员" class="headerlink" title="派生类访问基类成员"></a>派生类访问基类成员</h5><p>如上所述，派生类可以访问基类的 public 和 protected 的成员。<br>派生类的作用域嵌套在基类的作用域当中。</p>
+<blockquote>
+<p>遵循基类接口<br>每个类负责自己的接口。<br>即使我们可以在派生类中直接给基类的 public 和 protected 成员变量赋值，但是最好不要这么做。使用基类的构造函数来初始化这些派生类从基类继承过来的成员。</p>
+</blockquote>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">double total_price(int n) const override {
+        return n &gt;= min_quantity? n * price * discount : n * price;
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="类与-static-成员"><a href="#类与-static-成员" class="headerlink" title="类与 static 成员"></a>类与 static 成员</h5><p>static 成员是一种与类绑定，与类直接相关的变量或函数。<br>任何对象都不存储该静态成员，并且 static 成员函数也无法使用 this 指针。<br>该静态成员有多种调用方式，一种是通过对象的 <code>.</code> 运算符调用，一种是通过作用域 <code>::</code>运算符。<br>static 关键字只能在类内部出现。<br>由于 static 数据不属于任何一个类的对象，因此无法使用构造函数初始化。<br>因此我们需要在<strong>类的外部定义和初始化</strong> static 数据。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include&lt;iostream&gt;
+using namespace std;
+
+class Demo {
+public:
+	static double initRate();
+private:
+	static double interestRate;
+};
+
+double Demo::interestRate = initRate();
+
+double Demo::initRate() {
+	return 0.01;	
+}
+
+int main()
+{
+	Demo d;
+	cout &lt;&lt; Demo::initRate &lt;&lt; endl;
+
+	return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但是 C++ 允许常量的静态成员类内初始化。<br>该静态成员必须是 constexpr 的整型常量表达式。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class Demo {
+	const static int N = 10;
+	int arr[N];
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>并且即使在类内初始化了，类外也最好定义一下。<br>因此最好的办法是类内什么都不做。<br>遵循 <strong>类内声明，类外初始化</strong>。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include&lt;iostream&gt;
+using namespace std;
+
+class Demo {
+public:
+	constexpr static int N = 10;    // 不推荐
+    int arr[N];                     // 但是这里会用到，只能这么写    
+};
+
+int main()
+{
+	cout &lt;&lt; Demo::N;
+
+	return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="继承与-static-成员"><a href="#继承与-static-成员" class="headerlink" title="继承与 static 成员"></a>继承与 static 成员</h5><p>若基类定义了一个 static 成员，那么该成员在继承体系中只有唯一的定义，占一份内存。<br>如果该 static 对象是 public 的，那么大家都可以调用它；<br>如果是 private 的，则派生类无法调用。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include&lt;iostream&gt;
+using namespace std;
+
+class Father {
+public:
+	Father() {}
+	static void func() { cout &lt;&lt; "helloworld" &lt;&lt; endl; }
+};
+
+class Son: public Father {
+	void cnuf();
+};
+
+int main()
+{
+	Father f;
+	Son s;
+
+	Father::func();
+	Son::func();
+	f.func();
+	s.func();
+
+	return 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="防止继承-final"><a href="#防止继承-final" class="headerlink" title="防止继承 final"></a>防止继承 final</h5><p>有些类我们不希望它被继承，继承体系到此为止。<br>使用 <code>final</code> 关键字后，该类无法被继承。</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class NoDerived final {};
+class Base {};
+class Last final: public Base{};
+// class Error : public NoDerived {};  错误
+// class Error : public Last {};       错误<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -798,7 +1178,7 @@ public<span class="token operator">:</span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2022/04/20/C++11%E6%A0%87%E5%87%86%E4%B8%8E%E9%99%8C%E7%94%9F%E7%94%A8%E6%B3%95/">https://sakkana.github.io/2022/04/20/C++11%E6%A0%87%E5%87%86%E4%B8%8E%E9%99%8C%E7%94%9F%E7%94%A8%E6%B3%95/</a>
+                    <a href="https://sakkana.github.io/2022/04/20/C++/">https://sakkana.github.io/2022/04/20/C++/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1155,7 +1535,7 @@ public<span class="token operator">:</span>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">110.2k</span>&nbsp;字
+                class="white-color">115.3k</span>&nbsp;字
             
             
             
