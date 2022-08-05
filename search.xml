@@ -1197,31 +1197,6 @@
     </entry>
     
     
-    
-    <entry>
-      <title>Golang</title>
-      <link href="/2008/03/28/Golang%20-%20%E5%89%AF%E6%9C%AC/"/>
-      <url>/2008/03/28/Golang%20-%20%E5%89%AF%E6%9C%AC/</url>
-      
-        <content type="html"><![CDATA[<p>第一门入门语言是 C，第二门是 C++。<br>这两门是写过最多的语言吧。<br>Python 有事情的时候用过点，写函数式编程的时候用过点。<br>其他时间也没怎么用过了。<br>Java 写课程设计用过点，生产实习用过点。<br>其他时间也没用过了，也没好好学。<br>Golang 应该可以算是第三们语言吧，继 C/C++ 之后。</p><h3 id="如何使用-go-mod-管理包"><a href="#如何使用-go-mod-管理包" class="headerlink" title="如何使用 go mod 管理包"></a>如何使用 go mod 管理包</h3><p>之前使用 go get 下载源码总是出问题，后来学习了一下 go 管理工具的知识才明白一点。<br>总的来说 go 经历了三代包管理工具的优化，gopath，vendor 和现在的 go mod。<br>这里使用 go mod 管理，提前要把  go env 中的 go1111nmoudle 设置为 on。<br>进入要使用某个框架的目录，执行 <code>go mod init</code>，此时会创建一个名为 <code>go.mod</code> 的文件。<br>现在使用 <code>go get</code> 拉去框架后会把依赖的信息自动添加到这个文件中。</p><p>下面的笔记部分来自于 go-tour 和开源文档《go语言圣经》（ “go pragramming language” 的民间翻译版本，质量颇高）。</p><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2>]]></content>
-      
-      
-      <categories>
-          
-          <category> Golang </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Golang </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
   
   
 </search>
