@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.0.0">
+<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
 </head>
 
 
@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.2k
+                    3.8k
                 </div>
                 
 
@@ -1289,6 +1289,125 @@ func main() {
 	<span class="token keyword">return</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>以前学 C++ 的时候都管实现一个功能的模块叫函数，Java 里总是叫方法。<br>意味着是同一个东西。<br>事实上好像也没啥差别。<br>但是 Go 里面函数和方法是两个东西。<br>方法由 <code>方法接收者</code> 和函数组成。<br>可能这也是为什么 Java 里面叫方法，因为 Java 是完全面向对象的语言，所有的函数都是成员函数，需要写在一个类里面。</p>
+<p>在函数声明时，在其名字之前放上一个变量，即是一个方法。这个附加的参数会将该函数附加到这种类型上，即相当于为这种类型定义了一个独占的方法。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">type</span> People <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	id   <span class="token builtin">int</span>
+	name <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>p People<span class="token punctuation">)</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> p<span class="token punctuation">.</span>name
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>p People<span class="token punctuation">)</span> <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> p<span class="token punctuation">.</span>id
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	p1<span class="token punctuation">,</span> p2 <span class="token operator">:=</span> People<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"Amy"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> People<span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">"Bob"</span><span class="token punctuation">}</span>
+	<span class="token keyword">var</span> p3 People
+	p3 <span class="token operator">=</span> People<span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">"Andy"</span><span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p1<span class="token punctuation">,</span> p2<span class="token punctuation">,</span> p3<span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>p3<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>因此，在 Go 中，可以把方法和函数是为同一个东西，只不过方法带了一个接收者参数。是谁，去调用这个方法。这个方法，隶属于谁。<br>Go 里面没有类，这个弥补了类的概念——成员变量 + 成员函数。</p>
+<p>接收者除了自定义的结构体，也可以设置为自定义内建类型。<br>也就是说，不管是自己新建的结构体还是为内建类型起别名，都可以为他们声明方法。<br>但是不能为内建类型声明方法。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">"fmt"</span>
+	<span class="token string">"math"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> myFloat <span class="token builtin">float64</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>f myFloat<span class="token punctuation">)</span> <span class="token function">myfabs</span><span class="token punctuation">(</span><span class="token punctuation">)</span> myFloat <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> f <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token operator">-</span>f
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> f
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> f myFloat <span class="token operator">=</span> <span class="token operator">-</span>math<span class="token punctuation">.</span>Sqrt2
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>f<span class="token punctuation">.</span><span class="token function">myfabs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>声明方法可以指定接收者为 <code>指针</code> 类型。<br>这样子可以修改其接收者的值。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">type</span> myFloat <span class="token builtin">float64</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>f myFloat<span class="token punctuation">)</span> <span class="token function">immutable_change</span><span class="token punctuation">(</span>newValue myFloat<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	f <span class="token operator">=</span> newValue
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>f <span class="token operator">*</span>myFloat<span class="token punctuation">)</span> <span class="token function">mutable_change</span><span class="token punctuation">(</span>newValue myFloat<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token operator">*</span>f <span class="token operator">=</span> newValue
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> a<span class="token punctuation">,</span> b myFloat <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span>
+	a<span class="token punctuation">.</span><span class="token function">immutable_change</span><span class="token punctuation">(</span><span class="token number">888</span><span class="token punctuation">)</span>
+	b<span class="token punctuation">.</span><span class="token function">mutable_change</span><span class="token punctuation">(</span><span class="token number">999</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>1 999</p>
+</blockquote>
+<p>也可以单纯写成普通函数的形式，使用入参指针修改变量。<br>这种写法规定了入参必须为指针，如果传入普通变量就会编译错误。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">type</span> myFloat <span class="token builtin">float64</span>
+
+<span class="token keyword">func</span> <span class="token function">immutable_change</span><span class="token punctuation">(</span>f myFloat<span class="token punctuation">,</span> newValue myFloat<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	f <span class="token operator">=</span> newValue
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">mutable_change</span><span class="token punctuation">(</span>f <span class="token operator">*</span>myFloat<span class="token punctuation">,</span> newValue myFloat<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token operator">*</span>f <span class="token operator">=</span> newValue
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> a<span class="token punctuation">,</span> b myFloat <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span>
+	<span class="token function">immutable_change</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">888</span><span class="token punctuation">)</span>
+	<span class="token function">mutable_change</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>b<span class="token punctuation">,</span> <span class="token number">999</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>但是以指针接收者的形式声明的方法，既可以使用指针来调用它，也可以使用普通变量来调用它。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">type</span> myFloat <span class="token builtin">float64</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>f <span class="token operator">*</span>myFloat<span class="token punctuation">)</span> <span class="token function">mutable_change</span><span class="token punctuation">(</span>newValue myFloat<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token operator">*</span>f <span class="token operator">=</span> newValue
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> a myFloat <span class="token operator">=</span> <span class="token number">1.2</span>
+	<span class="token keyword">var</span> t myFloat <span class="token operator">=</span> <span class="token number">2.3</span>
+	b <span class="token operator">:=</span> <span class="token operator">&amp;</span>t
+	a<span class="token punctuation">.</span><span class="token function">mutable_change</span><span class="token punctuation">(</span><span class="token number">12.0</span><span class="token punctuation">)</span>
+	b<span class="token punctuation">.</span><span class="token function">mutable_change</span><span class="token punctuation">(</span><span class="token number">13.0</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token operator">*</span>b<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>12 13</p>
+</blockquote>
 
                 
             </div>
@@ -1669,7 +1788,7 @@ func main() {
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">119.5k</span>&nbsp;字
+                class="white-color">122.7k</span>&nbsp;字
             
             
             
