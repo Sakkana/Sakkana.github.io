@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 6.0.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
 </head>
 
 
@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    8.6k
+                    10.1k
                 </div>
                 
 
@@ -779,7 +779,13 @@
 <h3 id="notice"><a href="#notice" class="headerlink" title="notice"></a>notice</h3><p><img src="https://img1.imgtp.com/2022/08/03/qpbPBV3C.png" alt="register vs memory"><br>a0,a1 等寄存器是存在于 CPU 中的高速读写存储单元。<br>内存是独立的一块用于存储代码、指令、数据的存储单元，读写速度比寄存器慢。<br>xv6 中内核态和用户态的转换涉及用户状态的保存，其中 a1、a0、sp等是模拟真实的<strong>寄存器</strong>。p-&gt;trapframe-&gt;a0 等是同时映射于内核和用户空间中 trapframe 页的一块内存。<br>在进入内核态之前，我们需要保存所有用户态的寄存器，具体图示如下：<br><img src="https://img1.imgtp.com/2022/08/03/jzC08U8N.png" alt="fuck"></p>
 <hr>
 <h2 id="LEC-7-Page-Fault"><a href="#LEC-7-Page-Fault" class="headerlink" title="LEC 7 - Page Fault"></a>LEC 7 - Page Fault</h2><p>xv6 处理错误异常时非常单调的：若来自用户空间，直接杀死；若来自内核空间，内核直接 panic。<br>但是现实中的操作系统通常有更多有趣的机制来处理错误。</p>
-<h3 id="7-1-copy-on-write"><a href="#7-1-copy-on-write" class="headerlink" title="7.1 copy on write"></a>7.1 copy on write</h3><p>许多内核使用 <code>page fault</code> 来实现 <code>copy-on-write (写时拷贝)</code>。原本操作系统调用 <code>fork()</code> 后将父进程的内存给子进原封不动复制一份，xv6 使用 <code>uvmcopy()</code> 来给子进程分配内存并拷贝父进程的内存到其中。我们有个大胆的想法：如果父子进程可以共享同一份内存空间，这会极大地提高效率。但是粗犷地这么实现是行不通的，因为父子进程共享同一个堆栈，会互相扰乱对方代码的执行。</p>
+<p>当发生 page fault 的时候，我们关注三个信息。</p>
+<ol>
+<li>引起 page fault 的虚拟地址 -&gt; 保存在 stval 中</li>
+<li>引起 page fault 的原因 -&gt; 保存在 scause 中</li>
+<li>引起 page fault 时 PC 的值 -&gt; 保存在 sepc 中，切换到内核中保存在 trapframe-&gt;epc （解决了异常后要重新回去执行）</li>
+</ol>
+<h3 id="7-1-copy-on-write-写时拷贝"><a href="#7-1-copy-on-write-写时拷贝" class="headerlink" title="7.1 copy on write (写时拷贝)"></a>7.1 copy on write (写时拷贝)</h3><p>许多内核使用 <code>page fault</code> 来实现 <code>copy-on-write (写时拷贝)</code>。原本操作系统调用 <code>fork()</code> 后将父进程的内存给子进原封不动复制一份，xv6 使用 <code>uvmcopy()</code> 来给子进程分配内存并拷贝父进程的内存到其中。我们有个大胆的想法：如果父子进程可以共享同一份内存空间，这会极大地提高效率。但是粗犷地这么实现是行不通的，因为父子进程共享同一个堆栈，会互相扰乱对方代码的执行。</p>
 <p>但是，父子进程可以通过合适的方式利用页表的权限和 page fault 来实现 COW。<br>CPU 在三种情况下会引起 page fault：</p>
 <ol>
 <li>访问的虚拟地址在物理地址中没有映射。</li>
@@ -788,12 +794,24 @@
 </ol>
 <p>RISC-V 会在虚拟地址无法被翻译时区分三种 page fault：</p>
 <ol>
-<li>load page fault</li>
-<li>store page fault</li>
-<li>instruction page fault</li>
+<li>load page fault （从给定虚拟地址中 Load 数据，但是该地址没有对应的物理地址映射）</li>
+<li>store page fault （从给定虚拟地址中 Read 数据，但是该地址没有对应的物理地址映射）</li>
+<li>instruction page fault （程序计数器要执行的指令没有对应的物理地址映射）</li>
 </ol>
 <p><code>sscause</code> 寄存器会保存错误的类型，<code>stval</code> 寄存器会保存无法翻译的虚拟地址。</p>
-<h3 id="7-2-lazy-allocation"><a href="#7-2-lazy-allocation" class="headerlink" title="7.2 lazy allocation"></a>7.2 lazy allocation</h3><h3 id="7-3-demand-paging"><a href="#7-3-demand-paging" class="headerlink" title="7.3 demand paging"></a>7.3 demand paging</h3><h3 id="7-4-paging-to-disk"><a href="#7-4-paging-to-disk" class="headerlink" title="7.4 paging to disk"></a>7.4 paging to disk</h3><hr>
+<p><code>COW</code> 的想法是这样的。<br>在最开始，父进程和子进程共享所有的物理页，子进程只需要在页表中添加属于它自己的映射，父进程和子进程映射到同一个物理页面，但是各自都将页面映射成 <code>read-only</code>。<br>父子进程共享这一份内存，都可以 load 这里的数据。<br>** 一旦有人 write，CPU 抛出一个 page fault 异常 **。</p>
+<p>于是，内核的异常处理程序会分配新的页面，然后将产生 page fault 的页面拷贝到新的内存中。<br>随后修改当前的 PTE 使其指向新分配的页面，后将权限修改成 readable 和 writable。<br>接下来，重新执行这个 write 行为就不会引发异常了。<br>COW 机制使得 fork 的速度加快了，因为 fork 不需要拷贝内存。有些内存会在子进程 write 的时候被复制修改，但是绝大多数情况下的大部分内存是不需要被需改的。<br>一个例子就是 <code>exec</code> 系统调用：在调用 fork 后某些页面会被复制修改，但是接下来调用的 exec 会马上释放大量的从父进程继承过来的内存块，用目标程序的数据来替代。</p>
+<p>COW 是对上层应用透明的。</p>
+<h3 id="7-2-lazy-allocation-懒分配"><a href="#7-2-lazy-allocation-懒分配" class="headerlink" title="7.2 lazy allocation (懒分配)"></a>7.2 lazy allocation (懒分配)</h3><p>首先，当个一个应用调用 <code>sbrk</code> 要求分配内存时，内核记下来需要的内存大小但是<strong>并不分配物理内存，也不为其创建 PTE</strong> 来映射到虚拟内存。<br>然后，当 page fault (找不到这个页表项PTE)  发生时，内核为应用分配一页物理内存并将其映射到页表中。</p>
+<p>这样，由于应用总是要求分配比自己需求更多的内存，使用了 lay allocation 内核就无需在应用没有用到的页上面下功夫，也可以节省内存。<br>然而，这样会造成额外开支：频繁的 page fault 导致频繁的内核-用户两个空间的切换。操作系统可以通过分配一批连续页面而不是一个页面来减小这种开支。</p>
+<p>摘录自课程文档。</p>
+<blockquote>
+<p>核心思想非常简单，sbrk系统调基本上不做任何事情，唯一需要做的事情就是提升_p-&gt;sz_，将_p-&gt;sz_增加n，其中n是需要新分配的内存page数量。但是内核在这个时间点并不会分配任何物理内存。之后在某个时间点，应用程序使用到了新申请的那部分内存，这时会触发page fault，因为我们还没有将新的内存映射到page table。所以，如果我们解析一个大于旧的_p-&gt;sz_，但是又小于新的_p-&gt;sz（注，也就是旧的p-&gt;sz + n）_的虚拟地址，我们希望内核能够分配一个内存page，并且重新执行指令。<br>所以，当我们看到了一个page fault，相应的虚拟地址小于当前_p-&gt;sz_，同时大于stack，那么我们就知道这是一个来自于heap的地址，但是内核还没有分配任何物理内存。所以对于这个page fault的响应也理所当然的直接明了：在page fault handler中，通过kalloc函数分配一个内存page；初始化这个page内容为0；将这个内存page映射到user page table中；最后重新执行指令。比方说，如果是load指令，或者store指令要访问属于当前进程但是还未被分配的内存，在我们映射完新申请的物理内存page之后，重新执行指令应该就能通过了。</p>
+</blockquote>
+<h3 id="7-3-demand-paging-按需分配页面"><a href="#7-3-demand-paging-按需分配页面" class="headerlink" title="7.3 demand paging (按需分配页面)"></a>7.3 demand paging (按需分配页面)</h3><p>在 <code>exec</code> 系统调用中，一个新的应用的所有数据都被载入了内存。由于应用可能会很大且硬盘读写速度很慢，因此这个消耗对于用户是很难忍受的——用户打开一个应用要等小圈圈转很久很久才能出反应。<br>为了优化这个行为，现代操作系统内核为用户空间的地址<strong>创建一个页表，但是把所有的 PTE 都设置为 invalid</strong>。<br>一旦遇到 page fault (这个 PTE 是 invalid)，内核从硬盘读取以页面为单位的数据然后映射到用户的地址空间。</p>
+<h3 id="7-4-paging-to-disk"><a href="#7-4-paging-to-disk" class="headerlink" title="7.4 paging to disk"></a>7.4 paging to disk</h3><p>一个应用需要的内存可能超出了物理内存 RAM 所能承载的极限。<br>那怎么办呢？<br>一种想法是： [ user page 的一部分 ] -&gt; [ RAM ]<br>内核把<strong>没有在 RAM 中而是在硬盘中的数据的 PTE 标记为 invalid</strong>。如果应用要是用一块在硬盘中而不是在内存中的数据，就会引发 page falut (这个 PTE 是 invalid)，随后异常处理程序就需要在物理 RAM 中分配页面，把数据从硬盘加载进内存，然后修改相应的 PTE 指向给物理内存。</p>
+<p>如果一个页面需要被加载进内存，但是 RAM 空间不够了，会怎么样呢？<br>这是内核先是放一部分物理内存并还给硬盘并把相应的 PTE 设置为 invalid。<br>但是这个代价是昂贵的。<br>最理想的状态就是：应用只用到他们数据的一部分，并且这部分常驻于内存中。</p>
+<hr>
 <h2 id="LAB-2-System-calls"><a href="#LAB-2-System-calls" class="headerlink" title="LAB 2 - System calls"></a>LAB 2 - System calls</h2><p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/labs/syscall.html">lab 2 - System calls 地址</a></p>
 <p>lab2 花了我挺久的说实话。<br>这个 lab 大头在于修改内核的代码的过程中，理解 xv6 的进程、内存、系统调用是如何工作的，通过自己写代码的方式为 xv6 添加新的系统调用。</p>
 <h3 id="trace"><a href="#trace" class="headerlink" title="trace"></a>trace</h3><h5 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h5><blockquote>
@@ -969,18 +987,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/07/11/6.s081/">
+                <a href="/2022/08/07/Golang/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mit 6.s081">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Golang">
                         
-                        <span class="card-title">mit 6.s081</span>
+                        <span class="card-title">Golang</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -990,27 +1007,26 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-11
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-07
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-category">
-                                    操作系统
+                            <a href="/categories/Golang/" class="post-category">
+                                    Golang
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
-                        <span class="chip bg-color">操作系统</span>
+                    <a href="/tags/Golang/">
+                        <span class="chip bg-color">Golang</span>
                     </a>
                     
                 </div>
@@ -1245,7 +1261,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">122.7k</span>&nbsp;字
+                class="white-color">125.2k</span>&nbsp;字
             
             
             

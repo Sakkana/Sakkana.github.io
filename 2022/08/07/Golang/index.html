@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 6.0.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
 </head>
 
 
@@ -409,7 +409,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2008-03-28
+                    2022-08-07
                 </div>
                 
 
@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.8k
+                    4.8k
                 </div>
                 
 
@@ -613,6 +613,21 @@
 <blockquote>
 <p>{1 2} {88 99} {0 0} &amp;{12 12} {12 12}</p>
 </blockquote>
+<p>还有这种奇效。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	a <span class="token operator">:=</span> <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+		x <span class="token builtin">int</span>
+		y <span class="token builtin">int</span>
+	<span class="token punctuation">}</span><span class="token punctuation">{</span>
+		<span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>有点怪异</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
@@ -1386,13 +1401,14 @@ func main() {
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>但是以指针接收者的形式声明的方法，既可以使用指针来调用它，也可以使用普通变量来调用它。</p>
+<p>但是以指针接收者的形式声明的方法，既可以使用指针来调用它，也可以使用普通变量来调用它。<br>这种情况下 <code>a.mutable_change(12.0)</code> 会被解释为 <code>(&amp;a).mutable_change(12.0)</code>。</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token string">"fmt"</span>
 
 <span class="token keyword">type</span> myFloat <span class="token builtin">float64</span>
 
+<span class="token comment">// 以指针作为接收者</span>
 <span class="token keyword">func</span> <span class="token punctuation">(</span>f <span class="token operator">*</span>myFloat<span class="token punctuation">)</span> <span class="token function">mutable_change</span><span class="token punctuation">(</span>newValue myFloat<span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token operator">*</span>f <span class="token operator">=</span> newValue
 <span class="token punctuation">}</span>
@@ -1401,13 +1417,261 @@ func main() {
 	<span class="token keyword">var</span> a myFloat <span class="token operator">=</span> <span class="token number">1.2</span>
 	<span class="token keyword">var</span> t myFloat <span class="token operator">=</span> <span class="token number">2.3</span>
 	b <span class="token operator">:=</span> <span class="token operator">&amp;</span>t
-	a<span class="token punctuation">.</span><span class="token function">mutable_change</span><span class="token punctuation">(</span><span class="token number">12.0</span><span class="token punctuation">)</span>
-	b<span class="token punctuation">.</span><span class="token function">mutable_change</span><span class="token punctuation">(</span><span class="token number">13.0</span><span class="token punctuation">)</span>
+	a<span class="token punctuation">.</span><span class="token function">mutable_change</span><span class="token punctuation">(</span><span class="token number">12.0</span><span class="token punctuation">)</span>    <span class="token comment">// 值 接收者调用</span>
+	b<span class="token punctuation">.</span><span class="token function">mutable_change</span><span class="token punctuation">(</span><span class="token number">13.0</span><span class="token punctuation">)</span>    <span class="token comment">// 指针 接收者调用</span>
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token operator">*</span>b<span class="token punctuation">)</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <blockquote>
 <p>12 13</p>
 </blockquote>
+<p>相反也是正确的，如果函数定义中接收者是值，那么值和指针变量都可以调用它。<br>在这种情况下 <code>b.get_sun()</code> 会被解释为 <code>(*b).get_sum()</code>。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">type</span> Vertex <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	x<span class="token punctuation">,</span> y <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 值作为接收者</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>v Vertex<span class="token punctuation">)</span> <span class="token function">get_sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> v<span class="token punctuation">.</span>x <span class="token operator">+</span> v<span class="token punctuation">.</span>y
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	a<span class="token punctuation">,</span> t <span class="token operator">:=</span> Vertex<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span><span class="token punctuation">,</span> Vertex<span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span>
+	b <span class="token operator">:=</span> <span class="token operator">&amp;</span>t
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">get_sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>	<span class="token comment">// 值作为接收者</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span><span class="token function">get_sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>	<span class="token comment">// 指针作为接收者</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>那么选哪个呢？<br>其实和 C++ 的引用很像，<br>使用指针接收者，<br>首先，方法能够修改其接收者指向的值。<br>其次，这样可以避免在每次调用方法时复制该值。若值的类型为大型结构体时，这样做会更加高效。</p>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p><strong>接口类型</strong> 是由一组方法签名定义的集合。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">type</span> itf <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+	<span class="token function">get_sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> i itf <span class="token comment">// 接口类型</span>
+
+	a <span class="token operator">:=</span> Vertex<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">}</span>
+	<span class="token comment">// i = a 报错，因为值类型 Vertex 并没有实现itf</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>i<span class="token punctuation">.</span><span class="token function">get_sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+	b <span class="token operator">:=</span> Three_dimension_point<span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span>
+	i <span class="token operator">=</span> b
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>i<span class="token punctuation">.</span><span class="token function">get_sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+	c <span class="token operator">:=</span> <span class="token operator">&amp;</span>Vertex<span class="token punctuation">{</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">}</span>
+	i <span class="token operator">=</span> c
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>i<span class="token punctuation">.</span><span class="token function">get_sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> Vertex <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	x<span class="token punctuation">,</span> y <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">type</span> Three_dimension_point <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z <span class="token builtin">int</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>v <span class="token operator">*</span>Vertex<span class="token punctuation">)</span> <span class="token function">get_sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> v<span class="token punctuation">.</span>x <span class="token operator">+</span> v<span class="token punctuation">.</span>y
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>tdp Three_dimension_point<span class="token punctuation">)</span> <span class="token function">get_sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">int</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> tdp<span class="token punctuation">.</span>x <span class="token operator">+</span> tdp<span class="token punctuation">.</span>y <span class="token operator">+</span> tdp<span class="token punctuation">.</span>z
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果值类型实现了某个接口，那么该接口可以被赋予值类型和指针类型。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">"fmt"</span>
+	<span class="token string">"math"</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// 接口</span>
+<span class="token keyword">type</span> I <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+	<span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// T 类型结构体</span>
+<span class="token keyword">type</span> T <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	S <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// F -&gt; float64</span>
+<span class="token keyword">type</span> F <span class="token builtin">float64</span>
+
+
+
+<span class="token comment">// T 值类型实现接口中的 M 函数</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>t T<span class="token punctuation">)</span> <span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>S<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// F 值类型实现接口中的 M 函数</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>f F<span class="token punctuation">)</span> <span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>f<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> i I
+
+	i <span class="token operator">=</span> <span class="token operator">&amp;</span>T<span class="token punctuation">{</span><span class="token string">"Hello"</span><span class="token punctuation">}</span>
+	<span class="token function">describe</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+	i<span class="token punctuation">.</span><span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	i <span class="token operator">=</span> <span class="token function">F</span><span class="token punctuation">(</span>math<span class="token punctuation">.</span>Pi<span class="token punctuation">)</span>
+	<span class="token function">describe</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+	i<span class="token punctuation">.</span><span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	i <span class="token operator">=</span> T<span class="token punctuation">{</span><span class="token string">"fuck"</span><span class="token punctuation">}</span>
+	<span class="token function">describe</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+	i<span class="token punctuation">.</span><span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">describe</span><span class="token punctuation">(</span>i I<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"(%v, %T)\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果只实现了指针类型，该接口无法被值类型赋值。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">"fmt"</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">// I 接口</span>
+<span class="token keyword">type</span> I <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+	<span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// T 类型结构体</span>
+<span class="token keyword">type</span> T <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	S <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// T 值类型实现接口中的 M 函数</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>t <span class="token operator">*</span>T<span class="token punctuation">)</span> <span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>S<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> i I
+
+	i <span class="token operator">=</span> <span class="token operator">&amp;</span>T<span class="token punctuation">{</span><span class="token string">"Hello"</span><span class="token punctuation">}</span>
+	<span class="token function">describe</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+	i<span class="token punctuation">.</span><span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	<span class="token comment">// 报错 Type does not implement 'I' as the 'M' method has a pointer receiver</span>
+	<span class="token comment">// i = T{"fuck"}</span>
+	<span class="token comment">//describe(i)</span>
+	<span class="token comment">//i.M()</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">describe</span><span class="token punctuation">(</span>i I<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"(%v, %T)\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Go 不会报空指针异常。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token comment">// I 接口</span>
+<span class="token keyword">type</span> I <span class="token keyword">interface</span> <span class="token punctuation">{</span>
+	<span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// T 结构体</span>
+<span class="token keyword">type</span> T <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	S <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// T 指针类型实现接口中的 M 函数</span>
+<span class="token keyword">func</span> <span class="token punctuation">(</span>t <span class="token operator">*</span>T<span class="token punctuation">)</span> <span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> t <span class="token operator">==</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"&lt;nil&gt;"</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>S<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> i I <span class="token comment">// 定义一个接口类型</span>
+
+	<span class="token keyword">var</span> t <span class="token operator">*</span>T <span class="token comment">// 定义一个 T 指针类型</span>
+	i <span class="token operator">=</span> t    <span class="token comment">// 空指针赋给接口</span>
+	<span class="token function">describe</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+	i<span class="token punctuation">.</span><span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	i <span class="token operator">=</span> <span class="token operator">&amp;</span>T<span class="token punctuation">{</span><span class="token string">"hello"</span><span class="token punctuation">}</span>
+	<span class="token function">describe</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+	i<span class="token punctuation">.</span><span class="token function">M</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">describe</span><span class="token punctuation">(</span>i I<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"(%v, %T)\n"</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>只声明没定义的指针变量是空指针。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token string">"fmt"</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">var</span> ptr <span class="token operator">*</span><span class="token builtin">int</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"(%v, %T)\n"</span><span class="token punctuation">,</span> ptr<span class="token punctuation">,</span> ptr<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
+<p>(<nil>, *int)</nil></p>
+</blockquote>
+<p>练习：错误</p>
+<p>从<a target="_blank" rel="noopener" href="https://tour.go-zh.org/flowcontrol/8">之前的练习</a>中复制 <code>Sqrt</code> 函数，修改它使其返回 <code>error</code> 值。</p>
+<p><code>Sqrt</code> 接受到一个负数时，应当返回一个非 nil 的错误值。复数同样也不被支持。</p>
+<p>创建一个新的类型</p>
+<pre><code>type ErrNegativeSqrt float64
+</code></pre>
+<p>并为其实现</p>
+<pre><code>func (e ErrNegativeSqrt) Error() string
+</code></pre>
+<p>方法使其拥有 <code>error</code> 值，通过 <code>ErrNegativeSqrt(-2).Error()</code> 调用该方法应返回 <code>"cannot Sqrt negative number: -2"</code>。</p>
+<p>** 注意: ** 在 <code>Error</code> 方法内调用 <code>fmt.Sprint(e)</code> 会让程序陷入死循环。可以通过先转换 <code>e</code> 来避免这个问题：<code>fmt.Sprint(float64(e))</code>。这是为什么呢？</p>
+<p>修改 <code>Sqrt</code> 函数，使其接受一个负数时，返回 <code>ErrNegativeSqrt</code> 值。</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
+
+<span class="token keyword">import</span> <span class="token punctuation">(</span>
+	<span class="token string">"fmt"</span>
+	<span class="token string">"math"</span>
+<span class="token punctuation">)</span>
+
+<span class="token keyword">type</span> ErrNegativeSqrt <span class="token builtin">float64</span>
+
+<span class="token keyword">func</span> <span class="token punctuation">(</span>e ErrNegativeSqrt<span class="token punctuation">)</span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token builtin">string</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">"cannot Sqrt negative number: %v"</span><span class="token punctuation">,</span> <span class="token function">float64</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">Sqrt</span><span class="token punctuation">(</span>x <span class="token builtin">float64</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">float64</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> x <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">ErrNegativeSqrt</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> math<span class="token punctuation">.</span><span class="token function">Sqrt</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">nil</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">func</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token function">Sqrt</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token function">Sqrt</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -1434,7 +1698,7 @@ func main() {
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://sakkana.github.io/2008/03/28/Golang/">https://sakkana.github.io/2008/03/28/Golang/</a>
+                    <a href="https://sakkana.github.io/2022/08/07/Golang/">https://sakkana.github.io/2022/08/07/Golang/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1517,56 +1781,12 @@ func main() {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
-            <div class="card">
-                <a href="/2022/01/30/MySql/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="MySQL - 语法0">
-                        
-                        <span class="card-title">MySQL - 语法0</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-01-30
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Ludovico
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                        <span class="chip bg-color">数据库</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2008/03/28/Golang/">
+                <a href="/2022/08/07/Golang/">
                     <div class="card-image">
                         
                         
@@ -1583,7 +1803,7 @@ func main() {
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2008-03-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-08-07
                             </span>
                         <span class="publish-author">
                             
@@ -1603,6 +1823,55 @@ func main() {
                     
                     <a href="/tags/Golang/">
                         <span class="chip bg-color">Golang</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/07/11/6.s081/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="mit 6.s081">
+                        
+                        <span class="card-title">mit 6.s081</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-category">
+                                    操作系统
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+                        <span class="chip bg-color">操作系统</span>
                     </a>
                     
                 </div>
@@ -1788,7 +2057,7 @@ func main() {
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">122.7k</span>&nbsp;字
+                class="white-color">125.2k</span>&nbsp;字
             
             
             
