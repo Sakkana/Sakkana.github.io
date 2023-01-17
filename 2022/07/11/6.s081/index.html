@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.0.0"><link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 6.0.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="魚のブログ" type="application/atom+xml">
 </head>
 
 
@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    10.1k
+                    11.7k
                 </div>
                 
 
@@ -438,10 +438,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="mit-6-s081"><a href="#mit-6-s081" class="headerlink" title="mit 6.s081"></a>mit 6.s081</h1><h2 id="LEC-1"><a href="#LEC-1" class="headerlink" title="LEC 1"></a>LEC 1</h2><blockquote>
-<p>阅读：xv6 book Chapter 1<br>lab: Unix Utilties</p>
-</blockquote>
-<h3 id="操作系统接口"><a href="#操作系统接口" class="headerlink" title="操作系统接口"></a>操作系统接口</h3><table>
+                <h1 id="mit-6-s081"><a href="#mit-6-s081" class="headerlink" title="mit 6.s081"></a>mit 6.s081</h1><h2 id="LEC-1"><a href="#LEC-1" class="headerlink" title="LEC 1"></a>LEC 1</h2><h3 id="操作系统接口"><a href="#操作系统接口" class="headerlink" title="操作系统接口"></a>操作系统接口</h3><table>
 <thead>
 <tr>
 <th>系统调用</th>
@@ -811,7 +808,50 @@
 <h3 id="7-3-demand-paging-按需分配页面"><a href="#7-3-demand-paging-按需分配页面" class="headerlink" title="7.3 demand paging (按需分配页面)"></a>7.3 demand paging (按需分配页面)</h3><p>在 <code>exec</code> 系统调用中，一个新的应用的所有数据都被载入了内存。由于应用可能会很大且硬盘读写速度很慢，因此这个消耗对于用户是很难忍受的——用户打开一个应用要等小圈圈转很久很久才能出反应。<br>为了优化这个行为，现代操作系统内核为用户空间的地址<strong>创建一个页表，但是把所有的 PTE 都设置为 invalid</strong>。<br>一旦遇到 page fault (这个 PTE 是 invalid)，内核从硬盘读取以页面为单位的数据然后映射到用户的地址空间。</p>
 <h3 id="7-4-paging-to-disk"><a href="#7-4-paging-to-disk" class="headerlink" title="7.4 paging to disk"></a>7.4 paging to disk</h3><p>一个应用需要的内存可能超出了物理内存 RAM 所能承载的极限。<br>那怎么办呢？<br>一种想法是： [ user page 的一部分 ] -&gt; [ RAM ]<br>内核把<strong>没有在 RAM 中而是在硬盘中的数据的 PTE 标记为 invalid</strong>。如果应用要是用一块在硬盘中而不是在内存中的数据，就会引发 page falut (这个 PTE 是 invalid)，随后异常处理程序就需要在物理 RAM 中分配页面，把数据从硬盘加载进内存，然后修改相应的 PTE 指向给物理内存。</p>
 <p>如果一个页面需要被加载进内存，但是 RAM 空间不够了，会怎么样呢？<br>这是内核先是放一部分物理内存并还给硬盘并把相应的 PTE 设置为 invalid。<br>但是这个代价是昂贵的。<br>最理想的状态就是：应用只用到他们数据的一部分，并且这部分常驻于内存中。</p>
-<hr>
+<p>—-—</p>
+<h2 id="LEC-9-Interrupt"><a href="#LEC-9-Interrupt" class="headerlink" title="LEC 9 Interrupt"></a>LEC 9 Interrupt</h2><p><strong>驱动</strong>：操作系统中的一段代码，用于管理特定的设备：配置硬件设备，告诉设备做某些事情，处理相应的中断，和要进行 I/O 的进程通信。所有的驱动都在内核中。<br>操作系统需要关注设备，是因为他们会产生中断—— trap 的一种。内核中的异常处理代码会识别中断并交给驱动中断处理程序处理。在 xv6 中，这个分发发生在 <code>devintr</code>。<br>许多驱动代码在两种上下文中执行：</p>
+<ol>
+<li>进程的内核线程中：像 read, write 这样的系统调用要求设备执行 I/O, 等待操作完成。最终设备完成任务并产生中断。</li>
+<li>驱动中断处理程序中：指出什么操作完成了，并在正确的实时机唤醒正在等待的进程，通知硬件开始执行下一个等待中的操作。</li>
+</ol>
+<p>中断和系统调用、page fault 一样，走的都是同一套异常处理机制。<br>但是，系统调用和 page fault 都与当前进程的上下文相关联，而硬件中断无关当前 CPU 运行的进程。<br>外部设备如网卡，UART 等硬件需要被编程，他们有自己的寄存器。</p>
+<h3 id="控制台输入"><a href="#控制台输入" class="headerlink" title="控制台输入"></a>控制台输入</h3><p>控制台驱动通过 RISC-V 上的 UART 硬件读取用户的键盘输入，每次累计一行的输入，处理 backspace，ctrl-u 等特殊字符。用户的 shell 进程通过 read 系统调用从控制台获取这一行输入。每当在 qemu 中打字，qemu 模拟的 UART 会将字符送到 xv6 中。</p>
+<p>对于软件来说，UART 硬件是一些列映射到内存的控制寄存器，他们都所自己的物理地址。但是这些物理地址是指向设备硬件的，而不是 RAM。UART 映射到内存中的地址是从 <code>0X10000000</code> 开始的。每个 UART 寄存器都拥有 1 byte 的大小。</p>
+<ol>
+<li>LSR 寄存器：标志位，输入的字符是否等待被阅读。</li>
+<li>RHR 寄存器：存储输入的字符。每次读一个字符，硬件会从内部的等待队列中删除该字符，并且在队列为空时把 LSR 中的 ready 标志位抹去（因为所有的字符都被读完了，没有要等待的，所以不 ready to be read）。</li>
+<li>THR 寄存器：UART 的传输硬件和接收硬件是独立的，每当软件在 THR 中写一个异界，UART 就会发送这个字节。</li>
+</ol>
+<p>main 中的 consoenit() 初始化了 UART 硬件。这段代码配置 UART，使其能够在收到字节<code>输入</code>的时候能产生<code>接收中断</code>，并且在发送<code>输出</code>数据结束后能够产生<code>传输完成中断</code>。</p>
+<p>xv6 的 shell 通过被 <code>init.c</code> 打开的<strong>文件描述符</strong>来从控制台读取输入。read 系统调用通过 kernel 来到 <code>consoleread()</code>，该函数等待输入的到来并存储在 <code>cons.buf</code> 中，然后拷贝到用户空间，等一整行输入完成后再回到用户空间。若用户还没有输入完一整行，这个 read 进程会一直通过 sleep 系统调用睡眠。</p>
+<h5 id="输入过程"><a href="#输入过程" class="headerlink" title="输入过程"></a>输入过程</h5><ol>
+<li>用户敲击键盘，打出一个字符</li>
+<li>UART 硬件让 RISC-V 产生一个中断，激活 xv6 的中断处理程序</li>
+<li>中断处理程序调用 <code>devintr</code>，通过 sccause 检查该异常发现其来自外部设备</li>
+<li>请求一个叫做 PLIC 的硬件告诉它这个中断来自哪个设备，如果是 UART，就调用 <code>uartintr</code></li>
+<li><code>uartintr</code> 从 UART 读取任何等待输入的字符并交给 <code>consoleintr</code></li>
+<li><code>consoleintr</code> 累计存储在 <code>cons.buf</code> 中的输入字符数量，直到一整行都到来</li>
+<li><code>consoleintr</code> 换新正在等待的 <code>consoleread</code></li>
+<li><code>consoleread</code> 将 <code>cons.buf</code> 中的一整行拷贝到用户空间，然后异常回到用户空间</li>
+</ol>
+<h3 id="控制台输出"><a href="#控制台输出" class="headerlink" title="控制台输出"></a>控制台输出</h3><h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><h5 id="Shell-程序在-console-中输出"><a href="#Shell-程序在-console-中输出" class="headerlink" title="Shell 程序在 console 中输出 $"></a>Shell 程序在 console 中输出 <code>$</code></h5><p>设备将 <code>$</code> 写入 uart 寄存器，uart 发送字符，产生中断。模拟线路的另一端连接了一个虚拟的 uart 芯片，该芯片连接虚拟的 console，再显示在 cosnole 上。</p>
+<p>xv6 启动后运行的第一个进程是 <code>init</code>，该进程首先创建一个文件描述符 0 代表 console，然后复制两份。<br>这最初的三个文件描述符分别是 stdin, stdout 和 stderr。<br>随后 init 使用 exec 启动 shell 程序，这是第二个进程。<br>在 shell 程序中，首先打开这三个文件描述符。<br>然后 while 死循环执行用户的命令。<br>每次都会用 getcmd 打印 <code>$</code>，然后接受用户输入，解析，执行。<br>shell 是通过 fprintf 来打印 <code>$</code> 的。</p>
+<p>(user) sh.c -&gt; <code>getcmd()</code> -&gt; <code>fprintf()</code> -&gt; <code>putc()</code> -&gt; <code>write()</code> -&gt; | (kernel) -&gt; <code>sys_write()</code> -&gt; <code>filewrite()</code> -&gt; <code>consolewrite()</code> -&gt; <code>either_write()</code> 将字符串拷入 -&gt; | (driver) -&gt; <code>uartputc()</code> 写给 uart 设备 -&gt; <code>uartstart()</code> 传输数据给寄存器 -&gt; 中断 -&gt; PLIC - CPU -&gt; 异常处理程序 -&gt; <code>usertrap()</code> -&gt; <code>devintr()</code> -&gt; <code>plic_claim()</code> 获取中断 -&gt; <code>uartintr()</code> 处理该中断 -&gt; <code>uartstart()</code> 将Shell存储在 buffer 中的任意字符送出</p>
+<h5 id="人类在键盘敲击-ls，在-console-中显示-ls"><a href="#人类在键盘敲击-ls，在-console-中显示-ls" class="headerlink" title="人类在键盘敲击 ls，在 console 中显示 $ls"></a>人类在键盘敲击 <code>ls</code>，在 console 中显示 <code>$ls</code></h5><p>键盘连接到了 uart 输入线路，用户敲击键盘输入 <code>ls</code>，字符通过串口线被输送到另一端的 uart 芯片，另一端先将数据 bit 合并成 byte，再产生中断，告诉 CPU 我这里有来自键盘的字符。之后异常处理程序处理来自 uart 的字符。</p>
+<p>(user) sh.c -&gt; <code>gets()</code> -&gt; <code>read()</code> -&gt; | (kernel) <code>sys_read()</code> -&gt; <code>fileread()</code> -&gt; <code>consoleread()</code> -&gt; </p>
+<h5 id="启用中断"><a href="#启用中断" class="headerlink" title="启用中断"></a>启用中断</h5><p>main.c ( <code>consoleinit()</code> ) -&gt; uart.c ( <code>uartinit()</code> ) uart 能够接收中断 -&gt; plic.c ( <code>plicinit()</code> ) PLIC会将中断路由到某一个CPU的核 -&gt; <code>plicinithart()</code> 每个CPU的核都需要调用plicinithart函数表明对于哪些外设中断感兴趣 -&gt; <code>sechedule()</code>运行进程，但是在实际运行进程之前，会执行intr_on函数来使得CPU能接收中断 SIE 寄存器用于表示是否开启中断</p>
+<h2 id="LEC-10-Locking"><a href="#LEC-10-Locking" class="headerlink" title="LEC 10 Locking"></a>LEC 10 Locking</h2><h2 id="LEC-11-Scheduling"><a href="#LEC-11-Scheduling" class="headerlink" title="LEC 11 Scheduling"></a>LEC 11 Scheduling</h2><h3 id="复用"><a href="#复用" class="headerlink" title="复用"></a>复用</h3><p>xv6 在两种情况下会切换一个进程：</p>
+<ol>
+<li>进程等待 I/O，父进程等待子进程死亡，遇到 sleep 系统调用</li>
+<li>阶段性强制进程切换</li>
+</ol>
+<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>从一个用户进程切换到另一个用户进程包含以下几个步骤。</p>
+<ol>
+<li>user thread -&gt; kernel thread:  save user registers in <code>trapframe</code></li>
+<li>Kernel thread -&gt; scheduler thread: save kernel registers in <code>context</code></li>
+<li>Scheduler thread -&gt; kernel thread: restore kernel registers from <code>context</code></li>
+<li>Kernel thread -&gt; user thread: restore user registers from <code>trapframe</code></li>
+</ol>
 <h2 id="LAB-2-System-calls"><a href="#LAB-2-System-calls" class="headerlink" title="LAB 2 - System calls"></a>LAB 2 - System calls</h2><p><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/labs/syscall.html">lab 2 - System calls 地址</a></p>
 <p>lab2 花了我挺久的说实话。<br>这个 lab 大头在于修改内核的代码的过程中，理解 xv6 的进程、内存、系统调用是如何工作的，通过自己写代码的方式为 xv6 添加新的系统调用。</p>
 <h3 id="trace"><a href="#trace" class="headerlink" title="trace"></a>trace</h3><h5 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h5><blockquote>
@@ -991,13 +1031,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/08/07/Golang/">
+                <a href="/2022/08/01/QT+openGL/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Golang">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="QT环境下使用openGL">
                         
-                        <span class="card-title">Golang</span>
+                        <span class="card-title">QT环境下使用openGL</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1008,14 +1048,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-01
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Golang/" class="post-category">
-                                    Golang
+                            <a href="/categories/QT/" class="post-category">
+                                    QT
                                 </a>
                             
                             
@@ -1025,8 +1065,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Golang/">
-                        <span class="chip bg-color">Golang</span>
+                    <a href="/tags/QT/">
+                        <span class="chip bg-color">QT</span>
                     </a>
                     
                 </div>
@@ -1252,7 +1292,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2022-2022</span>
+                <span id="year">2022-2023</span>
             
             <span id="year">2022</span>
             <a href="/about" target="_blank">Ludovico</a>
@@ -1261,7 +1301,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">125.2k</span>&nbsp;字
+                class="white-color">128.5k</span>&nbsp;字
             
             
             
