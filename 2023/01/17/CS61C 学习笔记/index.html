@@ -418,7 +418,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    253
+                    1.1k
                 </div>
                 
 
@@ -438,15 +438,114 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="CS61C-学习笔记"><a href="#CS61C-学习笔记" class="headerlink" title="CS61C 学习笔记"></a>CS61C 学习笔记</h2><h3 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h3><h4 id="1-Number-Representation"><a href="#1-Number-Representation" class="headerlink" title="1: Number Representation"></a>1: Number Representation</h4><p><strong>Depending on the context, the same sequence of bits may represent different things.</strong></p>
+                <h1 id="CS61C-学习笔记"><a href="#CS61C-学习笔记" class="headerlink" title="CS61C 学习笔记"></a>CS61C 学习笔记</h1><h2 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h2><h3 id="1-Number-Representation"><a href="#1-Number-Representation" class="headerlink" title="1: Number Representation"></a>1: Number Representation</h3><h4 id="1-Pre-Check"><a href="#1-Pre-Check" class="headerlink" title="1 Pre-Check"></a>1 Pre-Check</h4><p><strong>Depending on the context, the same sequence of bits may represent different things.</strong></p>
 <p>正确。同一位模式可能代表不同的含义，比如补码下的负数会和无符号数编码相同，如四位编码下的 <code>1111</code> 可能代表 -1，也可能代表 15。而浮点数按照 IEEE 754 编码也有他自己的解释方式。</p>
 <p><strong>It is possible to get an overflow error in Two’s Complement when adding numbers of opposite signs.</strong></p>
 <p>错误。在补码模式下正数和负数相加并不会溢出。</p>
-<p>补码下，数值的取值范围是 [$-2^{n - 1}$, $2^{n - 1} - 1$]。只有在上界做加法，下界做减法才会溢出。</p>
+<p>补码下，数值的取值范围是 [-2<sup>n - 1</sup>, 2<sup>n - 1</sup> - 1$]。只有在上界做加法，下界做减法才会溢出。</p>
 <p><strong>If you interpret a N bit Two’s complement number as an unsigned number, negative numbers would be smaller than positive numbers.</strong></p>
-<p>错误。正数的范围是 [$0$, $2^{n - 1} - 1$]，位模式是 [0000…0000, 0111…111]。</p>
-<p>而负数的取值是 [$2^{n - 1}$, $-1$]，位模式是 [1000…0000, 1111…1111]。</p>
+<p>错误。正数的范围是 [0, 2<sup>n - 1</sup> - 1]，位模式是 [<code>0</code>000…0000, <code>0</code>111…111]。</p>
+<p>而负数的取值是 [2<sup>n - 1</sup>, -1]，位模式是 [<code>1</code>000…0000, <code>1</code>111…1111]。</p>
 <p>因此将一个用补码表示的负数强转成 <code>unsigned</code> 之后会比正数大。</p>
+<p><strong>If you interpret an N bit Bias notation number as an unsigned number (assume there are negative numbers for the given bias), negative numbers would be smaller than positive numbers.</strong></p>
+<p>正确。一般这个偏置会选择 2<sup>n</sup>。如此一来，最小的负数 -2<sup>n</sup> 会被编码成全 0，相当于整个数轴都向右移动 2<sup>n</sup> 位（十进制）。</p>
+<p>因此，整个域都被平移到了[0, +∞]。可以直接比较两个数的大小，而不用考虑符号。</p>
+<p><strong>We can represent fractions and decimals in our given number representation formats (unsigned, biased, and Two’s Complement).</strong></p>
+<p>错误。这些编码只规定了定点整数的编码方式。后面会用浮点数的表示方式来表示分数。</p>
+<h4 id="2-Unsigned-Integers"><a href="#2-Unsigned-Integers" class="headerlink" title="2 Unsigned Integers"></a>2 Unsigned Integers</h4><h6 id="2-1-binary-decimal-and-hex-相互转化。"><a href="#2-1-binary-decimal-and-hex-相互转化。" class="headerlink" title="2.1 binary, decimal, and hex 相互转化。"></a>2.1 binary, decimal, and hex 相互转化。</h6><p>1、</p>
+<p>b: 0b1001_0011</p>
+<p>h: 0x93</p>
+<p>d: 9 * 16 + 3 = 147</p>
+<p>2、</p>
+<p>d: 63</p>
+<p>b: 0b0100_0000 - 1 = 0x0011_1111</p>
+<p>h: 0x3f</p>
+<p>3、</p>
+<p>b: 0b0010_0100</p>
+<p>h: 0x24</p>
+<p>d: 2 * 16 + 4 = 36</p>
+<p>4、</p>
+<p>d: 0</p>
+<p>b: 0b0</p>
+<p>h: 0x0</p>
+<p>5、</p>
+<p>d: 437</p>
+<p>h: 437 = 1 * 16 * 16 + 11 * 16 + 5 = 0x1b5</p>
+<p>b: 0b0001_1011_0101</p>
+<p>6、</p>
+<p>h: 0x0123</p>
+<p>b: 0b0000_0001_0010_0011</p>
+<p>d: 1 * 256 + 2 * 16 + 3 = 291</p>
+<p>7、</p>
+<p>0xD3AD = 0b1101_0011_1010_1101</p>
+<p>0xB33F = 0b1011_0011_0011_1111</p>
+<p>0x7EC4 = 0b0111_1110_1010_0100</p>
+<h5 id="2-2-IEC-prefixing-system"><a href="#2-2-IEC-prefixing-system" class="headerlink" title="2.2 IEC prefixing system"></a>2.2 IEC prefixing system</h5><p><img src="https://pic.imgdb.cn/item/63c6c9a7be43e0d30eca760a.jpg"></p>
+<p>(a)</p>
+<p>2<sup>16</sup> = 64 K</p>
+<p>2<sup>27</sup> = 128 M</p>
+<p>2<sup>43</sup> = 8 T</p>
+<p>2<sup>36</sup> = 64 G</p>
+<p>2<sup>34</sup> = 16 G</p>
+<p>2<sup>61</sup> = 2 E</p>
+<p>2<sup>47</sup> = 128 T</p>
+<p>2<sup>59</sup> = 512 P</p>
+<p>(b)</p>
+<p>2 K = 2<sup>11</sup></p>
+<p>512 K = 2<sup>19</sup></p>
+<p>16 M = 2<sup>24</sup></p>
+<p>256 P = 2<sup>58</sup></p>
+<p>64 G = 2<sup>36</sup></p>
+<p>128 = 2<sup>67</sup></p>
+<h5 id="3-Signed-Integers"><a href="#3-Signed-Integers" class="headerlink" title="3 Signed Integers"></a>3 Signed Integers</h5><p>我发现国外的移码和国内的表示不太一样，我是按照 hust 谭志虎的教材来写的。</p>
+<p><img src="https://pic.imgdb.cn/item/63c6cb9abe43e0d30ece8703.jpg"></p>
+<p><img src="https://pic.imgdb.cn/item/63c6cbb1be43e0d30ecebc9c.jpg"></p>
+<p>(a) What is the largest integer? What is the result of adding one to that number? </p>
+<ol>
+<li>Unsigned?     2<sup>n</sup> - 1 = 2<sup>8</sup> - 1 = 255, 0</li>
+<li>Biased?  [-128, 127], max: 127, -128</li>
+<li>Two’s Complement? 2<sup>n - 1</sup> - 1, 127, -128</li>
+</ol>
+<p> (b) How would you represent the numbers 0, 1, and -1? </p>
+<ol>
+<li>Unsigned?    <code>0000...0000</code>, <code>0000...0001</code>, ×</li>
+<li>Biased?  <code>1000...0000</code>, <code>1000...0001</code>, <code>0111...1111</code></li>
+<li>Two’s Complement?  <code>0000...0000</code>, <code>0000...0001</code>, <code>1111...1111</code></li>
+</ol>
+<p>(c) How would you represent 17 and -17? </p>
+<ol>
+<li><p>Unsigned?  <code>01_0001</code>, <code>11_0001</code></p>
+</li>
+<li><p>Biased?  <code>11_0001</code>, <code>00_1111</code></p>
+</li>
+<li><p>Two’s Complement? <code>01_0001</code>,  <code>10_1111</code></p>
+</li>
+</ol>
+<h5 id="4-Arithmetic-and-Counting"><a href="#4-Arithmetic-and-Counting" class="headerlink" title="4 Arithmetic and Counting"></a>4 Arithmetic and Counting</h5><p><img src="https://pic.imgdb.cn/item/63c6d7eabe43e0d30ee79795.jpg"></p>
+<p>(a) Compute the decimal result of the following arithmetic expressions involving <code>6-bit Two’s Complement numbers</code> as they would be calculated on a computer. Do any of these result in an overflow? Are all these operations possible? </p>
+<p>6 位补码能表示的范围是 [-64, 63]</p>
+<ol>
+<li>0b01_1001 − 0b01_0111 = 0b00_0010 = 18 不会溢出</li>
+<li>0b10_0011 + 0b11_1010  = 0b101_1101 = 93 会溢出 -&gt; 0b01_1101 = 29</li>
+<li>0x3B + 0x06 = 0x41 = 65 会溢出 -&gt; 0x41 = 0b0100_0001 -&gt; 0b00_0001 = 1 = (-5 + 6)</li>
+<li>0xFF − 0xAA = 0x55 = 85 会溢出 -&gt; 0b101_0101 -&gt; 0b01_0101 = 21，大意了没有闪，这是不可能的，因为 ff 需要 8 位，但是最多只有 6 位…</li>
+<li>0b00_0100 − 0b00_1000 = 0b11_1100 = -4 不会溢出</li>
+</ol>
+<p>(b) What is the least number of bits needed to represent the following ranges using any number representation scheme? </p>
+<ol>
+<li>0 to 256：2<sup>8</sup> = 256，但实际上 8 位只能表示 [0, 257]，因此需要 9 位</li>
+<li>-7 to 56 ：2<sup>6</sup> = 64，-7 ~ 56 一共 64 个数字</li>
+<li>64 to 127 and -64 to -127：一共  128 个数字，需要 7 位</li>
+<li>Address every byte of a 12 TiB chunk of memory，1 T = 10<sup>40</sup> ，12 需要 4 位，因此需要 44 位</li>
+</ol>
+<p>(c) How many distinct numbers can the following schemes represent? How many distinct positive numbers?</p>
+<ol>
+<li>10-bit unsigned ：2<sup>10</sup> = 1024，一共可以表示 1024 个状态，范围是[0, 1023]，最大数字是 1023</li>
+<li>8-bit Two’s Complement ：[-128, 127]，可以表示 2<sup>8</sup> = 256 个状态，最大数字是 127</li>
+<li>8-bit One’s Complement ：[-127， 127]，除了符号位逐位取反，和原码的表示范围一样，能表示 256 种状态，最大数字是 127</li>
+<li>6-bit biased, with a bias of -30 ：6-bit  可以表示 64 种状态，[0, 63]，偏移 30 后，范围是 [-34, 33]，最大数字是 33，这是用 00_0000 来表示 -34，用 11_1111 来表示 33。</li>
+<li>10-bit sign-magnitude：[10_0000_0000, 01_1111_1111]，2<sup>10</sup> 可以表示 1024 种状态，但是实际上有两个 0，因此只能表示 1023 个数字，最大值为 511</li>
+</ol>
 <h3 id="Lab"><a href="#Lab" class="headerlink" title="Lab"></a>Lab</h3><h3 id="Homework"><a href="#Homework" class="headerlink" title="Homework"></a>Homework</h3><h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3>
                 
             </div>
@@ -832,7 +931,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">128.8k</span>&nbsp;字
+                class="white-color">129.6k</span>&nbsp;字
             
             
             
