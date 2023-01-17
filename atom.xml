@@ -6,7 +6,7 @@
   <link href="https://sakkana.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakkana.github.io/"/>
-  <updated>2023-01-17T15:36:03.311Z</updated>
+  <updated>2023-01-17T15:44:27.207Z</updated>
   <id>https://sakkana.github.io/</id>
   
   <author>
@@ -21,14 +21,14 @@
     <link href="https://sakkana.github.io/2023/01/17/CS61C%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     <id>https://sakkana.github.io/2023/01/17/CS61C%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
     <published>2023-01-17T03:46:01.000Z</published>
-    <updated>2023-01-17T15:36:03.311Z</updated>
+    <updated>2023-01-17T15:44:27.207Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="CS61C-学习笔记"><a href="#CS61C-学习笔记" class="headerlink" title="CS61C 学习笔记"></a>CS61C 学习笔记</h2>]]></content>
+    <content type="html"><![CDATA[<h2 id="CS61C-学习笔记"><a href="#CS61C-学习笔记" class="headerlink" title="CS61C 学习笔记"></a>CS61C 学习笔记</h2><h3 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h3><h4 id="1-Number-Representation"><a href="#1-Number-Representation" class="headerlink" title="1: Number Representation"></a>1: Number Representation</h4><p><strong>Depending on the context, the same sequence of bits may represent different things.</strong></p><p>正确。同一位模式可能代表不同的含义，比如补码下的负数会和无符号数编码相同，如四位编码下的 <code>1111</code> 可能代表 -1，也可能代表 15。而浮点数按照 IEEE 754 编码也有他自己的解释方式。</p><p><strong>It is possible to get an overflow error in Two’s Complement when adding numbers of opposite signs.</strong></p><p>错误。在补码模式下正数和负数相加并不会溢出。</p><p>补码下，数值的取值范围是 [$2^{n - 1}$, $2^{n - 1} - 1$]。只有在上界做加法，下界做减法才会溢出。</p><h3 id="Lab"><a href="#Lab" class="headerlink" title="Lab"></a>Lab</h3><h3 id="Homework"><a href="#Homework" class="headerlink" title="Homework"></a>Homework</h3><h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3>]]></content>
     
     
       
       
-    <summary type="html">&lt;h2 id=&quot;CS61C-学习笔记&quot;&gt;&lt;a href=&quot;#CS61C-学习笔记&quot; class=&quot;headerlink&quot; title=&quot;CS61C 学习笔记&quot;&gt;&lt;/a&gt;CS61C 学习笔记&lt;/h2&gt;</summary>
+    <summary type="html">&lt;h2 id=&quot;CS61C-学习笔记&quot;&gt;&lt;a href=&quot;#CS61C-学习笔记&quot; class=&quot;headerlink&quot; title=&quot;CS61C 学习笔记&quot;&gt;&lt;/a&gt;CS61C 学习笔记&lt;/h2&gt;&lt;h3 id=&quot;Discussion&quot;&gt;&lt;a href=&quot;#Discussion&quot;</summary>
       
     
     
