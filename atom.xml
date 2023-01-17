@@ -6,7 +6,7 @@
   <link href="https://sakkana.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakkana.github.io/"/>
-  <updated>2022-12-15T08:38:19.848Z</updated>
+  <updated>2023-01-17T15:36:03.311Z</updated>
   <id>https://sakkana.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CS61C 学习笔记</title>
+    <link href="https://sakkana.github.io/2023/01/17/CS61C%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <id>https://sakkana.github.io/2023/01/17/CS61C%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</id>
+    <published>2023-01-17T03:46:01.000Z</published>
+    <updated>2023-01-17T15:36:03.311Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="CS61C-学习笔记"><a href="#CS61C-学习笔记" class="headerlink" title="CS61C 学习笔记"></a>CS61C 学习笔记</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;CS61C-学习笔记&quot;&gt;&lt;a href=&quot;#CS61C-学习笔记&quot; class=&quot;headerlink&quot; title=&quot;CS61C 学习笔记&quot;&gt;&lt;/a&gt;CS61C 学习笔记&lt;/h2&gt;</summary>
+      
+    
+    
+    
+    <category term="Golang" scheme="https://sakkana.github.io/categories/Golang/"/>
+    
+    
+    <category term="Golang" scheme="https://sakkana.github.io/tags/Golang/"/>
+    
+  </entry>
   
   <entry>
     <title>Golang 基础</title>
@@ -482,30 +506,6 @@
     
     
     <category term="C/C++" scheme="https://sakkana.github.io/tags/C-C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySql - 9 事务，并发问题</title>
-    <link href="https://sakkana.github.io/2022/03/14/Mysql9%20%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/"/>
-    <id>https://sakkana.github.io/2022/03/14/Mysql9%20%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/</id>
-    <published>2022-03-14T15:51:01.000Z</published>
-    <updated>2022-03-15T16:46:10.208Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="事务，并发问题"><a href="#事务，并发问题" class="headerlink" title="事务，并发问题"></a>事务，并发问题</h1><h3 id="事务操作"><a href="#事务操作" class="headerlink" title="事务操作"></a>事务操作</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">START</span> <span class="token keyword">TRANSACTION</span><span class="token punctuation">;</span><span class="token comment">-- 开启事务</span><span class="token keyword">COMMIT</span><span class="token punctuation">;</span> <span class="token operator">/</span> <span class="token keyword">ROLLBACK</span><span class="token punctuation">;</span><span class="token comment">-- 提交、回滚事务</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><h3 id="事务四大特性"><a href="#事务四大特性" class="headerlink" title="事务四大特性"></a>事务四大特性</h3><ul><li><p>原子性 - 事务中的一系列操作同生共死</p></li><li><p>一致性 - 能量守恒</p></li><li><p>隔离性 - 互不干扰</p></li><li><p>持久性 - 永久写入磁盘</p></li></ul><h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p><img src="https://img-blog.csdnimg.cn/f48e1a3807ad4955adc2baf97aa1ecd0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQW1va3Jf,size_20,color_FFFFFF,t_70,g_se,x_16" alt="隔离级别"><img src="data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw=="></p><h4 id="查看事务隔离级别"><a href="#查看事务隔离级别" class="headerlink" title="查看事务隔离级别"></a>查看事务隔离级别</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SELECT</span> @<span class="token variable">@TRANSACTION</span> IOSLATION<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><h4 id="设置事务隔离级别"><a href="#设置事务隔离级别" class="headerlink" title="设置事务隔离级别"></a>设置事务隔离级别</h4><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">SET</span> <span class="token punctuation">[</span><span class="token keyword">SESSION</span><span class="token operator">|</span><span class="token keyword">GLOBAL</span><span class="token punctuation">]</span> <span class="token keyword">TRANSACTION</span> <span class="token keyword">ISOLATION</span> <span class="token keyword">LEVEL</span> <span class="token punctuation">[</span>隔离级别<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;事务，并发问题&quot;&gt;&lt;a href=&quot;#事务，并发问题&quot; class=&quot;headerlink&quot; title=&quot;事务，并发问题&quot;&gt;&lt;/a&gt;事务，并发问题&lt;/h1&gt;&lt;h3 id=&quot;事务操作&quot;&gt;&lt;a href=&quot;#事务操作&quot; class=&quot;headerlink&quot; titl</summary>
-      
-    
-    
-    
-    <category term="数据库" scheme="https://sakkana.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-    <category term="数据库" scheme="https://sakkana.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
