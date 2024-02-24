@@ -14,7 +14,7 @@
 <meta property="og:description" content="论文阅读这个博客记录一下我读过的一些论文，用于准备考研复试 &#x2F; ra 申请和日常学习。    题目 出处 主题 发表时间 开始阅读 结束阅读    Software-Defined Network Assimilation: Bridging the Last Mile Towards Centralized Network Configuration Management with N">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-02-24T21:21:09.000Z">
-<meta property="article:modified_time" content="2024-02-24T21:28:58.050Z">
+<meta property="article:modified_time" content="2024-02-24T21:49:29.665Z">
 <meta property="article:author" content="Sakana">
 <meta name="twitter:card" content="summary">
     
@@ -112,7 +112,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">论文阅读</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">论文阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#how-to-read-a-paper"><span class="toc-number">1.1.</span> <span class="toc-text">how to read a paper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.1.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%8B%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.2.</span> <span class="toc-text">看结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">阅读顺序</span></a></li></ol></li></ol></li></ol>
       </div>
     
   </span>
@@ -197,6 +197,50 @@
 <td align="center"></td>
 </tr>
 </tbody></table>
+<h2 id="how-to-read-a-paper"><a href="#how-to-read-a-paper" class="headerlink" title="how to read a paper"></a>how to read a paper</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ol>
+<li><em>废纸</em>，不值得了解</li>
+<li><em>值得了解</em>的论文，快速浏览，知道方法和大致思路，不用深究（大部分论文）</li>
+<li><em>值得精读</em>，有很大启发性和突破性，写作良好，经得住考验</li>
+<li><em>经典论文</em>，搞清楚方法和细节，自己尝试复现</li>
+</ol>
+<h3 id="看结构"><a href="#看结构" class="headerlink" title="看结构"></a>看结构</h3><p>八股文结构：</p>
+<ol>
+<li>Abstract（开头一小段）</li>
+<li>Introduction（1 - 2 页）- 方法、创新点、大致实验效果</li>
+<li>Related works（在最后）</li>
+<li>Conclusions（结尾）</li>
+<li>Approach（具体细节，可能拆分为很多章节）</li>
+<li>Experiments（实验）</li>
+</ol>
+<h3 id="阅读顺序"><a href="#阅读顺序" class="headerlink" title="阅读顺序"></a>阅读顺序</h3><blockquote>
+<p>原则：不要过于纠结某一句话，侧重理解 author 的想法，切忌从头到尾字斟句酌。</p>
+</blockquote>
+<ol>
+<li>读 1 - 2 遍 Abstract<ul>
+<li>I. 处理什么问题</li>
+<li>II. 提出了什么方法和创新点</li>
+<li>III. 方法取得了什么效果</li>
+</ul>
+</li>
+<li>跳过中间部分，直接看论文的实验部分<ul>
+<li>I. 实验环境的搭建（数据集、测试方法、评估指标）</li>
+<li>II. 作者跟什么方法进行比较（本领域景点方法，SOTA (state-of-the-art)）</li>
+<li>III. 取得了何种定性&#x2F;定量的效果（消融实验证明有效性）</li>
+</ul>
+</li>
+</ol>
+<p>针对 [分类 2] 中的论文读到这里就可以结束了，对于 [分类 3&#x2F;4] 可以继续读下去。</p>
+<ol start="3">
+<li>读 Introduction  - 更详细版的 Abstract</li>
+<li>读 Approach，细节性的推导和算法实现（对于经典论文慢下来反复看这部分，讲给别人听）</li>
+<li>Related Works - 扫一扫，可以跳过</li>
+<li>用审稿人的视角问自己一些问题<ul>
+<li>作者提出了什么方法和创新点</li>
+<li>方法取得了什么效果</li>
+<li>方法具有什么局限性和改进之处</li>
+</ul>
+</li>
+</ol>
 
   </div>
 </article>
@@ -224,7 +268,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">论文阅读</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">论文阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#how-to-read-a-paper"><span class="toc-number">1.1.</span> <span class="toc-text">how to read a paper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">1.1.1.</span> <span class="toc-text">分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%8B%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.2.</span> <span class="toc-text">看结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">阅读顺序</span></a></li></ol></li></ol></li></ol>
       </div>
     
 
