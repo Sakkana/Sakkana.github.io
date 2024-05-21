@@ -51,7 +51,21 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 7.1.1"></head>
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -133,6 +147,12 @@
 <section id="writing">
   <span class="h1"><a href="/archives/">Blog</a></span>
   
+  <span class="h2">Topics</span>
+  <span class="widget tagcloud">
+    <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/PL/" style="font-size: 10px;">PL</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/config/" style="font-size: 20px;">config</a> <a href="/tags/encrypted/" style="font-size: 10px;">encrypted</a> <a href="/tags/research/" style="font-size: 10px;">research</a>
+  </span>
+  <span class="h2">Most recent</span>
+  
   <ul class="post-list">
     
     
@@ -144,7 +164,47 @@
     <div class="meta">
       
         
-          <time datetime="2024-05-12T19:02:54.726Z" class="dt-published" itemprop="datePublished">2024-05-13</time>
+          <time datetime="2024-05-21T08:20:28.267Z" class="dt-updated" itemprop="dateModified">2024-05-21</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2024/05/21/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1archlinux%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5/">记录一次archlinux更新失败</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2024-05-21T08:19:57.248Z" class="dt-updated" itemprop="dateModified">2024-05-21</time>
+        
+      
+    </div>
+
+
+        <span>
+    
+        <a class="" href="/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/">SpringBoot速通</a>
+    
+
+
+</span>
+      </li>
+    
+      <li class="post-item">
+        
+    <div class="meta">
+      
+        
+          <time datetime="2024-05-12T19:32:21.169Z" class="dt-updated" itemprop="dateModified">2024-05-13</time>
         
       
     </div>
@@ -164,7 +224,7 @@
     <div class="meta">
       
         
-          <time datetime="2024-04-20T14:22:10.000Z" class="dt-published" itemprop="datePublished">2024-04-20</time>
+          <time datetime="2024-04-20T14:35:00.213Z" class="dt-updated" itemprop="dateModified">2024-04-20</time>
         
       
     </div>
@@ -172,7 +232,7 @@
 
         <span>
     
-        <a class="" href="/2024/04/20/CTFWriteUp-Web%E7%BB%83%E4%B9%A0/">CTFWriteUp-练习</a>
+        <a class="" href="/2024/02/23/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/">常用工具网站</a>
     
 
 
@@ -184,27 +244,7 @@
     <div class="meta">
       
         
-          <time datetime="2024-04-17T00:37:47.324Z" class="dt-published" itemprop="datePublished">2024-04-17</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/2024/04/17/hello-world/">Hello World</a>
-    
-
-
-</span>
-      </li>
-    
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2024-02-24T21:21:09.000Z" class="dt-published" itemprop="datePublished">2024-02-25</time>
+          <time datetime="2024-04-20T14:29:42.709Z" class="dt-updated" itemprop="dateModified">2024-04-20</time>
         
       
     </div>
@@ -213,26 +253,6 @@
         <span>
     
         <a class="" href="/2024/02/25/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-%F0%9F%9A%80/">论文阅读 🚀</a>
-    
-
-
-</span>
-      </li>
-    
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2024-02-22T22:22:26.000Z" class="dt-published" itemprop="datePublished">2024-02-23</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/2024/02/23/Rust%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0/">Rust学习小记</a>
     
 
 
@@ -331,6 +351,16 @@
 <!-- search -->
 
 <!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2e6da3c375c8a87f5b664cea6d4cb29c";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
 
 <!-- Cloudflare Analytics -->
 

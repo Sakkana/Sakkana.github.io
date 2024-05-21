@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="概述简化 Spring 的开发流程，加速开发过程。 Spring 框架的特性非侵入式：基于Spring开发的应用中的对象可以不依赖于Spring的API 控制反转：IOC——Inversion of Control，指的是将对象的创建权交给 Spring 去创建。使用 Spring 之前，对象的创建都是由我们自己在代码中new创建。而使用 Spring 之后。对象的创建都是给了 Spring 框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot速通">
+<meta property="og:url" content="http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/index.html">
+<meta property="og:site_name" content="Welcome to 🐟 の 小窝">
+<meta property="og:description" content="概述简化 Spring 的开发流程，加速开发过程。 Spring 框架的特性非侵入式：基于Spring开发的应用中的对象可以不依赖于Spring的API 控制反转：IOC——Inversion of Control，指的是将对象的创建权交给 Spring 去创建。使用 Spring 之前，对象的创建都是由我们自己在代码中new创建。而使用 Spring 之后。对象的创建都是给了 Spring 框架">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pdai.tech/images/spring/springframework/spring-framework-introduce-8.png">
+<meta property="article:published_time" content="2024-05-21T00:00:41.000Z">
+<meta property="article:modified_time" content="2024-05-21T08:19:57.248Z">
+<meta property="article:author" content="Sakana">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pdai.tech/images/spring/springframework/spring-framework-introduce-8.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/avatar.jpg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
+        
+      
+    
+    <!-- title -->
+    <title>SpringBoot速通</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/05/21/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1archlinux%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&text=SpringBoot速通"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&is_video=false&description=SpringBoot速通"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot速通&body=Check out this article: http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&name=SpringBoot速通&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&t=SpringBoot速通"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-%E6%A1%86%E6%9E%B6%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">Spring 框架的特性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring-%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">Spring 的组件</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-%E7%BC%BA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">Spring 缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA-SpringBoot-%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.</span> <span class="toc-text">构建 SpringBoot 项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E9%80%9A%E8%BF%87-maven-%E6%89%8B%E5%B7%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">方式一：通过 maven 手工配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDEA-%E5%86%85%E7%BD%AE-springboot-initializer-%E6%9E%84%E5%BB%BA"><span class="toc-number">3.2.</span> <span class="toc-text">IDEA 内置 springboot initializer 构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spirng-%E5%AE%98%E7%BD%91%E9%A1%B9%E7%9B%AE%E6%A8%A1%E6%9D%BF%E6%9E%84%E5%BB%BA"><span class="toc-number">3.3.</span> <span class="toc-text">spirng 官网项目模板构建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springboot-%E8%B5%B7%E6%AD%A5%E4%BE%9D%E8%B5%96%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">springboot 起步依赖原理分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#spring-boot-starter-parent"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">spring-boot-starter-parent</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#spring-boot-starter-web"><span class="toc-number">4.0.0.2.</span> <span class="toc-text">spring-boot-starter-web</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringBoot-%E9%85%8D%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">SpringBoot 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%86%E7%B1%BB"><span class="toc-number">5.1.</span> <span class="toc-text">配置文件分类</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#properties"><span class="toc-number">5.1.0.1.</span> <span class="toc-text">properties</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#yaml-yml"><span class="toc-number">5.1.0.2.</span> <span class="toc-text">yaml &#x2F; yml</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yaml"><span class="toc-number">5.2.</span> <span class="toc-text">yaml</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#properties-1"><span class="toc-number">5.2.0.1.</span> <span class="toc-text">properties</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xml"><span class="toc-number">5.2.0.2.</span> <span class="toc-text">xml</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#yml"><span class="toc-number">5.2.0.3.</span> <span class="toc-text">yml</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.3.</span> <span class="toc-text">读取配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#profile"><span class="toc-number">5.4.</span> <span class="toc-text">profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.5.</span> <span class="toc-text">内部配置加载顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.6.</span> <span class="toc-text">外部配置加载顺序</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SpringBoot速通
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Sakana</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-05-21T00:00:41.000Z" class="dt-published" itemprop="datePublished">2024-05-21</time>
+        
+        (Updated: <time datetime="2024-05-21T08:19:57.248Z" class="dt-updated" itemprop="dateModified">2024-05-21</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Java/" rel="tag">Java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>简化 Spring 的开发流程，加速开发过程。</p>
+<h3 id="Spring-框架的特性"><a href="#Spring-框架的特性" class="headerlink" title="Spring 框架的特性"></a>Spring 框架的<strong>特性</strong></h3><p>非侵入式：基于Spring开发的应用中的对象可以<code>不依赖</code>于Spring的API</p>
+<p>控制反转：IOC——Inversion of Control，指的是将对象的创建权交给 Spring 去创建。使用 Spring 之前，对象的创建都是由我们自己在代码中new创建。而使用 Spring 之后。<code>对象的创建都是给了 Spring 框架</code>。</p>
+<p>依赖注入：DI——Dependency Injection，是指依赖的对象<code>不需要手动调用 setXX 方法去设置</code>，而是<code>通过配置赋值</code>。</p>
+<p>面向切面编程：Aspect Oriented Programming——AOP</p>
+<p>容器：Spring 是一个容器，因为它包含并且<code>管理应用对象的生命周期</code></p>
+<p>组件化：Spring 实现了使用简单的组件配置组合成一个复杂的应用。在 Spring 中可以使用<code>XML</code>和<code>Java注解</code>组合这些对象。</p>
+<p>一站式：在 IOC 和 AOP 的基础上可以整合各种企业应用的开源框架和优秀的第三方类库（实际上 Spring 自身也提供了表现层的 SpringMVC 和持久层的 Spring JDBC）</p>
+<h5 id="Spring-的组件"><a href="#Spring-的组件" class="headerlink" title="Spring 的组件"></a>Spring 的组件</h5><p><img src="https://pdai.tech/images/spring/springframework/spring-framework-introduce-8.png" alt="img"></p>
+<p>最重要的是 <code>Core Containers</code>。</p>
+<ul>
+<li>Beans：基础部分，提供 IOC 和 DI。</li>
+<li>Core：封装 Spring 底层（资源访问、类型转换及一些常用工具类）。</li>
+<li>Context：建立在 Core 和 Beans 模块的基础之上，<ul>
+<li>集成 Beans 模块功能</li>
+<li>添加资源绑定、数据验证、国际化、Java EE 支持、容器生命周期、事件传播等</li>
+<li>ApplicationContext 接口是上下文模块的焦点。</li>
+</ul>
+</li>
+<li>SpEL：表达式语言支持<ul>
+<li>改属性值</li>
+<li>方法调用</li>
+<li>访问及修改数组、容器和索引器</li>
+<li>命名变量</li>
+<li>支持算数和逻辑运算</li>
+<li>从 Spring 容器获取 Bean</li>
+<li>列表投影、选择和一般的列表聚合等</li>
+</ul>
+</li>
+</ul>
+<p><code>Data Access / Integration</code></p>
+<ul>
+<li><p>JDBC 模块：提供一个 JDBC 样例模板</p>
+<ul>
+<li>消除传统冗长的 JDBC 编码</li>
+<li>事务控制</li>
+</ul>
+</li>
+<li><p>ORM 模块：提供与流行的“对象-关系”映射框架无缝集成的 API</p>
+<ul>
+<li>包括 JPA、JDO、Hibernate 和 MyBatis 等</li>
+<li>使用 Spring 事务管理，无需额外控制事务</li>
+</ul>
+</li>
+<li><p>OXM 模块：提供了一个支持 Object &#x2F;XML 映射的抽象层实现</p>
+<ul>
+<li>如 JAXB、Castor、XMLBeans、JiBX 和 XStream</li>
+<li>将 Java 对象映射成 XML 数据，或者将XML 数据映射成 Java 对象</li>
+</ul>
+</li>
+<li><p>JMS 模块：指 Java 消息服务提供一套 “消息生产者、消息消费者”模板</p>
+<ul>
+<li>用于更加简单的使用 JMS，JMS 用于用于在两个应用程序之间，或分布式系统中发送消息，进行异步通信。</li>
+</ul>
+</li>
+<li><p>Transactions 事务模块：支持编程和声明式事务管理</p>
+</li>
+</ul>
+<p><code>Web  模块</code></p>
+<ul>
+<li><p>Web：提供了基本的 Web 开发集成特性</p>
+<ul>
+<li>多文件上传</li>
+<li>使用的 Servlet 监听器的 IOC 容器初始化</li>
+<li>Web 应用上下文</li>
+</ul>
+</li>
+<li><p>Servlet：提供了一个 Spring MVC Web 框架实现</p>
+<ul>
+<li>基于注解的请求资源注入</li>
+<li>更简单的数据绑定</li>
+<li>数据验证等</li>
+</ul>
+</li>
+<li><p>WebSocket</p>
+</li>
+<li><p>Portlet</p>
+</li>
+</ul>
+<h2 id="Spring-缺点"><a href="#Spring-缺点" class="headerlink" title="Spring 缺点"></a>Spring 缺点</h2><ol>
+<li>配置繁琐（XML 繁琐）</li>
+<li>以来繁琐（maven 管理繁琐，jar 包版本兼容问题）</li>
+</ol>
+<p>SpringBoot 特性</p>
+<ul>
+<li>自动配置，写很少的配置文件</li>
+<li>起步依赖，将坐标打包到一起</li>
+</ul>
+<h2 id="构建-SpringBoot-项目"><a href="#构建-SpringBoot-项目" class="headerlink" title="构建 SpringBoot 项目"></a>构建 SpringBoot 项目</h2><h3 id="方式一：通过-maven-手工配置"><a href="#方式一：通过-maven-手工配置" class="headerlink" title="方式一：通过 maven 手工配置"></a>方式一：通过 maven 手工配置</h3><ol>
+<li>创建 maven 项目</li>
+<li>导入 SpringBoot 起步依赖</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>定义 controller</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.fish.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/hello&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hello SpringBoot!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>编写引导类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.fish;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 引导类，springboot 工程的入口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloApplication</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(HelloApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>启动测试</li>
+</ol>
+<h3 id="IDEA-内置-springboot-initializer-构建"><a href="#IDEA-内置-springboot-initializer-构建" class="headerlink" title="IDEA 内置 springboot initializer 构建"></a>IDEA 内置 springboot initializer 构建</h3><p>如果是使用 spring intializer 的创建方式的话可以手动选择需要的依赖。</p>
+<h3 id="spirng-官网项目模板构建"><a href="#spirng-官网项目模板构建" class="headerlink" title="spirng 官网项目模板构建"></a>spirng 官网项目模板构建</h3><p>也可以使用 <a target="_blank" rel="noopener" href="https://start.spring.io/">https://start.spring.io/</a> 选择想要的依赖，直接生成 springboot 工程，下载，运行。</p>
+<h2 id="springboot-起步依赖原理分析"><a href="#springboot-起步依赖原理分析" class="headerlink" title="springboot 起步依赖原理分析"></a>springboot 起步依赖原理分析</h2><h5 id="spring-boot-starter-parent"><a href="#spring-boot-starter-parent" class="headerlink" title="spring-boot-starter-parent"></a>spring-boot-starter-parent</h5><p>个人项目依赖一个 parent，即 <code>spring-boot-starter-parent</code>。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>追溯源码，发现 spring-boot-starter-parent 依赖 <code>spring-boot-dependencies</code>。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>继续追溯，发现 spring-boot-dependencies 就没有 parent 了。</p>
+<p>在个人项目 <code>pom.xml</code> 中，<code>spring-boot-starter-web</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>并没有指定版本信息，因为已经在父工程 spring-boot-dependencies中指定了。</p>
+<p>dependencyManagement 是版本锁定。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span>      </span><br><span class="line">    ...</span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-webflux<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这些依赖不会造成任何冲突，组合了一套最优的技术版本搭配。</p>
+<h5 id="spring-boot-starter-web"><a href="#spring-boot-starter-web" class="headerlink" title="spring-boot-starter-web"></a>spring-boot-starter-web</h5><p>点进去可以看到它依赖的坐标信息。</p>
+<p>这些是没有版本锁定的。</p>
+<p><code>我们的项目</code> —依赖—&gt; <code>spring-boot-starter</code> —依赖—&gt;  <code>spring-boot-starter、spring-boot-starter-json、spring-boot-starter-tomcat、spring-web、spring-webmvc</code>。</p>
+<p>因此，<code>我们的项目</code> —依赖—&gt; <code>spring-boot-starter、spring-boot-starter-json、spring-boot-starter-tomcat、spring-web、spring-webmvc</code>。</p>
+<p>这就是<em>依赖传递</em>。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-json<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-tomcat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.1.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-webmvc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>6.1.6<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="SpringBoot-配置"><a href="#SpringBoot-配置" class="headerlink" title="SpringBoot 配置"></a>SpringBoot 配置</h2><h3 id="配置文件分类"><a href="#配置文件分类" class="headerlink" title="配置文件分类"></a>配置文件分类</h3><p>SpringBoot 是基于约定的，很多配置有默认值。</p>
+<p>如果想要自定义覆盖默认，可以使用 <code>application.properties</code> 或 <code>application.yaml</code>  或 <code>application.yml</code> 进行配置。</p>
+<h5 id="properties"><a href="#properties" class="headerlink" title="properties"></a>properties</h5><p>key-value 形式。</p>
+<p>位于 <code>/src/resources/application.properties</code>。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span>=<span class="string">9090</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="yaml-yml"><a href="#yaml-yml" class="headerlink" title="yaml &#x2F; yml"></a>yaml &#x2F; yml</h5><p>k-v 之间<strong>必须有空格</strong>。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8080</span> </span><br></pre></td></tr></table></figure>
+
+
+
+<p>同一目录下优先级：<code>properties &gt; yml &gt; yaml</code></p>
+<h3 id="yaml"><a href="#yaml" class="headerlink" title="yaml"></a>yaml</h3><p>YAML Ain’t Markup Language，数据序列化格式。</p>
+<p>以数据为核心，比传统 xml 更加简洁。</p>
+<p>YMAL 文件有 <code>.yml</code> 和 <code>.yaml</code>。</p>
+<p>对比：</p>
+<h5 id="properties-1"><a href="#properties-1" class="headerlink" title="properties"></a>properties</h5><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server.port</span>=<span class="string">8080</span></span><br><span class="line"><span class="attr">server.address</span>=<span class="string">127.0.0.1</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">port</span>&gt;</span>8080<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">address</span>&gt;</span>127.0.0.1<span class="tag">&lt;/<span class="name">address</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="yml"><a href="#yml" class="headerlink" title="yml"></a>yml</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">	<span class="attr">port:</span> <span class="number">8080</span></span><br><span class="line">	<span class="attr">address:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>YAML 大小写敏感</li>
+<li>value 之前必须有 $\ge 1$ 个空格 </li>
+<li>相同层级的元素需要左对齐</li>
+<li># 表示注释</li>
+</ul>
+<h3 id="读取配置文件"><a href="#读取配置文件" class="headerlink" title="读取配置文件"></a>读取配置文件</h3><h3 id="profile"><a href="#profile" class="headerlink" title="profile"></a>profile</h3><h3 id="内部配置加载顺序"><a href="#内部配置加载顺序" class="headerlink" title="内部配置加载顺序"></a><code>内部配置</code>加载顺序</h3><h3 id="外部配置加载顺序"><a href="#外部配置加载顺序" class="headerlink" title="外部配置加载顺序"></a><code>外部配置</code>加载顺序</h3>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Blog</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-%E6%A1%86%E6%9E%B6%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">Spring 框架的特性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Spring-%E7%9A%84%E7%BB%84%E4%BB%B6"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">Spring 的组件</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-%E7%BC%BA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">Spring 缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA-SpringBoot-%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.</span> <span class="toc-text">构建 SpringBoot 项目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E9%80%9A%E8%BF%87-maven-%E6%89%8B%E5%B7%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">方式一：通过 maven 手工配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IDEA-%E5%86%85%E7%BD%AE-springboot-initializer-%E6%9E%84%E5%BB%BA"><span class="toc-number">3.2.</span> <span class="toc-text">IDEA 内置 springboot initializer 构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spirng-%E5%AE%98%E7%BD%91%E9%A1%B9%E7%9B%AE%E6%A8%A1%E6%9D%BF%E6%9E%84%E5%BB%BA"><span class="toc-number">3.3.</span> <span class="toc-text">spirng 官网项目模板构建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springboot-%E8%B5%B7%E6%AD%A5%E4%BE%9D%E8%B5%96%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">springboot 起步依赖原理分析</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#spring-boot-starter-parent"><span class="toc-number">4.0.0.1.</span> <span class="toc-text">spring-boot-starter-parent</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#spring-boot-starter-web"><span class="toc-number">4.0.0.2.</span> <span class="toc-text">spring-boot-starter-web</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringBoot-%E9%85%8D%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">SpringBoot 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%86%E7%B1%BB"><span class="toc-number">5.1.</span> <span class="toc-text">配置文件分类</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#properties"><span class="toc-number">5.1.0.1.</span> <span class="toc-text">properties</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#yaml-yml"><span class="toc-number">5.1.0.2.</span> <span class="toc-text">yaml &#x2F; yml</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yaml"><span class="toc-number">5.2.</span> <span class="toc-text">yaml</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#properties-1"><span class="toc-number">5.2.0.1.</span> <span class="toc-text">properties</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#xml"><span class="toc-number">5.2.0.2.</span> <span class="toc-text">xml</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#yml"><span class="toc-number">5.2.0.3.</span> <span class="toc-text">yml</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">5.3.</span> <span class="toc-text">读取配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#profile"><span class="toc-number">5.4.</span> <span class="toc-text">profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.5.</span> <span class="toc-text">内部配置加载顺序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E9%85%8D%E7%BD%AE%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="toc-number">5.6.</span> <span class="toc-text">外部配置加载顺序</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&text=SpringBoot速通"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&is_video=false&description=SpringBoot速通"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SpringBoot速通&body=Check out this article: http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&title=SpringBoot速通"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&name=SpringBoot速通&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/05/21/SpringBoot%E9%80%9F%E9%80%9A/&t=SpringBoot速通"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    Sakana
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2e6da3c375c8a87f5b664cea6d4cb29c";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'yuyucute';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
