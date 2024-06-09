@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Transformer</title>
+      <link href="/2024/06/09/Transformer/"/>
+      <url>/2024/06/09/Transformer/</url>
+      
+        <content type="html"><![CDATA[<h1 id="intro"><a href="#intro" class="headerlink" title="intro"></a>intro</h1><h2 id="什么是-Transformer"><a href="#什么是-Transformer" class="headerlink" title="什么是 Transformer"></a>什么是 Transformer</h2><p>Transformer 是一个 sequence to sequence（<code>Seq2seq</code>） 的模型。</p><ul><li>input: sequence</li><li>output: sequence，我们不知道输出的长度，需要模型自己来决定</li></ul><h2 id="Seq2seq-的例子"><a href="#Seq2seq-的例子" class="headerlink" title="Seq2seq 的例子"></a>Seq2seq 的例子</h2><ul><li>语音识别<ul><li>10 段音频 vector $\to$ 你好吗</li><li>这里的输入是由 10 段 vector 组成的 sequence，输出是由三个中文字符，或者说三个 vector 组成的 sequence</li></ul></li><li>机器翻译<ul><li>Hello $\to$ 你好</li><li>这里的输入是 5 个拉丁字母，输出是两个中文字符</li></ul></li><li>语音翻译<ul><li>10 段音频 vector（Hello 的英文） $\to$ 你好（中文字符）</li></ul></li><li>语音合成<ul><li>输入文字，输出声音信号</li></ul></li><li>很多 NLP 任务都可以抽象成 QA</li><li>Multi-label Classification<ul><li>同一个物体可以被分类为多个标签</li><li>和 multi-class classification 的区别：传统多分类问题，一个物体被分在多个 class 中的其中一个</li><li>机器自己决定输出给一个物体输出多少个类别</li></ul></li></ul><h1 id="Seq2seq-模型"><a href="#Seq2seq-模型" class="headerlink" title="Seq2seq 模型"></a>Seq2seq 模型</h1><p>一般的 Seq2seq 模型都是 Encoder-Decoder 架构。</p><p>数据流向为 $input \to Encoder \to Decoder \to output$。</p><h2 id="Encoder"><a href="#Encoder" class="headerlink" title="Encoder"></a>Encoder</h2><p>一个简化版本的 Encoder 如下：</p><p><img src="/../images/transformer/1.png"></p><p>首先是有一排输入 vector,将他们丢入 Encoder。</p><p>这个 Encoder 会做一些事情，比如做一个 Self-attention，然后将输出再送入全连接神经网络，最后给出输出。</p><p>但是在 Transformer 原文里 Encoder 做的事情要更复杂，如下图。</p><p><img src="/images/transformer/2.png"></p><ul><li>对输入向量 $b$ 做 Self-attention，得到输出向量 $a$</li><li>做 $a + b$（<code>residual connection</code>），得到输出 $c$</li><li>做 $norm(c)$，即对 $c$ 做 <em>Layer normalization</em>，得到输出 $d^{‘’}$<ul><li>normalization 做的是将数据变换到 0 期望 1 标准差</li><li>$Mean: \ \mu^l &#x3D; \frac{1}{H}\sum_{i &#x3D; 1}{H}a^l_i$</li><li>$Standard Deviation: \ \sigma^l; &#x3D; \sqrt{\frac{1}{H}\sum_{i &#x3D; 1}^{H}(a^l_i - \mu^l)^2}$</li><li>$d^{l’} &#x3D; \frac{x^l - \mu^l}{\sigma^l + \epsilon}$</li></ul></li><li>送入全连接神经网络，得到输出 $e$</li><li>做 $d + e$，得到新向量 $f$</li><li>将 $f$ 再做一次 <em>Layer normalization</em>，得到输出</li></ul><h2 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h2>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> AI </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>注意力机制</title>
       <link href="/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"/>
       <url>/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/</url>
