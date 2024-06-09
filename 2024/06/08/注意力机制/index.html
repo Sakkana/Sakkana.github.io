@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Vector as Input输入向量在诸如 CNN 这种神经网络中，传统的模型输入基本都是一条长向量就可以表示所有的信息。 但是在像自然语言处理中输入的一段话是一个 sequence，这个 sequence 中每个单词都是一个 vector，而且是不定长的。  句子 sequence：完整的句子 vector：单词   语音信号 sequence：完整的语音 vector：一段时间内采样的语音片">
+<meta property="og:type" content="article">
+<meta property="og:title" content="注意力机制">
+<meta property="og:url" content="http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="Welcome to 🐟 の 小窝">
+<meta property="og:description" content="Vector as Input输入向量在诸如 CNN 这种神经网络中，传统的模型输入基本都是一条长向量就可以表示所有的信息。 但是在像自然语言处理中输入的一段话是一个 sequence，这个 sequence 中每个单词都是一个 vector，而且是不定长的。  句子 sequence：完整的句子 vector：单词   语音信号 sequence：完整的语音 vector：一段时间内采样的语音片">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/12.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/3.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/4.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/5.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/6.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/7.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/8.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/9.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/10.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/11.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/13.png">
+<meta property="og:image" content="http://example.com/2024/06/08/images/attention/13.png">
+<meta property="article:published_time" content="2024-06-08T09:15:55.000Z">
+<meta property="article:modified_time" content="2024-06-09T05:06:15.836Z">
+<meta property="article:author" content="Sakana">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/06/08/images/attention/12.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/avatar.jpg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
+        
+      
+    
+    <!-- title -->
+    <title>注意力机制</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/05/23/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%BF%AB%E9%80%9F%E6%89%AB%E7%9B%B2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&text=注意力机制"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&is_video=false&description=注意力机制"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=注意力机制&body=Check out this article: http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&name=注意力机制&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&t=注意力机制"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vector-as-Input"><span class="toc-number">1.</span> <span class="toc-text">Vector as Input</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%90%91%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">输入向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">输出形式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention"><span class="toc-number">2.</span> <span class="toc-text">Self-attention</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F%E5%85%B3%E8%81%94%E4%B8%8A%E4%B8%8B%E6%96%87%E8%AF%AD%E5%A2%83%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">2.0.1.</span> <span class="toc-text">如何产生关联上下文语境的输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#alpha-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-number">2.0.2.</span> <span class="toc-text">$\alpha$ 的计算方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dot-Product-%E7%82%B9%E7%A7%AF%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.0.2.1.</span> <span class="toc-text">Dot-Product - 点积注意力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Additive-%E5%8A%A0%E6%80%A7%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.0.2.2.</span> <span class="toc-text">Additive - 加性注意力</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%80%E6%9C%89%E5%90%91%E9%87%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E5%BA%A6-alpha"><span class="toc-number">2.0.3.</span> <span class="toc-text">计算所有向量之间的关联度 $\alpha$</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q"><span class="toc-number">2.0.3.1.</span> <span class="toc-text">计算 Q</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-K"><span class="toc-number">2.0.3.2.</span> <span class="toc-text">计算 K</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89"><span class="toc-number">2.0.3.3.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-V"><span class="toc-number">2.0.3.4.</span> <span class="toc-text">计算 V</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%93%E5%88%86"><span class="toc-number">2.0.3.5.</span> <span class="toc-text">计算打分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E7%9F%A9%E9%98%B5%E5%BD%A2%E7%8A%B6%E7%9A%84%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3"><span class="toc-number">2.0.4.</span> <span class="toc-text">从矩阵形状的角度理解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q%E3%80%81K%E3%80%81V"><span class="toc-number">2.0.4.1.</span> <span class="toc-text">计算 Q、K、V</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89-1"><span class="toc-number">2.0.4.2.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Attention-%E8%BE%93%E5%87%BA"><span class="toc-number">2.0.4.3.</span> <span class="toc-text">计算 Attention 输出</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi-head-Self-attention"><span class="toc-number">3.</span> <span class="toc-text">Multi-head Self-attention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Position-Encoding"><span class="toc-number">4.</span> <span class="toc-text">Position Encoding</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">Self-attention 的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-CNN"><span class="toc-number">5.1.</span> <span class="toc-text">Self-attention v.s. CNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-RNN"><span class="toc-number">5.2.</span> <span class="toc-text">Self-attention v.s. RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Self-attention-4-Graph%EF%BC%88GNN%EF%BC%89"><span class="toc-number">5.2.1.</span> <span class="toc-text">Self-attention 4 Graph（GNN）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Much-More"><span class="toc-number">5.2.2.</span> <span class="toc-text">Much More</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Attention-Self-attention"><span class="toc-number">6.</span> <span class="toc-text">Attention &amp; Self-attention</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        注意力机制
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Sakana</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-08T09:15:55.000Z" class="dt-published" itemprop="datePublished">2024-06-08</time>
+        
+        (Updated: <time datetime="2024-06-09T05:06:15.836Z" class="dt-updated" itemprop="dateModified">2024-06-09</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AI/" rel="tag">AI</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Vector-as-Input"><a href="#Vector-as-Input" class="headerlink" title="Vector as Input"></a>Vector as Input</h1><h2 id="输入向量"><a href="#输入向量" class="headerlink" title="输入向量"></a>输入向量</h2><p>在诸如 CNN 这种神经网络中，传统的模型输入基本都是一条长向量就可以表示所有的信息。</p>
+<p>但是在像自然语言处理中输入的一段话是一个 sequence，这个 sequence 中每个单词都是一个 vector，而且是不定长的。</p>
+<ul>
+<li>句子<ul>
+<li>sequence：完整的句子</li>
+<li>vector：单词</li>
+</ul>
+</li>
+<li>语音信号<ul>
+<li>sequence：完整的语音</li>
+<li>vector：一段时间内采样的语音片段</li>
+</ul>
+</li>
+<li>社交网络<ul>
+<li>sequence：整个网络</li>
+<li>vector：网络中的某个结点（描述一个个体的年龄、性别、职业等）</li>
+</ul>
+</li>
+<li>分子<ul>
+<li>sequence：整个分子</li>
+<li>vector：分子中的某个球（原子）</li>
+</ul>
+</li>
+</ul>
+<p>这些问题都可以建模成 <em>vector set as input</em> 的模型输入。</p>
+<h2 id="输出形式"><a href="#输出形式" class="headerlink" title="输出形式"></a>输出形式</h2><img src="../images/attention/12.png" style="zoom:33%;" />
+
+<ul>
+<li>$n$ 个向量 $\to$ $n$ 个标签<ul>
+<li>词性标注</li>
+</ul>
+</li>
+<li>$n$ 个向量 $\to$ $1$ 个标签<ul>
+<li>情感分析</li>
+</ul>
+</li>
+<li>$n$ 个向量 $\to$ $n^{‘}$ 个标签<ul>
+<li><code>seq2seq</code> 问题，生成的结果是不定长的</li>
+<li>机器翻译、语音识别</li>
+</ul>
+</li>
+</ul>
+<p>由于 sequence 的长度原因，一个模型的输入往往不可能一次囊括所有信息。</p>
+<p>因此需要在某个 vector 的上下文中学习有关的信息。</p>
+<p>但是这个上下文中有的信息是重要的，有的是不重要的，因此出现了 attention 来计算其他 vector 和当前 vector 的关联度。</p>
+<h1 id="Self-attention"><a href="#Self-attention" class="headerlink" title="Self-attention"></a>Self-attention</h1><h3 id="如何产生关联上下文语境的输出"><a href="#如何产生关联上下文语境的输出" class="headerlink" title="如何产生关联上下文语境的输出"></a>如何产生关联上下文语境的输出</h3><p>假设模型有四个输入：$a^1, a^2, a^3, a^4$，目的是得到四个输出 $b^1, b^2, b^3, b^4$。</p>
+<p>其中，$a^i$ 是一个向量，代表一个单词，比如 $dog$。</p>
+<p>对于 $a^1$，在 $a^i, i \in [2, 3, 4]$ 中，找出和 $a^1$ 的相关性 $\alpha$，</p>
+<p>即找出哪几个向量和 $a^1$​ 的相关度最大，最重要。</p>
+<h3 id="alpha-的计算方法"><a href="#alpha-的计算方法" class="headerlink" title="$\alpha$ 的计算方法"></a>$\alpha$ 的计算方法</h3><h4 id="Dot-Product-点积注意力"><a href="#Dot-Product-点积注意力" class="headerlink" title="Dot-Product - 点积注意力"></a>Dot-Product - 点积注意力</h4><ul>
+<li>存在两个矩阵 $W^q$ 和 $W^k$，做 $W^q \cdot a^1 &#x3D; q$ 和 $W^k \cdot a^1 &#x3D; k$。</li>
+<li>作 $q \cdot k &#x3D; \alpha$。</li>
+</ul>
+<h4 id="Additive-加性注意力"><a href="#Additive-加性注意力" class="headerlink" title="Additive - 加性注意力"></a>Additive - 加性注意力</h4><ul>
+<li>存在两个矩阵 $W^q$ 和 $W^k$，做 $W^q \cdot a^1 &#x3D; q$ 和 $W^k \cdot a^1 &#x3D; k$​。</li>
+<li>作 $W^v \cdot tanh(q + k)$。</li>
+</ul>
+<img src="../images/attention/3.png" style="zoom:50%;" />
+
+
+
+<h3 id="计算所有向量之间的关联度-alpha"><a href="#计算所有向量之间的关联度-alpha" class="headerlink" title="计算所有向量之间的关联度 $\alpha$"></a>计算所有向量之间的关联度 $\alpha$</h3><p>对每个 vector 都作关联度计算，并送入 softmax，</p>
+<h4 id="计算-Q"><a href="#计算-Q" class="headerlink" title="计算 Q"></a>计算 Q</h4><p>$q^1 &#x3D; W^q \cdot a^1$ — query vector</p>
+<h4 id="计算-K"><a href="#计算-K" class="headerlink" title="计算 K"></a>计算 K</h4><p>$k^i &#x3D; W^k \cdot a^i$​ — key vector</p>
+<h4 id="计算-alpha-（Attention-Score）"><a href="#计算-alpha-（Attention-Score）" class="headerlink" title="计算 $\alpha$ （Attention Score）"></a>计算 $\alpha$ （Attention Score）</h4><p>$\alpha_{1, i} &#x3D; q^1 \cdot k^i$</p>
+<p>$\alpha^{‘}<em>{1, i} &#x3D; softmax(a</em>{1, i})$，即 $a^{‘}<em>{1, i} &#x3D; \frac{e^{\alpha</em>{1, i}}}{\sum_j{\alpha_{1, j}}}$，代表模型在 $\alpha_1$ 这个位置对输入信息 $\alpha_1$ 和 $\alpha_2$ 需要给予的关注程度。(<code>attention score</code>) </p>
+<img src="../images/attention/4.png" style="zoom:50%;" />
+
+<p>最后也不一定用 softmax，但这个是最常见的。</p>
+<h4 id="计算-V"><a href="#计算-V" class="headerlink" title="计算 V"></a>计算 V</h4><p>再引入一个新的矩阵 $W^v$，和每个 $\alpha$ 作点积，即 $v^i &#x3D; W^v \cdot \alpha^i$​ — <code>value vector</code>。</p>
+<h4 id="计算打分"><a href="#计算打分" class="headerlink" title="计算打分"></a>计算打分</h4><p>将这个 $v_i$ 和每个 $\alpha$ 作点积，计算 $\textcolor{red}{b^1 &#x3D; \sum_j{\alpha^{‘}_{1, i}v^i}}$，最后得到的 $\vec{b}$ 是一个四维向量，也就是 Attention 的输出。</p>
+<img src="../images/attention/5.png" style="zoom:50%;" />
+
+<h3 id="从矩阵形状的角度理解"><a href="#从矩阵形状的角度理解" class="headerlink" title="从矩阵形状的角度理解"></a>从矩阵形状的角度理解</h3><blockquote>
+<p>存在四个输入向量 $a_1, a_2, a_3, a_4$.</p>
+</blockquote>
+<h4 id="计算-Q、K、V"><a href="#计算-Q、K、V" class="headerlink" title="计算 Q、K、V"></a>计算 Q、K、V</h4><img src="../images/attention/6.png" style="zoom: 33%;" />
+
+<h4 id="计算-alpha-（Attention-Score）-1"><a href="#计算-alpha-（Attention-Score）-1" class="headerlink" title="计算 $\alpha$ （Attention Score）"></a>计算 $\alpha$ （Attention Score）</h4><img src="../images/attention/7.png" style="zoom: 33%;" />
+
+<h4 id="计算-Attention-输出"><a href="#计算-Attention-输出" class="headerlink" title="计算 Attention 输出"></a>计算 Attention 输出</h4><img src="../images/attention/8.png" style="zoom: 33%;" />
+
+
+
+<h1 id="Multi-head-Self-attention"><a href="#Multi-head-Self-attention" class="headerlink" title="Multi-head Self-attention"></a>Multi-head Self-attention</h1><p>Q、K、V 分叉，产生多个子 q、k、v。</p>
+<p>具体分几个 head 这个是个超参数，需要经验上去调。</p>
+<p>以双头注意力为例，需要对一个 <code>query</code> 和其他每个 <code>key</code> 计算两次关联度。</p>
+<p>对于输入向量 $a^i$ 首先是使用两个不同的权重矩阵去做乘法，得到两个分叉后的 q。</p>
+<img src="../images/attention/9.png" style="zoom: 33%;" />
+
+
+
+<img src="../images/attention/10.png" style="zoom: 33%;" />
+
+
+
+<h1 id="Position-Encoding"><a href="#Position-Encoding" class="headerlink" title="Position Encoding"></a>Position Encoding</h1><p>在 Self-attention 中没有使用 position 的信息，所有 vector 在 sequence 中的 position 都没有差别。</p>
+<p>但是比如一个句子中，动词放在句首的概率是比较小的。</p>
+<p>为每个位置设置一个专属的 positional vector  $\textcolor{red}{e^i}$。</p>
+<img src="../images/attention/11.png" style="zoom: 50%;" />
+
+
+
+<h1 id="Self-attention-的应用"><a href="#Self-attention-的应用" class="headerlink" title="Self-attention 的应用"></a>Self-attention 的应用</h1><ul>
+<li><p>Speech</p>
+</li>
+<li><p>Image</p>
+<ul>
+<li>Self-Attention GAN</li>
+<li>DEtection Transformer (DETR)</li>
+</ul>
+</li>
+<li><p>NLP</p>
+</li>
+</ul>
+<h2 id="Self-attention-v-s-CNN"><a href="#Self-attention-v-s-CNN" class="headerlink" title="Self-attention v.s. CNN"></a>Self-attention v.s. CNN</h2><p>CNN 可以看作简化版本的 Self-attention，因为 CNN 只关注一个 <code>receptive field</code> 中的像素信息，非常局限。</p>
+<p>Self-attention 可以自己学习 receptive field，找出来哪些感受野是重要的，相关的。</p>
+<blockquote>
+<p>On the Relationship between Self-Attention and Convolutional Layers</p>
+</blockquote>
+<p>Self-attention 弹性大，需要比较大的训练数据，因此</p>
+<ul>
+<li>在数据量大的时候效果更好</li>
+<li>在数据量小的时候容易  over-fitting</li>
+</ul>
+<p>CNN 弹性比价小，因此</p>
+<ul>
+<li>在数据量小的时候效果更好</li>
+<li>在数据量大的是时候 欠拟合</li>
+</ul>
+<blockquote>
+<p>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale</p>
+</blockquote>
+<h2 id="Self-attention-v-s-RNN"><a href="#Self-attention-v-s-RNN" class="headerlink" title="Self-attention v.s. RNN"></a>Self-attention v.s. RNN</h2><p>RNN 和 Self-attention 一样都是处理 input 是一个 sequence 的情景。</p>
+<ul>
+<li>RNN 处理当前输入 vector $\vec{v_1}$ $\to$ 输出新的 vector $\vec{v_2}$<ul>
+<li><ol>
+<li>$\vec{v_2}$ 被送入全连接神经网络学习</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>$\vec{v_2}$ 送入下一个 RNN 模块，并且结合下一个输入</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>每个 RNN 模块都会考虑当前输入 vector 以及上一个 RNN 模块输出的 vector。</p>
+<p>RNN 也可以是双向的，考虑整个 input sequence。</p>
+<img src="../images/attention/13.png" style="zoom: 33%;" />
+
+<p>Self-attention 的好处：</p>
+<ul>
+<li>K、Q 的匹配计算不用考虑距离<ul>
+<li>RNN 需要在内存存储前面的输出，直到计算到最后一个位置才被拿出来使用</li>
+</ul>
+</li>
+<li>并行化<ul>
+<li>所有的 output sequence 都是同时产生的</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Transformers are RNNs: Fast Autoregressive Transformers with Linear Attention</p>
+</blockquote>
+<h3 id="Self-attention-4-Graph（GNN）"><a href="#Self-attention-4-Graph（GNN）" class="headerlink" title="Self-attention 4 Graph（GNN）"></a>Self-attention 4 Graph（GNN）</h3><ul>
+<li>Graph<ul>
+<li>Node</li>
+<li>Edge</li>
+</ul>
+</li>
+</ul>
+<p>只计算相连的 node 之间的 attention score。</p>
+<img src="../images/attention/13.png" style="zoom:33%;" />
+
+
+
+<h3 id="Much-More"><a href="#Much-More" class="headerlink" title="Much More"></a>Much More</h3><p>long Range Arena: A Benchmark for Efficient Transformers</p>
+<p>Efficient Transformers: A Survey</p>
+<p>平衡计算速度、性能。</p>
+<h1 id="Attention-Self-attention"><a href="#Attention-Self-attention" class="headerlink" title="Attention &amp; Self-attention"></a>Attention &amp; Self-attention</h1><p>Self-attention 机制在 KQV 模型中的特殊点在于 <em>Q &#x3D; K &#x3D; V</em>，这也是为什么取名 Self-attention，</p>
+<p>因为其是<code>文本和文本自己</code>求相似度（$\alpha &#x3D; Q \cdot K$）再<code>和文本本身</code>相乘（$\alpha \cdot V$）计算得来。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Blog</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vector-as-Input"><span class="toc-number">1.</span> <span class="toc-text">Vector as Input</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%90%91%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">输入向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">输出形式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention"><span class="toc-number">2.</span> <span class="toc-text">Self-attention</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F%E5%85%B3%E8%81%94%E4%B8%8A%E4%B8%8B%E6%96%87%E8%AF%AD%E5%A2%83%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">2.0.1.</span> <span class="toc-text">如何产生关联上下文语境的输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#alpha-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-number">2.0.2.</span> <span class="toc-text">$\alpha$ 的计算方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dot-Product-%E7%82%B9%E7%A7%AF%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.0.2.1.</span> <span class="toc-text">Dot-Product - 点积注意力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Additive-%E5%8A%A0%E6%80%A7%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.0.2.2.</span> <span class="toc-text">Additive - 加性注意力</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%80%E6%9C%89%E5%90%91%E9%87%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E5%BA%A6-alpha"><span class="toc-number">2.0.3.</span> <span class="toc-text">计算所有向量之间的关联度 $\alpha$</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q"><span class="toc-number">2.0.3.1.</span> <span class="toc-text">计算 Q</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-K"><span class="toc-number">2.0.3.2.</span> <span class="toc-text">计算 K</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89"><span class="toc-number">2.0.3.3.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-V"><span class="toc-number">2.0.3.4.</span> <span class="toc-text">计算 V</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%93%E5%88%86"><span class="toc-number">2.0.3.5.</span> <span class="toc-text">计算打分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E7%9F%A9%E9%98%B5%E5%BD%A2%E7%8A%B6%E7%9A%84%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3"><span class="toc-number">2.0.4.</span> <span class="toc-text">从矩阵形状的角度理解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q%E3%80%81K%E3%80%81V"><span class="toc-number">2.0.4.1.</span> <span class="toc-text">计算 Q、K、V</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89-1"><span class="toc-number">2.0.4.2.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Attention-%E8%BE%93%E5%87%BA"><span class="toc-number">2.0.4.3.</span> <span class="toc-text">计算 Attention 输出</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi-head-Self-attention"><span class="toc-number">3.</span> <span class="toc-text">Multi-head Self-attention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Position-Encoding"><span class="toc-number">4.</span> <span class="toc-text">Position Encoding</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">Self-attention 的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-CNN"><span class="toc-number">5.1.</span> <span class="toc-text">Self-attention v.s. CNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-RNN"><span class="toc-number">5.2.</span> <span class="toc-text">Self-attention v.s. RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Self-attention-4-Graph%EF%BC%88GNN%EF%BC%89"><span class="toc-number">5.2.1.</span> <span class="toc-text">Self-attention 4 Graph（GNN）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Much-More"><span class="toc-number">5.2.2.</span> <span class="toc-text">Much More</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Attention-Self-attention"><span class="toc-number">6.</span> <span class="toc-text">Attention &amp; Self-attention</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&text=注意力机制"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&is_video=false&description=注意力机制"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=注意力机制&body=Check out this article: http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&title=注意力机制"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&name=注意力机制&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/&t=注意力机制"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    Sakana
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2e6da3c375c8a87f5b664cea6d4cb29c";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'yuyucute';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
