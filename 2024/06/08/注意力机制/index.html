@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://example.com/images/attention/12.png">
 <meta property="og:image" content="http://example.com/images/attention/3.png">
 <meta property="og:image" content="http://example.com/images/attention/4.png">
-<meta property="og:image" content="http://example.com/2024/06/08/images/attention/5.png">
+<meta property="og:image" content="http://example.com/images/attention/5.png">
 <meta property="og:image" content="http://example.com/images/attention/6.png">
 <meta property="og:image" content="http://example.com/images/attention/7.png">
 <meta property="og:image" content="http://example.com/images/attention/8.png">
@@ -24,9 +24,9 @@
 <meta property="og:image" content="http://example.com/images/attention/10.png">
 <meta property="og:image" content="http://example.com/images/attention/11.png">
 <meta property="og:image" content="http://example.com/images/attention/13.png">
-<meta property="og:image" content="http://example.com/images/attention/13.png">
+<meta property="og:image" content="http://example.com/images/attention/14.png">
 <meta property="article:published_time" content="2024-06-08T09:15:55.000Z">
-<meta property="article:modified_time" content="2024-06-09T12:08:18.820Z">
+<meta property="article:modified_time" content="2024-06-09T12:44:56.892Z">
 <meta property="article:author" content="Sakana">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
@@ -140,7 +140,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vector-as-Input"><span class="toc-number">1.</span> <span class="toc-text">Vector as Input</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%90%91%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">输入向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">输出形式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention"><span class="toc-number">2.</span> <span class="toc-text">Self-attention</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F%E5%85%B3%E8%81%94%E4%B8%8A%E4%B8%8B%E6%96%87%E8%AF%AD%E5%A2%83%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">2.0.1.</span> <span class="toc-text">如何产生关联上下文语境的输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#alpha-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-number">2.0.2.</span> <span class="toc-text">$\alpha$ 的计算方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dot-Product-%E7%82%B9%E7%A7%AF%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.0.2.1.</span> <span class="toc-text">Dot-Product - 点积注意力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Additive-%E5%8A%A0%E6%80%A7%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.0.2.2.</span> <span class="toc-text">Additive - 加性注意力</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%80%E6%9C%89%E5%90%91%E9%87%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E5%BA%A6-alpha"><span class="toc-number">2.0.3.</span> <span class="toc-text">计算所有向量之间的关联度 $\alpha$</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q"><span class="toc-number">2.0.3.1.</span> <span class="toc-text">计算 Q</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-K"><span class="toc-number">2.0.3.2.</span> <span class="toc-text">计算 K</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89"><span class="toc-number">2.0.3.3.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-V"><span class="toc-number">2.0.3.4.</span> <span class="toc-text">计算 V</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%93%E5%88%86"><span class="toc-number">2.0.3.5.</span> <span class="toc-text">计算打分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E7%9F%A9%E9%98%B5%E5%BD%A2%E7%8A%B6%E7%9A%84%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3"><span class="toc-number">2.0.4.</span> <span class="toc-text">从矩阵形状的角度理解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q%E3%80%81K%E3%80%81V"><span class="toc-number">2.0.4.1.</span> <span class="toc-text">计算 Q、K、V</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89-1"><span class="toc-number">2.0.4.2.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Attention-%E8%BE%93%E5%87%BA"><span class="toc-number">2.0.4.3.</span> <span class="toc-text">计算 Attention 输出</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi-head-Self-attention"><span class="toc-number">3.</span> <span class="toc-text">Multi-head Self-attention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Position-Encoding"><span class="toc-number">4.</span> <span class="toc-text">Position Encoding</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">Self-attention 的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-CNN"><span class="toc-number">5.1.</span> <span class="toc-text">Self-attention v.s. CNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-RNN"><span class="toc-number">5.2.</span> <span class="toc-text">Self-attention v.s. RNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-4-Graph%EF%BC%88GNN%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">Self-attention 4 Graph（GNN）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Much-More"><span class="toc-number">5.3.1.</span> <span class="toc-text">Much More</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Attention-Self-attention"><span class="toc-number">6.</span> <span class="toc-text">Attention &amp; Self-attention</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vector-as-Input"><span class="toc-number">1.</span> <span class="toc-text">Vector as Input</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%90%91%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">输入向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">输出形式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention"><span class="toc-number">2.</span> <span class="toc-text">Self-attention</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F%E5%85%B3%E8%81%94%E4%B8%8A%E4%B8%8B%E6%96%87%E8%AF%AD%E5%A2%83%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">2.1.</span> <span class="toc-text">如何产生关联上下文语境的输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alpha-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">$\alpha$ 的计算方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dot-Product-%E7%82%B9%E7%A7%AF%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.2.1.</span> <span class="toc-text">Dot-Product - 点积注意力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Additive-%E5%8A%A0%E6%80%A7%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.2.2.</span> <span class="toc-text">Additive - 加性注意力</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%80%E6%9C%89%E5%90%91%E9%87%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E5%BA%A6-alpha"><span class="toc-number">2.3.</span> <span class="toc-text">计算所有向量之间的关联度 $\alpha$</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q"><span class="toc-number">2.3.1.</span> <span class="toc-text">计算 Q</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-K"><span class="toc-number">2.3.2.</span> <span class="toc-text">计算 K</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89"><span class="toc-number">2.3.3.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-V"><span class="toc-number">2.3.4.</span> <span class="toc-text">计算 V</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%93%E5%88%86"><span class="toc-number">2.3.5.</span> <span class="toc-text">计算打分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E7%9F%A9%E9%98%B5%E5%BD%A2%E7%8A%B6%E7%9A%84%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3"><span class="toc-number">2.4.</span> <span class="toc-text">从矩阵形状的角度理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q%E3%80%81K%E3%80%81V"><span class="toc-number">2.4.1.</span> <span class="toc-text">计算 Q、K、V</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89-1"><span class="toc-number">2.4.2.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Attention-%E8%BE%93%E5%87%BA"><span class="toc-number">2.4.3.</span> <span class="toc-text">计算 Attention 输出</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi-head-Self-attention"><span class="toc-number">3.</span> <span class="toc-text">Multi-head Self-attention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Position-Encoding"><span class="toc-number">4.</span> <span class="toc-text">Position Encoding</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">Self-attention 的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-CNN"><span class="toc-number">5.1.</span> <span class="toc-text">Self-attention v.s. CNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-RNN"><span class="toc-number">5.2.</span> <span class="toc-text">Self-attention v.s. RNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-4-Graph%EF%BC%88GNN%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">Self-attention 4 Graph（GNN）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Much-More"><span class="toc-number">5.3.1.</span> <span class="toc-text">Much More</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Attention-Self-attention"><span class="toc-number">6.</span> <span class="toc-text">Attention &amp; Self-attention</span></a></li></ol>
       </div>
     
   </span>
@@ -167,7 +167,7 @@
       
         <time datetime="2024-06-08T09:15:55.000Z" class="dt-published" itemprop="datePublished">2024-06-08</time>
         
-        (Updated: <time datetime="2024-06-09T12:08:18.820Z" class="dt-updated" itemprop="dateModified">2024-06-09</time>)
+        (Updated: <time datetime="2024-06-09T12:44:56.892Z" class="dt-updated" itemprop="dateModified">2024-06-09</time>)
         
       
     </div>
@@ -212,8 +212,7 @@
 </li>
 </ul>
 <p>这些问题都可以建模成 <em>vector set as input</em> 的模型输入。</p>
-<h2 id="输出形式"><a href="#输出形式" class="headerlink" title="输出形式"></a>输出形式</h2><img src="/images/attention/12.png" style="zoom:33%;" />
-
+<h2 id="输出形式"><a href="#输出形式" class="headerlink" title="输出形式"></a>输出形式</h2><p><img src="/images/attention/12.png"></p>
 <ul>
 <li>$n$ 个向量 $\to$ $n$ 个标签<ul>
 <li>词性标注</li>
@@ -232,64 +231,45 @@
 <p>由于 sequence 的长度原因，一个模型的输入往往不可能一次囊括所有信息。</p>
 <p>因此需要在某个 vector 的上下文中学习有关的信息。</p>
 <p>但是这个上下文中有的信息是重要的，有的是不重要的，因此出现了 attention 来计算其他 vector 和当前 vector 的关联度。</p>
-<h1 id="Self-attention"><a href="#Self-attention" class="headerlink" title="Self-attention"></a>Self-attention</h1><h3 id="如何产生关联上下文语境的输出"><a href="#如何产生关联上下文语境的输出" class="headerlink" title="如何产生关联上下文语境的输出"></a>如何产生关联上下文语境的输出</h3><p>假设模型有四个输入：$a^1, a^2, a^3, a^4$，目的是得到四个输出 $b^1, b^2, b^3, b^4$。</p>
+<h1 id="Self-attention"><a href="#Self-attention" class="headerlink" title="Self-attention"></a>Self-attention</h1><h2 id="如何产生关联上下文语境的输出"><a href="#如何产生关联上下文语境的输出" class="headerlink" title="如何产生关联上下文语境的输出"></a>如何产生关联上下文语境的输出</h2><p>假设模型有四个输入：$a^1, a^2, a^3, a^4$，目的是得到四个输出 $b^1, b^2, b^3, b^4$。</p>
 <p>其中，$a^i$ 是一个向量，代表一个单词，比如 $dog$。</p>
 <p>对于 $a^1$，在 $a^i, i \in [2, 3, 4]$ 中，找出和 $a^1$ 的相关性 $\alpha$，</p>
 <p>即找出哪几个向量和 $a^1$​ 的相关度最大，最重要。</p>
-<h3 id="alpha-的计算方法"><a href="#alpha-的计算方法" class="headerlink" title="$\alpha$ 的计算方法"></a>$\alpha$ 的计算方法</h3><h4 id="Dot-Product-点积注意力"><a href="#Dot-Product-点积注意力" class="headerlink" title="Dot-Product - 点积注意力"></a>Dot-Product - 点积注意力</h4><ul>
+<h2 id="alpha-的计算方法"><a href="#alpha-的计算方法" class="headerlink" title="$\alpha$ 的计算方法"></a>$\alpha$ 的计算方法</h2><h3 id="Dot-Product-点积注意力"><a href="#Dot-Product-点积注意力" class="headerlink" title="Dot-Product - 点积注意力"></a>Dot-Product - 点积注意力</h3><ul>
 <li>存在两个矩阵 $W^q$ 和 $W^k$，做 $W^q \cdot a^1 &#x3D; q$ 和 $W^k \cdot a^1 &#x3D; k$。</li>
 <li>作 $q \cdot k &#x3D; \alpha$。</li>
 </ul>
-<h4 id="Additive-加性注意力"><a href="#Additive-加性注意力" class="headerlink" title="Additive - 加性注意力"></a>Additive - 加性注意力</h4><ul>
+<h3 id="Additive-加性注意力"><a href="#Additive-加性注意力" class="headerlink" title="Additive - 加性注意力"></a>Additive - 加性注意力</h3><ul>
 <li>存在两个矩阵 $W^q$ 和 $W^k$，做 $W^q \cdot a^1 &#x3D; q$ 和 $W^k \cdot a^1 &#x3D; k$​。</li>
 <li>作 $W^v \cdot tanh(q + k)$。</li>
 </ul>
-<img src="/images/attention/3.png" style="zoom:50%;" />
-
-
-
-<h3 id="计算所有向量之间的关联度-alpha"><a href="#计算所有向量之间的关联度-alpha" class="headerlink" title="计算所有向量之间的关联度 $\alpha$"></a>计算所有向量之间的关联度 $\alpha$</h3><p>对每个 vector 都作关联度计算，并送入 softmax，</p>
-<h4 id="计算-Q"><a href="#计算-Q" class="headerlink" title="计算 Q"></a>计算 Q</h4><p>$q^1 &#x3D; W^q \cdot a^1$ — query vector</p>
-<h4 id="计算-K"><a href="#计算-K" class="headerlink" title="计算 K"></a>计算 K</h4><p>$k^i &#x3D; W^k \cdot a^i$​ — key vector</p>
-<h4 id="计算-alpha-（Attention-Score）"><a href="#计算-alpha-（Attention-Score）" class="headerlink" title="计算 $\alpha$ （Attention Score）"></a>计算 $\alpha$ （Attention Score）</h4><p>$\alpha_{1, i} &#x3D; q^1 \cdot k^i$</p>
-<p>$\alpha^{‘}<em>{1, i} &#x3D; softmax(a</em>{1, i})$，即 $a^{‘}<em>{1, i} &#x3D; \frac{e^{\alpha</em>{1, i}}}{\sum_j{\alpha_{1, j}}}$，代表模型在 $\alpha_1$ 这个位置对输入信息 $\alpha_1$ 和 $\alpha_2$ 需要给予的关注程度。(<code>attention score</code>) </p>
-<img src="/images/attention/4.png" style="zoom:50%;" />
-
+<p><img src="/images/attention/3.png"></p>
+<h2 id="计算所有向量之间的关联度-alpha"><a href="#计算所有向量之间的关联度-alpha" class="headerlink" title="计算所有向量之间的关联度 $\alpha$"></a>计算所有向量之间的关联度 $\alpha$</h2><p>对每个 vector 都作关联度计算，并送入 softmax，</p>
+<h3 id="计算-Q"><a href="#计算-Q" class="headerlink" title="计算 Q"></a>计算 Q</h3><p>$q^1 &#x3D; W^q \cdot a^1$ — query vector</p>
+<h3 id="计算-K"><a href="#计算-K" class="headerlink" title="计算 K"></a>计算 K</h3><p>$k^i &#x3D; W^k \cdot a^i$​ — key vector</p>
+<h3 id="计算-alpha-（Attention-Score）"><a href="#计算-alpha-（Attention-Score）" class="headerlink" title="计算 $\alpha$ （Attention Score）"></a>计算 $\alpha$ （Attention Score）</h3><p>$\alpha_{1, i} &#x3D; q^1 \cdot k^i$​</p>
+<p>$\alpha_{1, i}^{‘} &#x3D; softmax(\alpha_{1, i})&#x3D; \frac{e^{\alpha}}{\sum_j {e^{\alpha_{1, j}}}}$，代表模型在 $\alpha_1$ 这个位置对输入信息 $\alpha_{1}$ 和 $\alpha_{2}$ 需要给予的关注程度。(<code>attention score</code>) </p>
+<p><img src="/images/attention/4.png"></p>
 <p>最后也不一定用 softmax，但这个是最常见的。</p>
-<h4 id="计算-V"><a href="#计算-V" class="headerlink" title="计算 V"></a>计算 V</h4><p>再引入一个新的矩阵 $W^v$，和每个 $\alpha$ 作点积，即 $v^i &#x3D; W^v \cdot \alpha^i$​ — <code>value vector</code>。</p>
-<h4 id="计算打分"><a href="#计算打分" class="headerlink" title="计算打分"></a>计算打分</h4><p>将这个 $v_i$ 和每个 $\alpha$ 作点积，计算 $\textcolor{red}{b^1 &#x3D; \sum_j{\alpha^{‘}_{1, i}v^i}}$，最后得到的 $\vec{b}$ 是一个四维向量，也就是 Attention 的输出。</p>
-<img src="../images/attention/5.png" style="zoom:50%;" />
-
-<h3 id="从矩阵形状的角度理解"><a href="#从矩阵形状的角度理解" class="headerlink" title="从矩阵形状的角度理解"></a>从矩阵形状的角度理解</h3><blockquote>
+<h3 id="计算-V"><a href="#计算-V" class="headerlink" title="计算 V"></a>计算 V</h3><p>再引入一个新的矩阵 $W^v$，和每个 $\alpha$ 作点积，即 $v^i &#x3D; W^v \cdot \alpha^i$​ — <code>value vector</code>。</p>
+<h3 id="计算打分"><a href="#计算打分" class="headerlink" title="计算打分"></a>计算打分</h3><p>将这个 $v_i$ 和每个 $\alpha$ 作点积，计算 $b^1 &#x3D; \sum_j{\alpha^{‘}_{1, i}v^i}$，最后得到的 $\vec{b}$ 是一个四维向量，也就是 Attention 的输出。</p>
+<p><img src="/images/attention/5.png"></p>
+<h2 id="从矩阵形状的角度理解"><a href="#从矩阵形状的角度理解" class="headerlink" title="从矩阵形状的角度理解"></a>从矩阵形状的角度理解</h2><blockquote>
 <p>存在四个输入向量 $a_1, a_2, a_3, a_4$.</p>
 </blockquote>
-<h4 id="计算-Q、K、V"><a href="#计算-Q、K、V" class="headerlink" title="计算 Q、K、V"></a>计算 Q、K、V</h4><img src="/images/attention/6.png" style="zoom: 33%;" />
-
-<h4 id="计算-alpha-（Attention-Score）-1"><a href="#计算-alpha-（Attention-Score）-1" class="headerlink" title="计算 $\alpha$ （Attention Score）"></a>计算 $\alpha$ （Attention Score）</h4><img src="/images/attention/7.png" style="zoom: 33%;" />
-
-<h4 id="计算-Attention-输出"><a href="#计算-Attention-输出" class="headerlink" title="计算 Attention 输出"></a>计算 Attention 输出</h4><img src="/images/attention/8.png" style="zoom: 33%;" />
-
-
-
+<h3 id="计算-Q、K、V"><a href="#计算-Q、K、V" class="headerlink" title="计算 Q、K、V"></a>计算 Q、K、V</h3><p><img src="/images/attention/6.png"></p>
+<h3 id="计算-alpha-（Attention-Score）-1"><a href="#计算-alpha-（Attention-Score）-1" class="headerlink" title="计算 $\alpha$ （Attention Score）"></a>计算 $\alpha$ （Attention Score）</h3><p><img src="/images/attention/7.png"></p>
+<h3 id="计算-Attention-输出"><a href="#计算-Attention-输出" class="headerlink" title="计算 Attention 输出"></a>计算 Attention 输出</h3><p><img src="/images/attention/8.png"></p>
 <h1 id="Multi-head-Self-attention"><a href="#Multi-head-Self-attention" class="headerlink" title="Multi-head Self-attention"></a>Multi-head Self-attention</h1><p>Q、K、V 分叉，产生多个子 q、k、v。</p>
 <p>具体分几个 head 这个是个超参数，需要经验上去调。</p>
 <p>以双头注意力为例，需要对一个 <code>query</code> 和其他每个 <code>key</code> 计算两次关联度。</p>
 <p>对于输入向量 $a^i$ 首先是使用两个不同的权重矩阵去做乘法，得到两个分叉后的 q。</p>
-<img src="/images/attention/9.png" style="zoom: 33%;" />
-
-
-
-<img src="/images/attention/10.png" style="zoom: 33%;" />
-
-
-
+<p><img src="/images/attention/9.png"></p>
+<p><img src="/images/attention/10.png"></p>
 <h1 id="Position-Encoding"><a href="#Position-Encoding" class="headerlink" title="Position Encoding"></a>Position Encoding</h1><p>在 Self-attention 中没有使用 position 的信息，所有 vector 在 sequence 中的 position 都没有差别。</p>
 <p>但是比如一个句子中，动词放在句首的概率是比较小的。</p>
-<p>为每个位置设置一个专属的 positional vector  $\textcolor{red}{e^i}$。</p>
-<img src="/images/attention/11.png" style="zoom: 50%;" />
-
-
-
+<p>为每个位置设置一个专属的 positional vector  $e^i$。</p>
+<p><img src="/images/attention/11.png"></p>
 <h1 id="Self-attention-的应用"><a href="#Self-attention-的应用" class="headerlink" title="Self-attention 的应用"></a>Self-attention 的应用</h1><ul>
 <li><p>Speech</p>
 </li>
@@ -336,8 +316,7 @@
 </ul>
 <p>每个 RNN 模块都会考虑当前输入 vector 以及上一个 RNN 模块输出的 vector。</p>
 <p>RNN 也可以是双向的，考虑整个 input sequence。</p>
-<img src="/images/attention/13.png" style="zoom: 33%;" />
-
+<p><img src="/images/attention/13.png"></p>
 <p>Self-attention 的好处：</p>
 <ul>
 <li>K、Q 的匹配计算不用考虑距离<ul>
@@ -360,10 +339,7 @@
 </li>
 </ul>
 <p>只计算相连的 node 之间的 attention score。</p>
-<img src="/images/attention/13.png" style="zoom:33%;" />
-
-
-
+<p><img src="/images/attention/14.png"></p>
 <h3 id="Much-More"><a href="#Much-More" class="headerlink" title="Much More"></a>Much More</h3><p>long Range Arena: A Benchmark for Efficient Transformers</p>
 <p>Efficient Transformers: A Survey</p>
 <p>平衡计算速度、性能。</p>
@@ -402,7 +378,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vector-as-Input"><span class="toc-number">1.</span> <span class="toc-text">Vector as Input</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%90%91%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">输入向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">输出形式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention"><span class="toc-number">2.</span> <span class="toc-text">Self-attention</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F%E5%85%B3%E8%81%94%E4%B8%8A%E4%B8%8B%E6%96%87%E8%AF%AD%E5%A2%83%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">2.0.1.</span> <span class="toc-text">如何产生关联上下文语境的输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#alpha-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-number">2.0.2.</span> <span class="toc-text">$\alpha$ 的计算方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dot-Product-%E7%82%B9%E7%A7%AF%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.0.2.1.</span> <span class="toc-text">Dot-Product - 点积注意力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Additive-%E5%8A%A0%E6%80%A7%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.0.2.2.</span> <span class="toc-text">Additive - 加性注意力</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%80%E6%9C%89%E5%90%91%E9%87%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E5%BA%A6-alpha"><span class="toc-number">2.0.3.</span> <span class="toc-text">计算所有向量之间的关联度 $\alpha$</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q"><span class="toc-number">2.0.3.1.</span> <span class="toc-text">计算 Q</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-K"><span class="toc-number">2.0.3.2.</span> <span class="toc-text">计算 K</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89"><span class="toc-number">2.0.3.3.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-V"><span class="toc-number">2.0.3.4.</span> <span class="toc-text">计算 V</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%93%E5%88%86"><span class="toc-number">2.0.3.5.</span> <span class="toc-text">计算打分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E7%9F%A9%E9%98%B5%E5%BD%A2%E7%8A%B6%E7%9A%84%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3"><span class="toc-number">2.0.4.</span> <span class="toc-text">从矩阵形状的角度理解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q%E3%80%81K%E3%80%81V"><span class="toc-number">2.0.4.1.</span> <span class="toc-text">计算 Q、K、V</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89-1"><span class="toc-number">2.0.4.2.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Attention-%E8%BE%93%E5%87%BA"><span class="toc-number">2.0.4.3.</span> <span class="toc-text">计算 Attention 输出</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi-head-Self-attention"><span class="toc-number">3.</span> <span class="toc-text">Multi-head Self-attention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Position-Encoding"><span class="toc-number">4.</span> <span class="toc-text">Position Encoding</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">Self-attention 的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-CNN"><span class="toc-number">5.1.</span> <span class="toc-text">Self-attention v.s. CNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-RNN"><span class="toc-number">5.2.</span> <span class="toc-text">Self-attention v.s. RNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-4-Graph%EF%BC%88GNN%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">Self-attention 4 Graph（GNN）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Much-More"><span class="toc-number">5.3.1.</span> <span class="toc-text">Much More</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Attention-Self-attention"><span class="toc-number">6.</span> <span class="toc-text">Attention &amp; Self-attention</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vector-as-Input"><span class="toc-number">1.</span> <span class="toc-text">Vector as Input</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%90%91%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">输入向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">输出形式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention"><span class="toc-number">2.</span> <span class="toc-text">Self-attention</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F%E5%85%B3%E8%81%94%E4%B8%8A%E4%B8%8B%E6%96%87%E8%AF%AD%E5%A2%83%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">2.1.</span> <span class="toc-text">如何产生关联上下文语境的输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alpha-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">$\alpha$ 的计算方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dot-Product-%E7%82%B9%E7%A7%AF%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.2.1.</span> <span class="toc-text">Dot-Product - 点积注意力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Additive-%E5%8A%A0%E6%80%A7%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-number">2.2.2.</span> <span class="toc-text">Additive - 加性注意力</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%80%E6%9C%89%E5%90%91%E9%87%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E8%81%94%E5%BA%A6-alpha"><span class="toc-number">2.3.</span> <span class="toc-text">计算所有向量之间的关联度 $\alpha$</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q"><span class="toc-number">2.3.1.</span> <span class="toc-text">计算 Q</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-K"><span class="toc-number">2.3.2.</span> <span class="toc-text">计算 K</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89"><span class="toc-number">2.3.3.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-V"><span class="toc-number">2.3.4.</span> <span class="toc-text">计算 V</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%89%93%E5%88%86"><span class="toc-number">2.3.5.</span> <span class="toc-text">计算打分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E7%9F%A9%E9%98%B5%E5%BD%A2%E7%8A%B6%E7%9A%84%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3"><span class="toc-number">2.4.</span> <span class="toc-text">从矩阵形状的角度理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Q%E3%80%81K%E3%80%81V"><span class="toc-number">2.4.1.</span> <span class="toc-text">计算 Q、K、V</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-alpha-%EF%BC%88Attention-Score%EF%BC%89-1"><span class="toc-number">2.4.2.</span> <span class="toc-text">计算 $\alpha$ （Attention Score）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97-Attention-%E8%BE%93%E5%87%BA"><span class="toc-number">2.4.3.</span> <span class="toc-text">计算 Attention 输出</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Multi-head-Self-attention"><span class="toc-number">3.</span> <span class="toc-text">Multi-head Self-attention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Position-Encoding"><span class="toc-number">4.</span> <span class="toc-text">Position Encoding</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Self-attention-%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">Self-attention 的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-CNN"><span class="toc-number">5.1.</span> <span class="toc-text">Self-attention v.s. CNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-v-s-RNN"><span class="toc-number">5.2.</span> <span class="toc-text">Self-attention v.s. RNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Self-attention-4-Graph%EF%BC%88GNN%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">Self-attention 4 Graph（GNN）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Much-More"><span class="toc-number">5.3.1.</span> <span class="toc-text">Much More</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Attention-Self-attention"><span class="toc-number">6.</span> <span class="toc-text">Attention &amp; Self-attention</span></a></li></ol>
       </div>
     
 
