@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://example.com/images/attention/13.png">
 <meta property="og:image" content="http://example.com/images/attention/14.png">
 <meta property="article:published_time" content="2024-06-08T09:15:55.000Z">
-<meta property="article:modified_time" content="2024-06-09T12:44:56.892Z">
+<meta property="article:modified_time" content="2024-06-10T11:49:21.328Z">
 <meta property="article:author" content="Sakana">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
@@ -169,7 +169,7 @@
       
         <time datetime="2024-06-08T09:15:55.000Z" class="dt-published" itemprop="datePublished">2024-06-08</time>
         
-        (Updated: <time datetime="2024-06-09T12:44:56.892Z" class="dt-updated" itemprop="dateModified">2024-06-09</time>)
+        (Updated: <time datetime="2024-06-10T11:49:21.328Z" class="dt-updated" itemprop="dateModified">2024-06-10</time>)
         
       
     </div>
@@ -214,7 +214,7 @@
 </li>
 </ul>
 <p>这些问题都可以建模成 <em>vector set as input</em> 的模型输入。</p>
-<h2 id="输出形式"><a href="#输出形式" class="headerlink" title="输出形式"></a>输出形式</h2><p><img src="/images/attention/12.png"></p>
+<h2 id="输出形式"><a href="#输出形式" class="headerlink" title="输出形式"></a>输出形式</h2><p><img src="/../images/attention/12.png"></p>
 <ul>
 <li>$n$ 个向量 $\to$ $n$ 个标签<ul>
 <li>词性标注</li>
@@ -245,7 +245,7 @@
 <li>存在两个矩阵 $W^q$ 和 $W^k$，做 $W^q \cdot a^1 &#x3D; q$ 和 $W^k \cdot a^1 &#x3D; k$​。</li>
 <li>作 $W^v \cdot tanh(q + k)$。</li>
 </ul>
-<p><img src="/images/attention/3.png"></p>
+<p><img src="/../images/attention/3.png"></p>
 <h2 id="计算所有向量之间的关联度-alpha"><a href="#计算所有向量之间的关联度-alpha" class="headerlink" title="计算所有向量之间的关联度 $\alpha$"></a>计算所有向量之间的关联度 $\alpha$</h2><p>对每个 vector 都作关联度计算，并送入 softmax，</p>
 <h3 id="计算-Q"><a href="#计算-Q" class="headerlink" title="计算 Q"></a>计算 Q</h3><p>$q^1 &#x3D; W^q \cdot a^1$ — query vector</p>
 <h3 id="计算-K"><a href="#计算-K" class="headerlink" title="计算 K"></a>计算 K</h3><p>$k^i &#x3D; W^k \cdot a^i$​ — key vector</p>
@@ -254,24 +254,24 @@
 <p><img src="/images/attention/4.png"></p>
 <p>最后也不一定用 softmax，但这个是最常见的。</p>
 <h3 id="计算-V"><a href="#计算-V" class="headerlink" title="计算 V"></a>计算 V</h3><p>再引入一个新的矩阵 $W^v$，和每个 $\alpha$ 作点积，即 $v^i &#x3D; W^v \cdot \alpha^i$​ — <code>value vector</code>。</p>
-<h3 id="计算打分"><a href="#计算打分" class="headerlink" title="计算打分"></a>计算打分</h3><p>将这个 $v_i$ 和每个 $\alpha$ 作点积，计算 $b^1 &#x3D; \sum_j{\alpha^{‘}_{1, i}v^i}$，最后得到的 $\vec{b}$ 是一个四维向量，也就是 Attention 的输出。</p>
-<p><img src="/images/attention/5.png"></p>
+<h3 id="计算打分"><a href="#计算打分" class="headerlink" title="计算打分"></a>计算打分</h3><p>将这个 $v_i$ 和每个 $\alpha$ 作点积，计算 $b^1 &#x3D; \sum_i{\alpha^{‘}_{1, i}v^i}$，最后得到的 $\vec{b}$ 是一个四维向量，也就是 Attention 的输出。</p>
+<p><img src="/../images/attention/5.png"></p>
 <h2 id="从矩阵形状的角度理解"><a href="#从矩阵形状的角度理解" class="headerlink" title="从矩阵形状的角度理解"></a>从矩阵形状的角度理解</h2><blockquote>
 <p>存在四个输入向量 $a_1, a_2, a_3, a_4$.</p>
 </blockquote>
-<h3 id="计算-Q、K、V"><a href="#计算-Q、K、V" class="headerlink" title="计算 Q、K、V"></a>计算 Q、K、V</h3><p><img src="/images/attention/6.png"></p>
-<h3 id="计算-alpha-（Attention-Score）-1"><a href="#计算-alpha-（Attention-Score）-1" class="headerlink" title="计算 $\alpha$ （Attention Score）"></a>计算 $\alpha$ （Attention Score）</h3><p><img src="/images/attention/7.png"></p>
-<h3 id="计算-Attention-输出"><a href="#计算-Attention-输出" class="headerlink" title="计算 Attention 输出"></a>计算 Attention 输出</h3><p><img src="/images/attention/8.png"></p>
+<h3 id="计算-Q、K、V"><a href="#计算-Q、K、V" class="headerlink" title="计算 Q、K、V"></a>计算 Q、K、V</h3><p><img src="/../images/attention/6.png"></p>
+<h3 id="计算-alpha-（Attention-Score）-1"><a href="#计算-alpha-（Attention-Score）-1" class="headerlink" title="计算 $\alpha$ （Attention Score）"></a>计算 $\alpha$ （Attention Score）</h3><p><img src="/../images/attention/7.png"></p>
+<h3 id="计算-Attention-输出"><a href="#计算-Attention-输出" class="headerlink" title="计算 Attention 输出"></a>计算 Attention 输出</h3><p><img src="/../images/attention/8.png"></p>
 <h1 id="Multi-head-Self-attention"><a href="#Multi-head-Self-attention" class="headerlink" title="Multi-head Self-attention"></a>Multi-head Self-attention</h1><p>Q、K、V 分叉，产生多个子 q、k、v。</p>
 <p>具体分几个 head 这个是个超参数，需要经验上去调。</p>
 <p>以双头注意力为例，需要对一个 <code>query</code> 和其他每个 <code>key</code> 计算两次关联度。</p>
 <p>对于输入向量 $a^i$ 首先是使用两个不同的权重矩阵去做乘法，得到两个分叉后的 q。</p>
-<p><img src="/images/attention/9.png"></p>
-<p><img src="/images/attention/10.png"></p>
+<p><img src="/../images/attention/9.png"></p>
+<p><img src="/../images/attention/10.png"></p>
 <h1 id="Position-Encoding"><a href="#Position-Encoding" class="headerlink" title="Position Encoding"></a>Position Encoding</h1><p>在 Self-attention 中没有使用 position 的信息，所有 vector 在 sequence 中的 position 都没有差别。</p>
 <p>但是比如一个句子中，动词放在句首的概率是比较小的。</p>
 <p>为每个位置设置一个专属的 positional vector  $e^i$。</p>
-<p><img src="/images/attention/11.png"></p>
+<p><img src="/../images/attention/11.png"></p>
 <h1 id="Self-attention-的应用"><a href="#Self-attention-的应用" class="headerlink" title="Self-attention 的应用"></a>Self-attention 的应用</h1><ul>
 <li><p>Speech</p>
 </li>
@@ -318,7 +318,7 @@
 </ul>
 <p>每个 RNN 模块都会考虑当前输入 vector 以及上一个 RNN 模块输出的 vector。</p>
 <p>RNN 也可以是双向的，考虑整个 input sequence。</p>
-<p><img src="/images/attention/13.png"></p>
+<p><img src="/../images/attention/13.png"></p>
 <p>Self-attention 的好处：</p>
 <ul>
 <li>K、Q 的匹配计算不用考虑距离<ul>
@@ -341,7 +341,7 @@
 </li>
 </ul>
 <p>只计算相连的 node 之间的 attention score。</p>
-<p><img src="/images/attention/14.png"></p>
+<p><img src="/../images/attention/14.png"></p>
 <h3 id="Much-More"><a href="#Much-More" class="headerlink" title="Much More"></a>Much More</h3><p>long Range Arena: A Benchmark for Efficient Transformers</p>
 <p>Efficient Transformers: A Survey</p>
 <p>平衡计算速度、性能。</p>
