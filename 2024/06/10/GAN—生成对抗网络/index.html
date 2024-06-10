@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Network v.s. Generator网络和生成器是两种东西。 传统 Network是一个 function，给定一个 $x$，输出一个 $y$。 这个 $x$ 可以是一个图片，可以是一个 sequence。 输出的 $y$ 可以是一个数值，也可以是一个 label。 Generator将 network 当成 generator 使用。  这里的网络输入除了常规的 $x$ 之外，还有一个从">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GAN—生成式对抗网络">
+<meta property="og:url" content="http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="Welcome to 🐟 の 小窝">
+<meta property="og:description" content="Network v.s. Generator网络和生成器是两种东西。 传统 Network是一个 function，给定一个 $x$，输出一个 $y$。 这个 $x$ 可以是一个图片，可以是一个 sequence。 输出的 $y$ 可以是一个数值，也可以是一个 label。 Generator将 network 当成 generator 使用。  这里的网络输入除了常规的 $x$ 之外，还有一个从">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/gan/1.png">
+<meta property="og:image" content="http://example.com/images/gan/2.png">
+<meta property="og:image" content="http://example.com/images/gan/3.png">
+<meta property="og:image" content="http://example.com/images/gan/4.png">
+<meta property="og:image" content="http://example.com/images/gan/5.png">
+<meta property="og:image" content="http://example.com/images/gan/6.png">
+<meta property="article:published_time" content="2024-06-10T12:30:52.000Z">
+<meta property="article:modified_time" content="2024-06-10T13:20:00.795Z">
+<meta property="article:author" content="Sakana">
+<meta property="article:tag" content="AI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/gan/1.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/avatar.jpg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
+        
+      
+    
+    <!-- title -->
+    <title>GAN—生成式对抗网络</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/06/09/Transformer/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&text=GAN—生成式对抗网络"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&is_video=false&description=GAN—生成式对抗网络"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GAN—生成式对抗网络&body=Check out this article: http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&name=GAN—生成式对抗网络&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&t=GAN—生成式对抗网络"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Network-v-s-Generator"><span class="toc-number">1.</span> <span class="toc-text">Network v.s. Generator</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F-Network"><span class="toc-number">1.1.</span> <span class="toc-text">传统 Network</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generator"><span class="toc-number">1.2.</span> <span class="toc-text">Generator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%B2%BE%E7%81%B5%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.</span> <span class="toc-text">小精灵的例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GAN"><span class="toc-number">2.</span> <span class="toc-text">GAN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Discriminator"><span class="toc-number">2.1.</span> <span class="toc-text">Discriminator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9B%BA%E5%AE%9A-G-%EF%BC%8C%E6%9B%B4%E6%96%B0-D"><span class="toc-number">2.2.1.</span> <span class="toc-text">1. 固定 $G$，更新 $D$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%9B%BA%E5%AE%9A-D-%EF%BC%8C%E6%9B%B4%E6%96%B0-G"><span class="toc-number">2.2.2.</span> <span class="toc-text">2. 固定 $D$，更新 $G$</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        GAN—生成式对抗网络
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Sakana</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-10T12:30:52.000Z" class="dt-published" itemprop="datePublished">2024-06-10</time>
+        
+        (Updated: <time datetime="2024-06-10T13:20:00.795Z" class="dt-updated" itemprop="dateModified">2024-06-10</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AI/" rel="tag">AI</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Network-v-s-Generator"><a href="#Network-v-s-Generator" class="headerlink" title="Network v.s. Generator"></a>Network v.s. Generator</h1><p>网络和生成器是两种东西。</p>
+<h2 id="传统-Network"><a href="#传统-Network" class="headerlink" title="传统 Network"></a>传统 Network</h2><p>是一个 function，给定一个 $x$，输出一个 $y$。</p>
+<p>这个 $x$ 可以是一个图片，可以是一个 sequence。</p>
+<p>输出的 $y$ 可以是一个数值，也可以是一个 label。</p>
+<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2><p>将 network 当成 generator 使用。</p>
+<p><img src="/../images/gan/1.png"></p>
+<p>这里的网络输入除了常规的 $x$ 之外，还有一个从<code>已知分布</code>中 sample 出来的 $z$。</p>
+<p>这个分布可以是高斯分布，可以是均匀分布，只要求这个分布的公式能够写出来。</p>
+<p>此时的模型输出就不是单一的东西了，变成了一个复杂的分布。</p>
+<p>为什么需要输入从一个简单的分布中采样呢？</p>
+<p>为什么需要输出一个分布呢？</p>
+<blockquote>
+<p>随机性</p>
+</blockquote>
+<h2 id="小精灵的例子"><a href="#小精灵的例子" class="headerlink" title="小精灵的例子"></a>小精灵的例子</h2><p><img src="/../images/gan/2.png"></p>
+<p>在这个小精灵游戏的例子中，需要根据前面画面的 frame 预测下一个 frame 是什么样的。</p>
+<p>然后游戏情节的推动并不是单一线性的，小精灵可能<code>向左转</code>也可能<code>向右转</code>。</p>
+<p>因此训练集中会对于同一个输入有多个不同的 label，导致输出是多样的。</p>
+<p>因此需要在网络中加入概率成分 $z$，使得输出是一个概率分布，使得输出<em>并不是固定的</em>。</p>
+<p>比如当 $z$ sample 到 0 的时候就左转，sample 到 1 的时候右转，从而模拟不可预测的情况。</p>
+<p>主要用在需要有创造力的地方，同一个输入可以有不同的正确的输出。</p>
+<p>AIGC 场景、对话场景。</p>
+<p><img src="/../images/gan/3.png"></p>
+<h1 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h1><h2 id="Discriminator"><a href="#Discriminator" class="headerlink" title="Discriminator"></a>Discriminator</h2><p>discriminator 用于找出输入和 label 之间的差别，促使下一次 generaotr 可以生成更好的东西。</p>
+<p>discriminator 也是一个神经网络，可以是 CNN，也可以是 Transformer，由自己设计。</p>
+<p><img src="/../images/gan/4.png"></p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>记号：</p>
+<p>$G \leftarrow Generator$</p>
+<p>$D \leftarrow Discriminator$ </p>
+<p>先初始化这两个模型里面的参数</p>
+<p>后面每一轮都重复下面的步骤。</p>
+<h3 id="1-固定-G-，更新-D"><a href="#1-固定-G-，更新-D" class="headerlink" title="1. 固定 $G$，更新 $D$"></a>1. 固定 $G$，更新 $D$</h3><p>sample 一堆向量丢给 $G$，此时会生成一堆杂乱无章的图像。</p>
+<p>拿这些杂乱无章的图像和数据集中正常的二次元图像去训练 $D$。</p>
+<p>训练$D$ 可以用 classification 去做，也可以用 regression 去做。</p>
+<ul>
+<li>classfication<ul>
+<li>将正常的图片标记为 1，将 $G$ 生成的标记为 0，训练一个网络 $D$ 来做分类。</li>
+</ul>
+</li>
+<li>regression<ul>
+<li>看到正常的图片输出 1，看到 $G$ 生成的标记为 0，训练一个网络 $D$ 来做回归。</li>
+</ul>
+</li>
+</ul>
+<p>从而让 $D$ 学会分辨正常图片和 $G$ 生成的青春版图片之间的差异。</p>
+<p><img src="/../images/gan/5.png"></p>
+<h3 id="2-固定-D-，更新-G"><a href="#2-固定-D-，更新-G" class="headerlink" title="2. 固定 $D$，更新 $G$"></a>2. 固定 $D$，更新 $G$</h3><p>想办法让 $G$ 骗过 $D$。</p>
+<p>调整 $G$ 的参数使得 $D$​ 输出的打分越大越好。</p>
+<p>训练 $G$ 的过程和平时训练神经网络没有什么差异，都是设置一个 loss，跑梯度下降等。</p>
+<p>目标就是最大化 $D$ 的输出。</p>
+<p><img src="/../images/gan/6.png"></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Blog</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Network-v-s-Generator"><span class="toc-number">1.</span> <span class="toc-text">Network v.s. Generator</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F-Network"><span class="toc-number">1.1.</span> <span class="toc-text">传统 Network</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generator"><span class="toc-number">1.2.</span> <span class="toc-text">Generator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%B2%BE%E7%81%B5%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.</span> <span class="toc-text">小精灵的例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GAN"><span class="toc-number">2.</span> <span class="toc-text">GAN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Discriminator"><span class="toc-number">2.1.</span> <span class="toc-text">Discriminator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9B%BA%E5%AE%9A-G-%EF%BC%8C%E6%9B%B4%E6%96%B0-D"><span class="toc-number">2.2.1.</span> <span class="toc-text">1. 固定 $G$，更新 $D$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%9B%BA%E5%AE%9A-D-%EF%BC%8C%E6%9B%B4%E6%96%B0-G"><span class="toc-number">2.2.2.</span> <span class="toc-text">2. 固定 $D$，更新 $G$</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&text=GAN—生成式对抗网络"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&is_video=false&description=GAN—生成式对抗网络"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GAN—生成式对抗网络&body=Check out this article: http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&title=GAN—生成式对抗网络"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&name=GAN—生成式对抗网络&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/&t=GAN—生成式对抗网络"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    Sakana
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2e6da3c375c8a87f5b664cea6d4cb29c";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'yuyucute';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

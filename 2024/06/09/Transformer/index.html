@@ -15,8 +15,12 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/images/transformer/1.png">
 <meta property="og:image" content="http://example.com/images/transformer/2.png">
+<meta property="og:image" content="http://example.com/images/transformer/3.png">
+<meta property="og:image" content="http://example.com/images/transformer/4.png">
+<meta property="og:image" content="http://example.com/images/transformer/5.png">
+<meta property="og:image" content="http://example.com/images/transformer/6.png">
 <meta property="article:published_time" content="2024-06-09T12:50:36.000Z">
-<meta property="article:modified_time" content="2024-06-09T13:58:54.713Z">
+<meta property="article:modified_time" content="2024-06-10T12:29:54.586Z">
 <meta property="article:author" content="Sakana">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
@@ -99,6 +103,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="Previous post" href="/2024/06/10/GAN%E2%80%94%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="Next post" href="/2024/06/08/%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -130,7 +136,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">intro</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Transformer"><span class="toc-number">1.1.</span> <span class="toc-text">什么是 Transformer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Seq2seq-%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">Seq2seq 的例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Seq2seq-%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">Seq2seq 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Encoder"><span class="toc-number">2.1.</span> <span class="toc-text">Encoder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Decoder"><span class="toc-number">2.2.</span> <span class="toc-text">Decoder</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">intro</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Transformer"><span class="toc-number">1.1.</span> <span class="toc-text">什么是 Transformer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Seq2seq-%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">Seq2seq 的例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Seq2seq-%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">Seq2seq 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Encoder"><span class="toc-number">2.1.</span> <span class="toc-text">Encoder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Decoder"><span class="toc-number">2.2.</span> <span class="toc-text">Decoder</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Autogressive-AT"><span class="toc-number">2.2.1.</span> <span class="toc-text">Autogressive (AT)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Non-Autoregressive-NAT"><span class="toc-number">2.2.2.</span> <span class="toc-text">Non-Autoregressive (NAT)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83"><span class="toc-number">2.2.3.</span> <span class="toc-text">训练</span></a></li></ol></li></ol></li></ol>
       </div>
     
   </span>
@@ -157,7 +163,7 @@
       
         <time datetime="2024-06-09T12:50:36.000Z" class="dt-published" itemprop="datePublished">2024-06-09</time>
         
-        (Updated: <time datetime="2024-06-09T13:58:54.713Z" class="dt-updated" itemprop="dateModified">2024-06-09</time>)
+        (Updated: <time datetime="2024-06-10T12:29:54.586Z" class="dt-updated" itemprop="dateModified">2024-06-10</time>)
         
       
     </div>
@@ -231,7 +237,22 @@
 <li>做 $d + e$，得到新向量 $f$</li>
 <li>将 $f$ 再做一次 <em>Layer normalization</em>，得到输出</li>
 </ul>
-<h2 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h2>
+<h2 id="Decoder"><a href="#Decoder" class="headerlink" title="Decoder"></a>Decoder</h2><h3 id="Autogressive-AT"><a href="#Autogressive-AT" class="headerlink" title="Autogressive (AT)"></a>Autogressive (AT)</h3><p><img src="/../images/transformer/3.png"></p>
+<p>这里的 Decoder 和 Encoder 的区别仅仅是中间加了一个 <em>Multi-Head Attention</em> 层，并且在第一个注意力模块做了一个 Mask，在输出多了一层 <em>Linear</em> 和 <em>softmax</em>。</p>
+<p> <img src="/../images/transformer/4.png"></p>
+<p>这里 Masked 多头注意力做的是 Corss-attention（交叉注意力）。</p>
+<p>先有的交叉注意力，再有的 transformer 论文里的 Self-attention。</p>
+<p>之所以是要做 mask，是因为新 vector 的产生是不能关注到其后面的输入，这是因为在生成的时候是<em>一个一个</em>产生的，</p>
+<p>对于 Decoder 而言，在生成当前 vector 的时候后面的 vector 还没有被生成，因此需要 mask 掉后面的输入。</p>
+<p> <img src="/../images/transformer/5.png"></p>
+<p>在 AT 模型中，每一个输出都是串行产生的，并且前一个输出会作为 Decoder 的下一个输入。</p>
+<p>Decoder 的第一个输入是一个 START 标志，代表开始。</p>
+<p>同时模型也需要学会何时产生 END 标志，表示输出 sequence 的结束。</p>
+<p>因此这种模型我们并不知道 Decoder 会输出多少个 vector，一切都是模型自己学习得到的。</p>
+<h3 id="Non-Autoregressive-NAT"><a href="#Non-Autoregressive-NAT" class="headerlink" title="Non-Autoregressive (NAT)"></a>Non-Autoregressive (NAT)</h3><p>NAT 模型下我们会人工指定输出的 vector 数量，有可能是预测不超过 $x$ 个输出，因此指定 $x$ 个 START 标志作为输入。</p>
+<p>最后 Decoder 会对于每一个 START input 产生一个输出，一旦发现了 END 标志则后面所有的都当成无用输出。</p>
+<p><img src="/../images/transformer/6.png"></p>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3>
   </div>
 </article>
 
@@ -264,7 +285,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">intro</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Transformer"><span class="toc-number">1.1.</span> <span class="toc-text">什么是 Transformer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Seq2seq-%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">Seq2seq 的例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Seq2seq-%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">Seq2seq 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Encoder"><span class="toc-number">2.1.</span> <span class="toc-text">Encoder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Decoder"><span class="toc-number">2.2.</span> <span class="toc-text">Decoder</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#intro"><span class="toc-number">1.</span> <span class="toc-text">intro</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Transformer"><span class="toc-number">1.1.</span> <span class="toc-text">什么是 Transformer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Seq2seq-%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">Seq2seq 的例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Seq2seq-%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">Seq2seq 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Encoder"><span class="toc-number">2.1.</span> <span class="toc-text">Encoder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Decoder"><span class="toc-number">2.2.</span> <span class="toc-text">Decoder</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Autogressive-AT"><span class="toc-number">2.2.1.</span> <span class="toc-text">Autogressive (AT)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Non-Autoregressive-NAT"><span class="toc-number">2.2.2.</span> <span class="toc-text">Non-Autoregressive (NAT)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83"><span class="toc-number">2.2.3.</span> <span class="toc-text">训练</span></a></li></ol></li></ol></li></ol>
       </div>
     
 
