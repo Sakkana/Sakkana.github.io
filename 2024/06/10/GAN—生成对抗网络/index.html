@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://example.com/images/gan/5.png">
 <meta property="og:image" content="http://example.com/images/gan/6.png">
 <meta property="article:published_time" content="2024-06-10T12:30:52.000Z">
-<meta property="article:modified_time" content="2024-06-10T13:20:00.795Z">
+<meta property="article:modified_time" content="2024-06-11T03:31:21.739Z">
 <meta property="article:author" content="Sakana">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
@@ -161,7 +161,7 @@
       
         <time datetime="2024-06-10T12:30:52.000Z" class="dt-published" itemprop="datePublished">2024-06-10</time>
         
-        (Updated: <time datetime="2024-06-10T13:20:00.795Z" class="dt-updated" itemprop="dateModified">2024-06-10</time>)
+        (Updated: <time datetime="2024-06-11T03:31:21.739Z" class="dt-updated" itemprop="dateModified">2024-06-11</time>)
         
       
     </div>
@@ -214,7 +214,7 @@
 <p>后面每一轮都重复下面的步骤。</p>
 <h3 id="1-固定-G-，更新-D"><a href="#1-固定-G-，更新-D" class="headerlink" title="1. 固定 $G$，更新 $D$"></a>1. 固定 $G$，更新 $D$</h3><p>sample 一堆向量丢给 $G$，此时会生成一堆杂乱无章的图像。</p>
 <p>拿这些杂乱无章的图像和数据集中正常的二次元图像去训练 $D$。</p>
-<p>训练$D$ 可以用 classification 去做，也可以用 regression 去做。</p>
+<p>训练 $D$ 可以用 classification 去做，也可以用 regression 去做。</p>
 <ul>
 <li>classfication<ul>
 <li>将正常的图片标记为 1，将 $G$ 生成的标记为 0，训练一个网络 $D$ 来做分类。</li>
@@ -225,10 +225,10 @@
 </ul>
 </li>
 </ul>
-<p>从而让 $D$ 学会分辨正常图片和 $G$ 生成的青春版图片之间的差异。</p>
+<p>从而让 $D$ 学会<strong>分辨</strong>正常图片和 $G$ 生成的青春版图片之间的<strong>差异</strong>。</p>
 <p><img src="/../images/gan/5.png"></p>
 <h3 id="2-固定-D-，更新-G"><a href="#2-固定-D-，更新-G" class="headerlink" title="2. 固定 $D$，更新 $G$"></a>2. 固定 $D$，更新 $G$</h3><p>想办法让 $G$ 骗过 $D$。</p>
-<p>调整 $G$ 的参数使得 $D$​ 输出的打分越大越好。</p>
+<p>调整 $G$ 的参数使得 $D$​ 输出的<strong>打分越大越好</strong>。</p>
 <p>训练 $G$ 的过程和平时训练神经网络没有什么差异，都是设置一个 loss，跑梯度下降等。</p>
 <p>目标就是最大化 $D$ 的输出。</p>
 <p><img src="/../images/gan/6.png"></p>
