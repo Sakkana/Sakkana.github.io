@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="中间表示 (Intermediate Representation)编译器 &amp; 静态分析  Source Code Scanner -&gt; Lexical Analysis (词法分析) -&gt; Tokens Regular Expression   Parser -&gt; Syntax Analysis (语法分析) -&gt; AST  Context-Free Gramma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态分析-IR">
+<meta property="og:url" content="http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/index.html">
+<meta property="og:site_name" content="Welcome to 🐟 の 小窝">
+<meta property="og:description" content="中间表示 (Intermediate Representation)编译器 &amp; 静态分析  Source Code Scanner -&gt; Lexical Analysis (词法分析) -&gt; Tokens Regular Expression   Parser -&gt; Syntax Analysis (语法分析) -&gt; AST  Context-Free Gramma">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/IR/0.png">
+<meta property="og:image" content="http://example.com/images/IR/1.png">
+<meta property="og:image" content="http://example.com/images/IR/2.png">
+<meta property="article:published_time" content="2024-07-12T04:23:05.000Z">
+<meta property="article:modified_time" content="2024-07-12T04:55:24.685Z">
+<meta property="article:author" content="Sakana">
+<meta property="article:tag" content="静态分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/IR/0.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/avatar.jpg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/avatar.jpg" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/avatar.jpg">
+        
+      
+    
+    <!-- title -->
+    <title>静态分析-IR</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/06/24/BERT/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&text=静态分析-IR"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&is_video=false&description=静态分析-IR"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=静态分析-IR&body=Check out this article: http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&name=静态分析-IR&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&t=静态分析-IR"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E8%A1%A8%E7%A4%BA-Intermediate-Representation"><span class="toc-number">1.</span> <span class="toc-text">中间表示 (Intermediate Representation)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">编译器 &amp; 静态分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AST-v-s-IR"><span class="toc-number">1.2.</span> <span class="toc-text">AST v.s. IR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3AC-%E4%B8%89%E5%9C%B0%E5%9D%80%E7%A0%81"><span class="toc-number">1.3.</span> <span class="toc-text">3AC 三地址码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E4%BB%A5%E5%85%85%E5%BD%93%E5%9C%B0%E5%9D%80%E7%9A%84-Address"><span class="toc-number">1.3.1.</span> <span class="toc-text">可以充当地址的 Address</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-3AC-%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.3.2.</span> <span class="toc-text">常用 3AC 形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3AC-in-Real-Static-Analyzer-Soot"><span class="toc-number">1.4.</span> <span class="toc-text">3AC in Real Static Analyzer: Soot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Static-Single-Assignment-SSA"><span class="toc-number">1.5.</span> <span class="toc-text">Static Single Assignment (SSA)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Block-BB"><span class="toc-number">1.6.</span> <span class="toc-text">Basic Block (BB)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Control-Flow-Graphs-CFG"><span class="toc-number">1.7.</span> <span class="toc-text">Control Flow Graphs (CFG)</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        静态分析-IR
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Sakana</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-12T04:23:05.000Z" class="dt-published" itemprop="datePublished">2024-07-12</time>
+        
+        (Updated: <time datetime="2024-07-12T04:55:24.685Z" class="dt-updated" itemprop="dateModified">2024-07-12</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90/" rel="tag">静态分析</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="中间表示-Intermediate-Representation"><a href="#中间表示-Intermediate-Representation" class="headerlink" title="中间表示 (Intermediate Representation)"></a>中间表示 (Intermediate Representation)</h1><h2 id="编译器-静态分析"><a href="#编译器-静态分析" class="headerlink" title="编译器 &amp; 静态分析"></a>编译器 &amp; 静态分析</h2><p><img src="/../images/IR/0.png"></p>
+<ul>
+<li><code>Source Code</code></li>
+<li>Scanner -&gt; <code>Lexical Analysis (词法分析)</code> -&gt; Tokens<ul>
+<li>Regular Expression</li>
+</ul>
+</li>
+<li>Parser -&gt; <code>Syntax Analysis (语法分析)</code> -&gt; AST <ul>
+<li>Context-Free Grammar</li>
+</ul>
+</li>
+<li>Type Checker -&gt; <code>Semantic Analysis (语义分析)</code> -&gt; Decorated AST<ul>
+<li>Attribute Grammar</li>
+</ul>
+</li>
+<li>front-end — (Translator -&gt; <strong>IR</strong> -&gt; static analysis) — back-end</li>
+<li>Code Generator</li>
+<li><code>Machine Code</code></li>
+</ul>
+<h2 id="AST-v-s-IR"><a href="#AST-v-s-IR" class="headerlink" title="AST v.s. IR"></a>AST v.s. IR</h2><p>AST 和 IR 的形式</p>
+<p><img src="/../images/IR/1.png"></p>
+<p>优劣对比</p>
+<p><img src="/../images/IR/2.png"></p>
+<h2 id="3AC-三地址码"><a href="#3AC-三地址码" class="headerlink" title="3AC 三地址码"></a>3AC 三地址码</h2><p>右侧最多只有一个运算符。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a + b + <span class="number">3</span> </span><br><span class="line">=&gt; ❎</span><br><span class="line">    </span><br><span class="line">t1 = a + <span class="type">b</span></span><br><span class="line"><span class="variable">t2</span> <span class="operator">=</span> t1 + <span class="number">3</span></span><br><span class="line">=&gt; ✅</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="可以充当地址的-Address"><a href="#可以充当地址的-Address" class="headerlink" title="可以充当地址的 Address"></a>可以充当地址的 Address</h3><ul>
+<li>变量名 x, y, z</li>
+<li>常量 3</li>
+<li>编译器生成的临时变量 tmp</li>
+</ul>
+<h3 id="常用-3AC-形式"><a href="#常用-3AC-形式" class="headerlink" title="常用 3AC 形式"></a>常用 3AC 形式</h3><ul>
+<li>x &#x3D; y bop z</li>
+<li>x &#x3D; uop y</li>
+<li>x &#x3D; y</li>
+<li>goto L</li>
+<li>if x goto L</li>
+<li>if x rop y goto L</li>
+</ul>
+<h2 id="3AC-in-Real-Static-Analyzer-Soot"><a href="#3AC-in-Real-Static-Analyzer-Soot" class="headerlink" title="3AC in Real Static Analyzer: Soot"></a>3AC in Real Static Analyzer: Soot</h2><h2 id="Static-Single-Assignment-SSA"><a href="#Static-Single-Assignment-SSA" class="headerlink" title="Static Single Assignment (SSA)"></a>Static Single Assignment (SSA)</h2><h2 id="Basic-Block-BB"><a href="#Basic-Block-BB" class="headerlink" title="Basic Block (BB)"></a>Basic Block (BB)</h2><h2 id="Control-Flow-Graphs-CFG"><a href="#Control-Flow-Graphs-CFG" class="headerlink" title="Control Flow Graphs (CFG)"></a>Control Flow Graphs (CFG)</h2>
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Blog</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E8%A1%A8%E7%A4%BA-Intermediate-Representation"><span class="toc-number">1.</span> <span class="toc-text">中间表示 (Intermediate Representation)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">编译器 &amp; 静态分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AST-v-s-IR"><span class="toc-number">1.2.</span> <span class="toc-text">AST v.s. IR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3AC-%E4%B8%89%E5%9C%B0%E5%9D%80%E7%A0%81"><span class="toc-number">1.3.</span> <span class="toc-text">3AC 三地址码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E4%BB%A5%E5%85%85%E5%BD%93%E5%9C%B0%E5%9D%80%E7%9A%84-Address"><span class="toc-number">1.3.1.</span> <span class="toc-text">可以充当地址的 Address</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-3AC-%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.3.2.</span> <span class="toc-text">常用 3AC 形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3AC-in-Real-Static-Analyzer-Soot"><span class="toc-number">1.4.</span> <span class="toc-text">3AC in Real Static Analyzer: Soot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Static-Single-Assignment-SSA"><span class="toc-number">1.5.</span> <span class="toc-text">Static Single Assignment (SSA)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Block-BB"><span class="toc-number">1.6.</span> <span class="toc-text">Basic Block (BB)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Control-Flow-Graphs-CFG"><span class="toc-number">1.7.</span> <span class="toc-text">Control Flow Graphs (CFG)</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&text=静态分析-IR"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&is_video=false&description=静态分析-IR"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=静态分析-IR&body=Check out this article: http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&title=静态分析-IR"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&name=静态分析-IR&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2024/07/12/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90-IR/&t=静态分析-IR"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    Sakana
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/Sakkana">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2e6da3c375c8a87f5b664cea6d4cb29c";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'yuyucute';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
